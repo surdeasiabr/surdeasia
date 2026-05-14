@@ -13,6 +13,70 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="araras.css">
+    <style>
+        .contact-form-container {
+            max-width: 600px;
+            margin: 40px auto 0;
+            background: #fff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            color: var(--ar-blue-deep);
+            font-size: 0.9rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(31, 59, 77, 0.1);
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--ar-blue-deep);
+            box-shadow: 0 0 0 3px rgba(31, 59, 77, 0.1);
+        }
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .form-submit {
+            width: 100%;
+            margin-top: 10px;
+        }
+        .form-feedback {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            display: none;
+        }
+        .form-feedback.success {
+            display: block;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+        .form-feedback.error {
+            display: block;
+            background-color: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+    </style>
 </head>
 <body>
 
@@ -396,29 +460,41 @@
     </section>
 
     <!-- ==================== CTA / CONTATO ==================== -->
-    <section id="contato-araras" class="ar-section ar-cta">
+    <section id="contato-araras" class="ar-section ar-cta" style="background: var(--ar-blue-deep);">
         <div class="ar-container">
-            <div class="ar-cta-wrapper ar-reveal">
-                <div class="ar-cta-content">
-                    <span class="ar-label">Vamos Conversar</span>
-                    <h2 class="ar-title">Leve a experiência<br>SURDEASIA para seu hotel</h2>
-                    <p class="ar-text">Estamos selecionando parceiros estratégicos para a primeira fase do Projeto Araras. Entre em contato e receba uma proposta personalizada.</p>
-                    <div class="ar-cta-buttons">
-                        <a href="https://wa.me/5521972100797?text=Olá!%20Tenho%20interesse%20no%20Projeto%20Araras%20SURDEASIA%20para%20meu%20hotel/resort.%20Gostaria%20de%20receber%20uma%20proposta." class="ar-btn ar-btn-whatsapp" target="_blank" rel="noopener">
-                            <svg class="ar-btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                            Conversar no WhatsApp
-                        </a>
-                        <a href="mailto:contato@surdeasiabr.com?subject=Projeto%20Araras%20-%20Proposta" class="ar-btn ar-btn-outline-dark">
-                            ✉️ Enviar E-mail
-                        </a>
+            <div class="ar-section-header ar-reveal" style="text-align: center; max-width: 800px; margin: 0 auto;">
+                <span class="ar-label" style="color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.3);">Vamos Conversar</span>
+                <h2 class="ar-title" style="color: #fff;">Leve a experiência SURDEASIA para seu hotel</h2>
+                <p class="ar-text" style="color: rgba(255,255,255,0.9); font-size: 1.1rem; line-height: 1.6;">Preencha o formulário abaixo e receba nossa proposta detalhada. Estamos selecionando parceiros exclusivos para a primeira fase do Projeto Araras.</p>
+            </div>
+
+            <div class="contact-form-container ar-reveal">
+                <form id="araras-form">
+                    <input type="hidden" id="form-type" value="araras">
+                    <div class="form-group">
+                        <label for="name">Nome do Hotel / Empresa *</label>
+                        <input type="text" id="name" class="form-control" required placeholder="Nome do seu estabelecimento">
                     </div>
-                </div>
-                <div class="ar-cta-visual">
-                    <div class="ar-cta-logo">
-                        <img src="images/logo-transparent.png" alt="SURDEASIA">
-                        <span>Projeto Araras</span>
+                    <div class="form-group">
+                        <label for="email">E-mail de Contato *</label>
+                        <input type="email" id="email" class="form-control" required placeholder="Para onde enviaremos a apresentação?">
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label for="message">Mensagem (opcional)</label>
+                        <textarea id="message" class="form-control" placeholder="Conte um pouco sobre seu hotel (Ex: Localização, número de quartos, perfil do hóspede)"></textarea>
+                    </div>
+                    <button type="submit" class="ar-btn ar-btn-primary form-submit" id="submit-btn">
+                        Solicitar Proposta Araras
+                    </button>
+                    <div id="form-feedback" class="form-feedback"></div>
+                </form>
+            </div>
+            
+            <div class="ar-cta-buttons" style="margin-top: 40px; justify-content: center;">
+                <a href="https://wa.me/5521972100797?text=Olá!%20Tenho%20interesse%20no%20Projeto%20Araras%20SURDEASIA." class="ar-btn ar-btn-whatsapp" target="_blank" rel="noopener">
+                    <svg class="ar-btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Conversar no WhatsApp
+                </a>
             </div>
         </div>
     </section>
@@ -471,6 +547,51 @@
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
+        });
+
+        /* ========== FORM SUBMISSION ========== */
+        const form = document.getElementById('araras-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const feedback = document.getElementById('form-feedback');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            submitBtn.textContent = 'Enviando...';
+            submitBtn.disabled = true;
+            feedback.className = 'form-feedback';
+            
+            const data = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value,
+                type: document.getElementById('form-type').value
+            };
+
+            try {
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.success) {
+                    feedback.textContent = "Solicitação enviada com sucesso! Em breve entraremos em contato.";
+                    feedback.classList.add('success');
+                    form.reset();
+                } else {
+                    throw new Error(result.error || 'Erro desconhecido');
+                }
+            } catch (error) {
+                console.error(error);
+                feedback.textContent = "Erro ao enviar. Por favor, tente pelo WhatsApp.";
+                feedback.classList.add('error');
+            } finally {
+                submitBtn.textContent = 'Solicitar Proposta Araras';
+                submitBtn.disabled = false;
+            }
         });
     </script>
 </body>

@@ -136,7 +136,11 @@ const products = [
         "images": [
             "images/Chemisse De Linho Listrado Azul 222.png",
             "images/Chemisse Wave de Linho Branco 100A.png",
+            "images/Chemisse Wave Branco Linho 1001.png",
+            "images/Chemisse Wave Branco Linho 1002.png",
             "images/Chemisse Wave Listrado linho azul 123.png",
+            "images/Chemisse Wave Azul Marinho Linho 2000.png",
+            "images/Chemisse Wave Azul Marinho Linho 2001.png",
             "images/Chemisse wave de Linho Listrado Bege 100.png",
             "images/Chemisse de Linho Listrado Azul 111.png",
             "images/Chemisse de Linho Listrado Azul 333.png"
@@ -144,13 +148,13 @@ const products = [
         "category": "Camisas",
         "badge": "Novo",
         "colors": [
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse Wave de Linho Branco 100A.png" },
-            { "name": "Azul Marinho", "hex": "#000080", "image": "images/Chemisse Wave Listrado linho azul 123.png" },
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse Wave Branco Linho 1001.png" },
+            { "name": "Azul Marinho", "hex": "#000080", "image": "images/Chemisse Wave Azul Marinho Linho 2000.png" },
             { "name": "Azul Listrado", "hex": "#4A81B8", "image": "images/Chemisse de Linho Listrado Azul 111.png" },
             { "name": "Bege Listrado", "hex": "#D5C4B3", "image": "images/Chemisse wave de Linho Listrado Bege 100.png" }
         ],
         "sizes": ["Tamanho Único"],
-        "desc": "Chemisse Wave confeccionada em linho. Uma peça versátil e marcante que traz a essência do mar para o seu estilo."
+        "desc": "Chemisse Wave confeccionada em linho premium. Uma peça versátil e marcante que traz a essência do mar para o seu estilo."
     },
     {
         "id": 9,
@@ -161,15 +165,18 @@ const products = [
         "images": [
             "images/chemisse listrado algodao 1.jpeg",
             "images/chemisse listrado algodao 2.jpeg",
-            "images/Chemisse Listrado Algodao 3.png"
+            "images/Chemisse Listrado Algodao 3.png",
+            "images/Chemisse Wave Algodao Listra ancha Bege 1001.png",
+            "images/Chemisse Wave Algodao Listra ancha Bege 1002.png"
         ],
         "category": "Camisas",
         "badge": "Novo",
         "colors": [
-            { "name": "Celeste", "hex": "#87CEEB", "image": "images/chemisse listrado algodao 1.jpeg" }
+            { "name": "Celeste", "hex": "#87CEEB", "image": "images/chemisse listrado algodao 1.jpeg" },
+            { "name": "Bege", "hex": "#D5C4B3", "image": "images/Chemisse Wave Algodao Listra ancha Bege 1001.png" }
         ],
         "sizes": ["Tamanho Único"],
-        "desc": "Chemisse confeccionado em algodão premium com listras na cor celeste. Caimento impecável e frescor ideal para dias ensolarados."
+        "desc": "Chemisse confeccionado em algodão premium com listras. Caimento impecável e frescor ideal para dias ensolarados."
     },
     {
         "id": 7,
@@ -185,19 +192,20 @@ const products = [
             "images/Chemisse Wave Voil Viscosa 4.jpeg",
             "images/Chemisse Wave Voil Viscosa 5.jpeg",
             "images/Chemisse Viscosa Celeste 100.png",
-            "images/Chemisse Viscosa Celeste 200.png"
+            "images/Chemisse Viscosa Celeste 200.png",
+            "images/Chemisse Wave Azul Viscosa Stoneado.png"
         ],
         "category": "Camisas",
         "badge": "Novo",
         "colors": [
             { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse Wave Voil Viscosa 1.jpeg" },
             { "name": "Azul Mediterrâneo", "hex": "#4A81B8", "image": "images/Chemisse de Voil Azul Stone 111.png" },
-            { "name": "Celeste Stoneado", "hex": "#87CEEB", "image": "images/Chemisse Viscosa Celeste 100.png" }
+            { "name": "Celeste Stoneado", "hex": "#87CEEB", "image": "images/Chemisse Viscosa Celeste 100.png" },
+            { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Chemisse Wave Azul Viscosa Stoneado.png" }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Chemisse Wave em voil de viscose. Peça elegante, leve e fluida, perfeita para compor looks de verão com sofisticação."
     },
-
     {
         "id": 3,
         "name": "Calca Summer",
@@ -263,6 +271,28 @@ const products = [
         "desc": "Macacão longo perfeito para dias ensolarados à beira-mar. Caimento solto e elegante que acompanha o movimento do corpo, acompanhado de cinto. Disponível em linho e voil de viscosa."
     },
     {
+        "id": 20,
+        "name": "Macacao Dulu Viscosa",
+        "price": "R$ 380,00",
+        "priceNum": 380,
+        "image": "images/Macacao Dulu Chocolate 106.png",
+        "images": [
+            "images/Macacao Dulu Chocolate 106.png",
+            "images/Macacao Dulu Chocolate 100.png",
+            "images/Macacao Dulu Chocolate 102.png",
+            "images/Macacao Dulu Chocolate 103.png",
+            "images/Macacao Dulu Chocolate 104.png",
+            "images/Macacao Dulu Chocolate 105.png"
+        ],
+        "category": "Macacões",
+        "badge": "Novo",
+        "colors": [
+            { "name": "Marrom Chocolate", "hex": "#3E2723", "image": "images/Macacao Dulu Chocolate 106.png" }
+        ],
+        "sizes": ["Tamanho Único"],
+        "desc": "Macacão de voil de viscose com acabamento Stone Wash e elástico no busto. Conforto e estilo em uma peça única."
+    },
+    {
         "id": 2,
         "name": "Saia Mahalo",
         "price": "R$ 350,00",
@@ -273,6 +303,8 @@ const products = [
             "images/Saia Mahalo 111.png",
             "images/Saia Mahalo 113.png",
             "images/Saia Mahalo 114.png",
+            "images/Saia Mahalo Verde Manzana 1.png",
+            "images/Saia Mahalo Verde Manzana 2.png",
             "images/Saia Mahalo Rosa Viejo Voil de Viscosa 1.jpg",
             "images/Saia Mahalo Rosa Viejo Voil de Viscosa 2.jpg",
             "images/Saia Mahalo Bege 1.jpg",
@@ -285,7 +317,7 @@ const products = [
         ],
         "category": "Saias",
         "colors": [
-            { "name": "Verde Maçã", "hex": "#8DB600", "image": "images/Saia Mahalo 112.png" },
+            { "name": "Verde Maçã", "hex": "#8DB600", "image": "images/Saia Mahalo Verde Manzana 1.png" },
             { "name": "Rosa Velho", "hex": "#D6899E", "image": "images/Saia Mahalo Rosa Viejo Voil de Viscosa 1.jpg" },
             { "name": "Bege", "hex": "#D5C4B3", "image": "images/Saia Mahalo Bege 1.jpg" },
             { "name": "Cinza", "hex": "#D3D3D3", "image": "images/Saia Mahalo Cinza 1.jpg" },
@@ -314,6 +346,32 @@ const products = [
         ],
         "sizes": ["M"],
         "desc": "Camisa elegante em voil de viscosa com babados esvoaçantes nas mangas. Possui botões de madrepérola. Às vezes é feita de linho ou de algodão."
+    },
+    {
+        "id": 21,
+        "name": "Camisa Pontas",
+        "price": "R$ 340,00",
+        "priceNum": 340,
+        "image": "images/Camisa Pontas bege Stoneada 1004.png",
+        "images": [
+            "images/Camisa Pontas bege Stoneada 1004.png",
+            "images/Camisa Pontas bege Stoneada 1005.png",
+            "images/Camisa Pontas Azul Stoneado 1000.png",
+            "images/Camisa Pontas Azul Stoneado 1001.png",
+            "images/Camisa Pontas Azul Jean 1002.png",
+            "images/Camisa Pontas Azul Jean 1003.png"
+        ],
+        "category": "Camisas",
+        "badge": "Novo",
+        "colors": [
+            { "name": "Bege Stoneada", "hex": "#D5C4B3", "image": "images/Camisa Pontas bege Stoneada 1004.png" },
+            { "name": "Marrom Chocolate Stoneado", "hex": "#3E2723", "image": "images/Camisa Pontas bege Stoneada 1004.png" },
+            { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Camisa Pontas Azul Stoneado 1000.png" },
+            { "name": "Azul Jeans", "hex": "#5D76A9", "image": "images/Camisa Pontas Azul Jean 1002.png" },
+            { "name": "Verde Maçã Stoneado", "hex": "#8DB600", "image": "images/Camisa Pontas bege Stoneada 1004.png" }
+        ],
+        "sizes": ["Tamanho Único"],
+        "desc": "Camisa solta com botões de madrepérola e tecidos leves. Elegância e frescor."
     },
     {
         "id": 6,
