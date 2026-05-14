@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido — SURDEASIA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .result-page {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--off-white);
+            padding: 24px;
+        }
+        .result-card {
+            max-width: 520px;
+            width: 100%;
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 60px 40px;
+            text-align: center;
+            border: 1px solid #EDF2F7;
+            box-shadow: var(--shadow-md);
+        }
+        .result-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 28px;
+            animation: pop 0.5s cubic-bezier(.22,1,.36,1);
+        }
+        @keyframes pop {
+            0% { transform: scale(0); }
+            60% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+        .result-icon.success { background: #C6F6D5; color: #276749; }
+        .result-icon.pending { background: #FEFCBF; color: #975A16; }
+        .result-icon.error { background: #FED7D7; color: #9B2C2C; }
+        .result-icon svg { width: 36px; height: 36px; }
+
+        .result-card h1 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+        .result-card p {
+            color: var(--text-mid);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 8px;
+        }
+        .result-card .sub {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 16px;
+        }
+        .result-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 32px;
+        }
+        .result-actions .btn {
+            justify-content: center;
+        }
+        .btn-result {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            transition: all 0.35s;
+            text-decoration: none;
+            border: none;
+            font-family: var(--font-sans);
+        }
+        .btn-result-primary {
+            background: var(--blue-med);
+            color: var(--white);
+        }
+        .btn-result-primary:hover {
+            background: var(--blue-deep);
+            transform: translateY(-2px);
+        }
+        .btn-result-whatsapp {
+            background: #25D366;
+            color: var(--white);
+        }
+        .btn-result-whatsapp:hover {
+            background: #20BD5A;
+            transform: translateY(-2px);
+        }
+        .btn-result-outline {
+            background: transparent;
+            color: var(--text-mid);
+            border: 1.5px solid #E2E8F0;
+        }
+        .btn-result-outline:hover {
+            border-color: var(--blue-med);
+            color: var(--blue-med);
+        }
+        .brand-logo {
+            margin-bottom: 32px;
+        }
+        .brand-logo img {
+            height: 36px;
+            width: auto;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="result-page">
+        <div class="result-card" id="result-card">
+            <div class="brand-logo">
+                <img src="images/logo-transparent.png" alt="SURDEASIA">
+            </div>
+            <!-- Content injected by JS -->
+        </div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const status = params.get('status');
+        const card = document.getElementById('result-card');
+
+        // Clear cart on success
+        if (status === 'approved') {
+            localStorage.removeItem('surdeasia_cart');
+        }
+
+        const content = {
+            approved: `
+                <div class="result-icon success">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                </div>
+                <h1>Pagamento Aprovado! 🎉</h1>
+                <p>Seu pedido foi confirmado com sucesso.</p>
+                <p>Entraremos em contato pelo WhatsApp para confirmar os detalhes da entrega e envio.</p>
+                <p class="sub">Obrigado por escolher a SURDEASIA!</p>
+                <div class="result-actions">
+                    <a href="/" class="btn-result btn-result-primary">Voltar à Loja</a>
+                    <a href="https://wa.me/5521972100797?text=Olá!%20Acabei%20de%20fazer%20um%20pedido%20no%20site%20e%20quero%20confirmar%20os%20detalhes." class="btn-result btn-result-whatsapp" target="_blank">
+                        Confirmar entrega pelo WhatsApp
+                    </a>
+                </div>
+            `,
+            pending: `
+                <div class="result-icon pending">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                </div>
+                <h1>Pagamento Pendente</h1>
+                <p>Seu pagamento está sendo processado. Você receberá uma confirmação assim que for aprovado.</p>
+                <p class="sub">Se você pagou com boleto, aguarde até 2 dias úteis para a confirmação.</p>
+                <div class="result-actions">
+                    <a href="/" class="btn-result btn-result-primary">Voltar à Loja</a>
+                    <a href="https://wa.me/5521972100797?text=Olá!%20Fiz%20um%20pedido%20e%20meu%20pagamento%20está%20pendente.%20Podem%20me%20ajudar?" class="btn-result btn-result-outline" target="_blank">
+                        Falar com a gente
+                    </a>
+                </div>
+            `,
+            rejected: `
+                <div class="result-icon error">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </div>
+                <h1>Pagamento não aprovado</h1>
+                <p>Infelizmente seu pagamento não foi processado. Isso pode acontecer por dados incorretos ou limite insuficiente.</p>
+                <p class="sub">Tente novamente ou entre em contato conosco.</p>
+                <div class="result-actions">
+                    <a href="/checkout" class="btn-result btn-result-primary">Tentar Novamente</a>
+                    <a href="https://wa.me/5521972100797?text=Olá!%20Tive%20um%20problema%20no%20pagamento%20e%20preciso%20de%20ajuda." class="btn-result btn-result-whatsapp" target="_blank">
+                        Pedir ajuda pelo WhatsApp
+                    </a>
+                    <a href="/" class="btn-result btn-result-outline">Voltar à Loja</a>
+                </div>
+            `
+        };
+
+        // Add brand logo back and inject content
+        const logo = card.querySelector('.brand-logo').outerHTML;
+        card.innerHTML = logo + (content[status] || content.rejected);
+    </script>
+</body>
+</html>

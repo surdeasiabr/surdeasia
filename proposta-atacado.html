@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial — SURDEASIA</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --blue-med: #1f3b4d;
+            --blue-light: #e5edf1;
+            --white: #ffffff;
+            --gray-light: #f9f9f9;
+            --text-dark: #222222;
+            --text-med: #555555;
+            
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Outfit', sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--white);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── PDF-like Page Structure ── */
+        .page {
+            min-height: 100vh;
+            width: 100vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8vh 5vw;
+            position: relative;
+        }
+
+        .page-content {
+            max-width: 1200px;
+            width: 100%;
+            display: flex;
+            gap: 10vw;
+            align-items: center;
+        }
+
+        .page-content.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .page-content.center {
+            flex-direction: column;
+            text-align: center;
+            justify-content: center;
+        }
+
+        /* ── Typography ── */
+        h1, h2, h3 {
+            font-family: var(--font-serif);
+            color: var(--blue-med);
+            font-weight: 400;
+        }
+
+        .title-huge {
+            font-size: clamp(3rem, 6vw, 6rem);
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .title-section {
+            font-size: clamp(2.5rem, 4vw, 4rem);
+            line-height: 1.2;
+            margin-bottom: 2rem;
+        }
+
+        .subtitle {
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--blue-med);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            display: block;
+        }
+
+        p {
+            font-size: clamp(1rem, 1.2vw, 1.2rem);
+            color: var(--text-med);
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            max-width: 500px;
+        }
+
+        .center p {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ── Images ── */
+        .visual {
+            flex: 1;
+            position: relative;
+        }
+
+        .text {
+            flex: 1;
+        }
+
+        .img-wrapper {
+            width: 100%;
+            height: 70vh;
+            overflow: hidden;
+            border-radius: 2px;
+            box-shadow: 0 20px 50px rgba(31, 59, 77, 0.1);
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* ── Lists ── */
+        ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        ul li {
+            font-size: 1.1rem;
+            color: var(--text-med);
+            font-weight: 300;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        ul li::before {
+            content: "•";
+            color: var(--blue-med);
+            margin-right: 15px;
+            font-size: 1.5rem;
+            line-height: 1;
+        }
+
+        /* ── Emphasized Data ── */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+            text-align: left;
+        }
+
+        .data-item {
+            border-left: 1px solid var(--blue-light);
+            padding-left: 1.5rem;
+        }
+
+        .data-label {
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-med);
+            margin-bottom: 0.5rem;
+        }
+
+        .data-value {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            color: var(--blue-med);
+        }
+
+        /* ── Download Button ── */
+        .btn-print {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--blue-med);
+            color: var(--white);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(31, 59, 77, 0.2);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .btn-print:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(31, 59, 77, 0.3);
+        }
+
+        @media print {
+            .btn-print { display: none; }
+            .page { 
+                min-height: 100vh;
+                page-break-after: always;
+                padding: 0;
+                align-items: center;
+                justify-content: center;
+            }
+            .img-wrapper { box-shadow: none; height: 80vh; }
+        }
+
+        @media (max-width: 900px) {
+            .page-content, .page-content.reverse {
+                flex-direction: column;
+                gap: 3rem;
+            }
+            .img-wrapper {
+                height: 50vh;
+            }
+            .page {
+                padding: 10vh 5vw;
+                min-height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <button class="btn-print" onclick="window.print()">Salvar como PDF</button>
+
+    <!-- CAPA -->
+    <section class="page" style="background-color: var(--blue-med); color: var(--white);">
+        <div class="page-content center">
+            <img src="images/logo-white.png" alt="SURDEASIA" style="width: 250px; height: auto; margin: 0 auto 4rem; object-fit: contain;">
+            <span class="subtitle" style="color: var(--blue-light);">Proposta Comercial</span>
+            <h1 class="title-huge" style="color: var(--white);">A Essência<br>do Mediterrâneo</h1>
+            <p style="color: rgba(255,255,255,0.8); max-width: 600px; font-size: 1.2rem;">Sardegna → Bali → Praias do Mundo → Brasil</p>
+        </div>
+    </section>
+
+    <!-- INTRO -->
+    <section class="page">
+        <div class="page-content">
+            <div class="text">
+                <span class="subtitle">Introdução</span>
+                <h2 class="title-section">Prazer,<br>SURDEASIA.</h2>
+                <p>Nascemos através das viagens, das praias e da busca constante por estética, qualidade e lifestyle ao redor do mundo.</p>
+                <p>Nossa história passou por Itália, Argentina, Uruguai, Indonésia e Bali. Desenvolvemos coleções escolhendo tecidos naturais e criando peças inspiradas nas praias mais exclusivas do mundo.</p>
+                <p>Hoje, iniciamos um novo movimento de expansão no Brasil, apresentando uma marca com essência internacional e estética sofisticada.</p>
+            </div>
+            <div class="visual">
+                <div class="img-wrapper">
+                    <img src="images/Vestido aloha Sombrilla.png" alt="SURDEASIA Essência">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESSÊNCIA -->
+    <section class="page">
+        <div class="page-content reverse">
+            <div class="text">
+                <span class="subtitle">Nossa Essência</span>
+                <h2 class="title-section">Leve,<br>Elegante,<br>Atemporal.</h2>
+                <p>Criamos peças versáteis para mulheres que valorizam:</p>
+                <ul>
+                    <li>Conforto sofisticado</li>
+                    <li>Tecidos naturais (Linho, Voal)</li>
+                    <li>Exclusividade</li>
+                    <li>Elegância descomplicada</li>
+                    <li>Lifestyle resort internacional</li>
+                </ul>
+                <p>Nosso olhar esteve sempre focado em produto, qualidade e experiência.</p>
+            </div>
+            <div class="visual">
+                <div class="img-wrapper">
+                    <img src="images/Chemisse Linho Morango 1.jpg" alt="Chemise Linho">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PARCERIAS -->
+    <section class="page" style="background-color: var(--gray-light);">
+        <div class="page-content center">
+            <span class="subtitle">Visão Estratégica</span>
+            <h2 class="title-section">Parcerias<br>Comerciais</h2>
+            <p style="max-width: 700px;">Buscamos construir pontos de experiência SURDEASIA em locais alinhados ao universo premium da marca.</p>
+            
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center; margin-top: 3rem; max-width: 900px;">
+                <div style="background: var(--white); padding: 3rem; flex: 1; min-width: 250px;">
+                    <h3 style="font-family: var(--font-sans); font-size: 1.1rem; margin-bottom: 1rem; color: var(--blue-med); text-transform: uppercase; letter-spacing: 0.1em;">Hotel & Resort</h3>
+                    <p style="font-size: 0.95rem; margin:0;">Foco: experiência, hóspedes, pool area e exclusividade através do <em>Projeto Araras</em>.</p>
+                </div>
+                <div style="background: var(--white); padding: 3rem; flex: 1; min-width: 250px;">
+                    <h3 style="font-family: var(--font-sans); font-size: 1.1rem; margin-bottom: 1rem; color: var(--blue-med); text-transform: uppercase; letter-spacing: 0.1em;">Multimarcas</h3>
+                    <p style="font-size: 0.95rem; margin:0;">Foco: giro rápido, alta margem, branding, ticket médio atrativo e lifestyle aspiracional.</p>
+                </div>
+                <div style="background: var(--white); padding: 3rem; flex: 1; min-width: 250px;">
+                    <h3 style="font-family: var(--font-sans); font-size: 1.1rem; margin-bottom: 1rem; color: var(--blue-med); text-transform: uppercase; letter-spacing: 0.1em;">Beach Sellers</h3>
+                    <p style="font-size: 0.95rem; margin:0;">Foco: alta margem, peças desejo, facilidade extrema de venda e reposição constante.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INFORMAÇÕES COMERCIAIS -->
+    <section class="page">
+        <div class="page-content">
+            <div class="text">
+                <span class="subtitle">Modelo de Negócio</span>
+                <h2 class="title-section">Informações<br>Comerciais</h2>
+                
+                <div class="data-grid">
+                    <div class="data-item">
+                        <div class="data-label">Ticket Médio (Varejo)</div>
+                        <div class="data-value">R$ 350 - 450</div>
+                    </div>
+                    <div class="data-item">
+                        <div class="data-label">Pedido Mínimo</div>
+                        <div class="data-value">30 peças</div>
+                    </div>
+                </div>
+
+                <ul style="margin-top: 3rem;">
+                    <li>Condições especiais mediante volume</li>
+                    <li>Possibilidade de exclusividade regional</li>
+                    <li>Reposição ágil conforme estoque</li>
+                    <li>Controle rigoroso de qualidade</li>
+                    <li>Troca garantida por defeito de fábrica</li>
+                </ul>
+            </div>
+            <div class="visual">
+                <div class="img-wrapper">
+                    <img src="images/Calca Wave Summer.png" alt="Lifestyle SURDEASIA">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FECHAMENTO -->
+    <section class="page" style="background-color: var(--blue-med); color: var(--white);">
+        <div class="page-content center">
+            <img src="images/logo-white.png" alt="SURDEASIA" style="width: 150px; height: auto; margin: 0 auto 3rem; object-fit: contain;">
+            <h2 class="title-huge" style="color: var(--white); font-size: 3rem; max-width: 800px; margin-bottom: 4rem;">
+                "Moda resort sofisticada, autêntica e conectada ao lifestyle das praias mais desejadas do mundo."
+            </h2>
+            
+            <div style="text-align: left; max-width: 400px; margin: 0 auto;">
+                <p style="color: rgba(255,255,255,0.7); margin-bottom: 0.5rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em;">Vamos conversar?</p>
+                <p style="color: var(--white); margin-bottom: 0.2rem; font-size: 1.2rem;">Tomás Pagliere</p>
+                <p style="color: rgba(255,255,255,0.8); margin-bottom: 0.2rem; font-family: var(--font-sans);">tomas@surdeasiabr.com</p>
+                <p style="color: rgba(255,255,255,0.8); margin-bottom: 0.2rem; font-family: var(--font-sans);">WhatsApp: +55 21 97210-0797</p>
+                <p style="color: rgba(255,255,255,0.8); font-family: var(--font-sans);">Instagram: @surdeasiabrasil</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

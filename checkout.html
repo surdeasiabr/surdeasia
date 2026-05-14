@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SURDEASIA — Finalizar compra. Pagamento seguro via Mercado Pago.">
+    <title>Checkout — SURDEASIA</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="main-nav" class="nav scrolled">
+        <div class="nav-inner">
+            <a href="/" class="nav-logo">
+                <img src="images/logo-transparent.png" alt="SURDEASIA" class="logo-img">
+            </a>
+            <div class="checkout-steps" id="checkout-steps">
+                <div class="step active" data-step="1">
+                    <span class="step-num">1</span>
+                    <span class="step-label">Seus Dados</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="2">
+                    <span class="step-num">2</span>
+                    <span class="step-label">Pagamento</span>
+                </div>
+            </div>
+            <a href="/" class="checkout-back-link">← Voltar à loja</a>
+        </div>
+    </nav>
+
+    <main class="checkout-main">
+        <div class="checkout-container">
+
+            <!-- ========== LEFT: FORM ========== -->
+            <div class="checkout-form-col">
+
+                <!-- STEP 1: Customer Info + Address -->
+                <div class="checkout-step" id="step-1" style="display: block;">
+                    <div class="checkout-section">
+                        <h2 class="checkout-section-title">Dados Pessoais</h2>
+                        <div class="form-grid">
+                            <div class="form-group full">
+                                <label for="customer-name">Nome completo</label>
+                                <input type="text" id="customer-name" placeholder="Seu nome completo" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-email">E-mail</label>
+                                <input type="email" id="customer-email" placeholder="seu@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-phone">Telefone / WhatsApp</label>
+                                <input type="tel" id="customer-phone" placeholder="(21) 99999-9999" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="customer-cpf">CPF</label>
+                                <input type="text" id="customer-cpf" placeholder="000.000.000-00" required maxlength="14">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checkout-section">
+                        <h2 class="checkout-section-title">Endereço de Entrega</h2>
+                        <div class="form-grid">
+                            <div class="form-group cep-group">
+                                <label for="address-cep">CEP</label>
+                                <input type="text" id="address-cep" placeholder="00000-000" maxlength="9" required>
+                                <span class="cep-loader" id="cep-loader" style="display:none;">
+                                    <svg class="spinner" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="30 70"/></svg>
+                                </span>
+                            </div>
+                            <div class="form-group full">
+                                <label for="address-street">Rua / Avenida</label>
+                                <input type="text" id="address-street" placeholder="Nome da rua" required>
+                            </div>
+                            <div class="form-group small">
+                                <label for="address-number">Número</label>
+                                <input type="text" id="address-number" placeholder="123" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="address-complement">Complemento</label>
+                                <input type="text" id="address-complement" placeholder="Apto, bloco (opcional)">
+                            </div>
+                            <div class="form-group">
+                                <label for="address-neighborhood">Bairro</label>
+                                <input type="text" id="address-neighborhood" placeholder="Bairro" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="address-city">Cidade</label>
+                                <input type="text" id="address-city" placeholder="Cidade" required>
+                            </div>
+                            <div class="form-group small">
+                                <label for="address-state">UF</label>
+                                <input type="text" id="address-state" placeholder="RJ" maxlength="2" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Shipping Options (appears after CEP is entered) -->
+                    <div class="checkout-section" id="shipping-options" style="display: none;">
+                        <h2 class="checkout-section-title">Frete — Correios</h2>
+                        <p style="font-size: 0.85rem; color: #666; margin-bottom: 15px; line-height: 1.4;">
+                            * Observação: Os envios são realizados todas as <strong>segundas-feiras</strong> e <strong>sextas-feiras</strong>, exceto em feriados ou por impossibilidade técnica.
+                        </p>
+                        <div class="shipping-loading" id="shipping-loading" style="display: none;">
+                            <svg class="spinner" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="30 70"/></svg>
+                            <span>Calculando frete...</span>
+                        </div>
+                        <div id="shipping-results">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <button class="btn btn-checkout-pay" id="btn-pay" onclick="processCheckout()">
+                        <svg class="btn-spinner" id="pay-spinner" style="display:none;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="30 70"/></svg>
+                        <span id="pay-btn-text">Ir para Pagamento Seguro</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="btn-arrow"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </button>
+
+                    <div class="payment-info-bar">
+                        <div class="payment-info-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                            <span>Pagamento 100% seguro</span>
+                        </div>
+                        <div class="payment-info-item">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="20" height="20"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                            <span>Crédito, débito, PIX e boleto</span>
+                        </div>
+                        <div class="payment-info-item">
+                            <img src="https://http2.mlstatic.com/frontend-assets/mp-web-navigation/ui-navigation/6.6.92/mercadopago/logo__large@2x.png" alt="Mercado Pago" style="height: 20px; width: auto; opacity: 0.7;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ========== RIGHT: ORDER SUMMARY ========== -->
+            <aside class="checkout-summary" id="checkout-summary">
+                <div class="summary-sticky">
+                    <h3 class="summary-title">Resumo do Pedido</h3>
+                    <div class="summary-items" id="summary-items">
+                        <!-- populated by JS -->
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="summary-subtotal">R$ 0,00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Frete</span>
+                        <span id="summary-shipping" class="shipping-tbd">A combinar</span>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <strong id="summary-total">R$ 0,00</strong>
+                    </div>
+                    <div class="summary-secure">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="16" height="16"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+                        <span>Pagamento processado pelo Mercado Pago</span>
+                    </div>
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-top: 0;">
+        <div class="container">
+            <div class="footer-bottom" style="border-top: none; padding-top: 0;">
+                <p>&copy; 2026 SURDEASIA. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="checkout.js"></script>
+</body>
+</html>

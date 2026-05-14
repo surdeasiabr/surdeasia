@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SURDEASIA — Moda praia premium inspirada no Mediterrâneo. Tecidos naturais, elegância e liberdade para viver o verão.">
+    <meta name="keywords" content="moda praia, beachwear, linho, Mediterrâneo, Sardenha, SURDEASIA, resort wear">
+    <title>SURDEASIA — Moda Praia Premium</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cart.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav id="main-nav" class="nav">
+        <div class="nav-inner">
+            <a href="#hero" class="nav-logo">
+                <img src="images/logo-white.png" alt="SURDEASIA" class="logo-img logo-nav-white">
+                <img src="images/logo-transparent.png" alt="SURDEASIA" class="logo-img logo-nav-dark">
+            </a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#colecao">Coleção</a></li>
+                <li><a href="#experiencia">Experiência</a></li>
+                <li><a href="#historia">Nossa História</a></li>
+                <li><a href="#materiais">Materiais</a></li>
+                <li><a href="projeto-araras.html" class="nav-araras-link">Projeto Araras</a></li>
+                <li><a href="atacado.html" class="nav-araras-link">Atacado</a></li>
+                <li><a href="#contato">Contato</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ==================== HERO ==================== -->
+    <section id="hero" class="hero">
+        <div class="hero-bg">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=2000" alt="SURDEASIA Premium Beach" class="hero-bg-img">
+            <div class="hero-overlay"></div>
+        </div>
+        <div class="hero-content fade-in">
+            <div class="hero-logo-mark">
+                <img src="images/logo-white.png" alt="SURDEASIA" class="hero-logo-img">
+            </div>
+            <p class="hero-tagline">Uma experiência de vida leve, livre e cheia de magia.</p>
+            <div class="hero-buttons">
+                <a href="#colecao" class="btn btn-primary" id="btn-ver-colecao">Ver Coleção</a>
+                <a href="https://wa.me/5521972100797?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20a%20SURDEASIA" class="btn btn-outline" id="btn-whatsapp-hero" target="_blank" rel="noopener">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Comprar pelo WhatsApp
+                </a>
+            </div>
+        </div>
+        <a href="#intro" class="hero-scroll" id="hero-scroll-indicator">
+            <span>Descubra</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+        </a>
+    </section>
+
+    <!-- ==================== INTRO ==================== -->
+    <section id="intro" class="section section-intro">
+        <div class="container">
+            <div class="intro-content reveal">
+                <span class="section-label">Bem-vinda ao nosso mundo</span>
+                <p class="intro-text">
+                    <span class="highlight">SURDEASIA</span> é um estilo fresco que nasce nas praias da Sardenha, inspirado pelas cores do Mediterrâneo e pensado para te conectar com uma vida mais leve, natural e cheia de beleza.
+                </p>
+                <div class="intro-divider"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== COLEÇÃO / PRODUTOS ==================== -->
+    <section id="colecao" class="section section-products">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">Coleção Verão</span>
+                <h2 class="section-title">Peças que contam histórias</h2>
+                <p class="section-subtitle">Cada peça nasce da nossa paixão pelo mar e pelos tecidos naturais.</p>
+            </div>
+
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be injected by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== EXPERIÊNCIA DA COLEÇÃO ==================== -->
+    <section id="experiencia" class="section section-experience">
+        <div class="experience-gallery">
+            <div class="experience-image parallax-container reveal">
+                <img src="images/Calca Wave Summer.png" alt="Lifestyle SURDEASIA na praia" loading="lazy">
+            </div>
+            <div class="experience-text reveal">
+                <span class="section-label">A Experiência</span>
+                <h2 class="section-title">Mais que roupas,<br>criamos sensações.</h2>
+                <p>Cada peça acompanha o movimento do corpo, do vento e do mar. Sentir o linho na pele, caminhar descalça pela areia, deixar o vento levar — isso é SURDEASIA.</p>
+                <a href="#colecao" class="btn btn-text">Explorar a Coleção →</a>
+            </div>
+        </div>
+        <div class="experience-gallery reverse">
+            <div class="experience-image parallax-container reveal">
+                <img src="images/Chemisse Linho Morango 1.jpg" alt="Peça SURDEASIA ao vento" loading="lazy">
+            </div>
+            <div class="experience-text reveal">
+                <span class="section-label">Nosso Toque</span>
+                <h2 class="section-title">Liberdade em<br>cada detalhe.</h2>
+                <p>Desenhamos para quem valoriza a simplicidade com personalidade. O luxo mora no essencial — no tecido que respira, na cor que acalma, na forma que liberta.</p>
+            </div>
+        </div>
+        <div class="experience-gallery">
+            <div class="experience-image parallax-container reveal" style="aspect-ratio: auto; box-shadow: none;">
+                <img src="images/imagen aislada 1.jpeg" alt="Inspiração SURDEASIA" loading="lazy" style="object-fit: contain; width: 100%; height: auto; border-radius: 20px;">
+            </div>
+            <div class="experience-text reveal">
+                <span class="section-label">A Essência</span>
+                <h2 class="section-title">Paz, harmonia<br>e amor.</h2>
+                <p>Respire a calma do oceano e vista a leveza da natureza. Nossas peças são um convite para você se conectar com o momento presente e celebrar a beleza de ser livre.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== NOSSA HISTÓRIA ==================== -->
+    <section id="historia" class="section section-story">
+        <div class="container">
+            <div class="story-wrapper reveal">
+                <div class="story-visual">
+                    <div class="story-image-stack">
+                        <img src="images/Vestido aloha Sombrilla.png" alt="SURDEASIA na Sardenha" loading="lazy" class="story-img">
+                        <div class="story-accent"></div>
+                    </div>
+                </div>
+                <div class="story-content">
+                    <span class="section-label">Nossa História</span>
+                    <h2 class="section-title">Da Sardenha<br>para o mundo.</h2>
+                    <p>Somos cinco irmãos que começaram vendendo roupas na praia. Ao longo do tempo, fomos conhecendo diferentes culturas e os lugares mais incríveis do mundo.</p>
+                    <p>Tudo começou na Itália, na ilha da Sardenha, e hoje seguimos levando nossa essência para as praias mais bonitas do mundo.</p>
+                    <div class="story-stats">
+                        <div class="stat">
+                            <span class="stat-number" data-count="5">0</span>
+                            <span class="stat-label">Irmãos</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-count="12">0</span>
+                            <span class="stat-label">Países</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number" data-count="1">0</span>
+                            <span class="stat-label">Paixão</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== MATERIAIS E FILOSOFIA ==================== -->
+    <section id="materiais" class="section section-materials">
+        <div class="container">
+            <div class="materials-wrapper reveal">
+                <div class="materials-content">
+                    <span class="section-label">Materiais & Filosofia</span>
+                    <h2 class="section-title">Tecidos que respiram,<br>assim como você.</h2>
+                    <p>Trabalhamos com tecidos naturais como linho e voal de viscose, buscando leveza, conforto e conexão com a natureza.</p>
+                    <div class="materials-tags">
+                        <span class="tag">Linho Natural</span>
+                        <span class="tag">Voal de Viscose</span>
+                        <span class="tag">Algodão Orgânico</span>
+                        <span class="tag">Tingimento Natural</span>
+                    </div>
+                </div>
+                <div class="materials-visual">
+                    <div class="material-card">
+                        <div class="material-swatch swatch-linen"></div>
+                        <span>Linho</span>
+                    </div>
+                    <div class="material-card">
+                        <div class="material-swatch swatch-voile"></div>
+                        <span>Voal</span>
+                    </div>
+                    <div class="material-card">
+                        <div class="material-swatch swatch-cotton"></div>
+                        <span>Algodão</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== INSTAGRAM ==================== -->
+    <section id="instagram" class="section section-instagram">
+        <div class="container">
+            <div class="section-header reveal">
+                <span class="section-label">@SURDEASIABRASIL</span>
+                <h2 class="section-title">Siga nossa jornada</h2>
+            </div>
+            <div class="insta-grid reveal">
+                <div class="insta-item"><img src="images/Chemisse algodao listra ancha azul 1.jpg" alt="SURDEASIA Instagram" loading="lazy"></div>
+                <div class="insta-item"><img src="images/Chemisse Clasic listra bordo 1.jpg" alt="SURDEASIA Instagram" loading="lazy"></div>
+                <div class="insta-item"><img src="images/Saia Mahalo Cinza 1.jpg" alt="SURDEASIA Instagram" loading="lazy"></div>
+                <div class="insta-item"><img src="images/blusa aloha 7.jpeg" alt="SURDEASIA Instagram" loading="lazy"></div>
+                <div class="insta-item"><img src="images/Chemisse Linho Morango 2.jpg" alt="SURDEASIA Instagram" loading="lazy"></div>
+                <div class="insta-item"><img src="images/Chemisse Wave Listrado Linho Azul 3.jpeg" alt="SURDEASIA Instagram" loading="lazy"></div>
+            </div>
+            <div class="insta-cta reveal">
+                <a href="https://instagram.com/surdeasiabrasil" class="btn btn-primary" id="btn-instagram" target="_blank" rel="noopener">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    Seguir no Instagram
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== CONTATO ==================== -->
+    <section id="contato" class="section section-contact">
+        <div class="container">
+            <div class="contact-wrapper reveal">
+                <span class="section-label">Contato</span>
+                <h2 class="section-title">Fale com a gente e viva<br>a experiência SURDEASIA.</h2>
+                <p>Estamos prontos para te ajudar a encontrar a peça perfeita.</p>
+                <a href="https://wa.me/5521972100797?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20a%20SURDEASIA" class="btn btn-whatsapp btn-lg" id="btn-whatsapp-contact" target="_blank" rel="noopener">
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Conversar no WhatsApp
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-brand">
+                    <span class="footer-logo">
+                        <img src="images/logo-white.png" alt="SURDEASIA" class="footer-logo-img">
+                    </span>
+                    <p>Moda praia premium inspirada<br>no Mediterrâneo.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Navegação</h4>
+                    <a href="#colecao">Coleção</a>
+                    <a href="#experiencia">Experiência</a>
+                    <a href="#historia">Nossa História</a>
+                    <a href="#materiais">Materiais</a>
+                </div>
+                <div class="footer-links">
+                    <h4>Redes</h4>
+                    <a href="https://instagram.com/surdeasiabrasil" target="_blank" rel="noopener">Instagram</a>
+                    <a href="https://wa.me/5521972100797" target="_blank" rel="noopener">WhatsApp</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 SURDEASIA. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==================== WHATSAPP FLOATING BUTTON ==================== -->
+    <a href="https://wa.me/5521972100797?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20a%20SURDEASIA" class="whatsapp-float" id="whatsapp-float" target="_blank" rel="noopener" aria-label="Conversar no WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+
+    <!-- ==================== PRODUCT DETAIL MODAL ==================== -->
+    <div class="modal-overlay" id="product-modal">
+        <div class="modal">
+            <button class="modal-close" id="modal-close" aria-label="Fechar">&times;</button>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img src="" alt="" id="modal-img">
+                    <div class="modal-thumbnails" id="modal-thumbnails" style="display: flex; gap: 8px; margin-top: 10px; overflow-x: auto; padding-bottom: 5px;"></div>
+                </div>
+                <div class="modal-info">
+                    <span class="section-label" id="modal-category"></span>
+                    <h2 id="modal-name"></h2>
+                    <p class="modal-price" id="modal-price"></p>
+                    <p class="modal-desc" id="modal-desc"></p>
+                    <div class="modal-options">
+                        <div class="option-group">
+                            <label>Cor</label>
+                            <div class="color-options" id="modal-colors"></div>
+                        </div>
+                        <div class="option-group">
+                            <label>Tamanho</label>
+                            <div class="size-options" id="modal-sizes"></div>
+                        </div>
+                    </div>
+                    <button class="btn btn-full btn-add-to-cart" id="modal-add-cart" onclick="addToCartFromModal()" style="display:flex; align-items:center; justify-content:center; gap:10px; width:100%; padding:16px 24px; background:var(--blue-med); color:#fff; border:none; border-radius:50px; font-size:.88rem; font-weight:500; letter-spacing:.04em; cursor:pointer; transition:all .35s; margin-bottom:10px; font-family:var(--font-sans);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:18px;height:18px;"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                        Adicionar ao Carrinho
+                    </button>
+                    <a href="#" class="btn btn-whatsapp btn-full" id="modal-whatsapp" target="_blank" rel="noopener" style="font-size:.82rem; padding:12px 24px;">
+                        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Ou compre pelo WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+</body>
+</html>
