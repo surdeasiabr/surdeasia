@@ -234,17 +234,16 @@ const products = [
         "images": [
             "images/calca dulu 222.png",
             "images/calca dulu 111.png",
-            "images/Chemisse de Linho Listrado Azul 111.png",
-            "images/Chemisse De Linho Listrado Azul 222.png",
-            "images/Chemisse de Voil Azul Stone 111.png",
-            "images/Chemisse Wave Voil Viscosa 4.jpeg",
-            "images/Chemisse Wave Voil Viscosa 5.jpeg"
+            "images/calca dulu 10.jpeg",
+            "images/calca dulu 11.jpeg",
+            "images/calca dulu 12.jpeg",
+            "images/calca dulu 13.jpeg"
         ],
         "category": "Calças",
         "badge": "Novo",
         "colors": [
             { "name": "Azul Marinho", "hex": "#000080", "image": "images/calca dulu 222.png" },
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse de Linho Listrado Azul 111.png" }
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/calca dulu 111.png" }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Calça de linho premium com faixa elástica na cintura. Uma peça que abraça o corpo com leveza, proporcionando total liberdade de movimento e um caimento incrivelmente elegante e despojado."
@@ -352,23 +351,23 @@ const products = [
         "name": "Camisa Pontas",
         "price": "R$ 340,00",
         "priceNum": 340,
-        "image": "images/Camisa Pontas bege Stoneada 1004.png",
+        "image": "images/Camisa Pontas Bege Stoneada 1004.png",
         "images": [
-            "images/Camisa Pontas bege Stoneada 1004.png",
-            "images/Camisa Pontas bege Stoneada 1005.png",
-            "images/Camisa Pontas Azul Stoneado 1000.png",
-            "images/Camisa Pontas Azul Stoneado 1001.png",
+            "images/Camisa Pontas Bege Stoneada 1004.png",
+            "images/Camisa Pontas Bege Stoneada 1005.png",
+            "images/Camisa Pontas Azul Stoneada 1000.png",
+            "images/Camisa Pontas Azul Stoneada 1001.png",
             "images/Camisa Pontas Azul Jean 1002.png",
             "images/Camisa Pontas Azul Jean 1003.png"
         ],
         "category": "Camisas",
         "badge": "Novo",
         "colors": [
-            { "name": "Bege Stoneada", "hex": "#D5C4B3", "image": "images/Camisa Pontas bege Stoneada 1004.png" },
-            { "name": "Marrom Chocolate Stoneado", "hex": "#3E2723", "image": "images/Camisa Pontas bege Stoneada 1004.png" },
-            { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Camisa Pontas Azul Stoneado 1000.png" },
+            { "name": "Bege Stoneada", "hex": "#D5C4B3", "image": "images/Camisa Pontas Bege Stoneada 1004.png" },
+            { "name": "Marrom Chocolate Stoneado", "hex": "#3E2723", "image": "images/Camisa Pontas Bege Stoneada 1004.png" },
+            { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Camisa Pontas Azul Stoneada 1000.png" },
             { "name": "Azul Jeans", "hex": "#5D76A9", "image": "images/Camisa Pontas Azul Jean 1002.png" },
-            { "name": "Verde Maçã Stoneado", "hex": "#8DB600", "image": "images/Camisa Pontas bege Stoneada 1004.png" }
+            { "name": "Verde Maçã Stoneado", "hex": "#8DB600", "image": "images/Camisa Pontas Bege Stoneada 1004.png" }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Camisa solta com botões de madrepérola e tecidos leves. Elegância e frescor."
