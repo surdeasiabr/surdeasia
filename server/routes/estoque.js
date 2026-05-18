@@ -10,13 +10,17 @@ function parseCSV(csvText) {
     // Example: 10, Chemisse Wave, Tamanho Único, Branco, 5
     const data = [];
     for (let i = 1; i < lines.length; i++) {
-        const parts = lines[i].split(',').map(p => p.trim());
+        const separator = lines[i].includes(';') ? ';' : ',';
+        const parts = lines[i].split(separator).map(p => p.trim());
         if (parts.length >= 4) {
+            let stockVal = parseInt(parts[4]);
+            if (isNaN(stockVal)) stockVal = 0;
+            
             data.push({
                 id: parseInt(parts[0]),
                 size: parts[2],
                 color: parts[3],
-                stock: parseInt(parts[4] || 0)
+                stock: stockVal
             });
         }
     }

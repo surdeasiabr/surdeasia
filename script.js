@@ -480,16 +480,21 @@ let currentModalProduct = null;
 let selectedModalSize = null;
 let selectedModalColor = null;
 
+function normalizeStr(s) {
+    if (!s) return '';
+    return String(s).trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
 function checkStock(productId, size, color) {
     if (!useStockSystem) return true;
     const pId = String(productId);
-    const pSize = String(size).trim();
-    const pColor = String(color).trim();
+    const pSize = normalizeStr(size);
+    const pColor = normalizeStr(color);
     
     const item = globalStockData.find(s => 
         String(s.id) === pId && 
-        String(s.size).trim() === pSize && 
-        String(s.color).trim() === pColor
+        normalizeStr(s.size) === pSize && 
+        normalizeStr(s.color) === pColor
     );
     
     if (item) {
@@ -644,6 +649,8 @@ function handleThumbnailClick(imgSrc) {
                         selectedModalColor = matchingColor.name;
                         dots.forEach(d => d.classList.remove('active'));
                         dot.classList.add('active');
+                        // Update stock UI when color changes via thumbnail
+                        updateModalStockUI();
                     }
                 }
             });
