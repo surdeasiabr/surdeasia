@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Estoque - Surdeasia</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #1f3b4d;
+            text-align: center;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #1f3b4d;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .stock-input {
+            width: 60px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .btn:hover {
+            background-color: #218838;
+        }
+        .btn-update {
+            background-color: #007bff;
+        }
+        .btn-update:hover {
+            background-color: #0069d9;
+        }
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #28a745;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            display: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .toast.error {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="toast" id="toast">Sucesso!</div>
+
+    <div class="container">
+        <h1>📦 Controle de Estoque Interno</h1>
+        <p>Aqui você gerencia as quantidades. Elas serão atualizadas automaticamente quando houver vendas no site.</p>
+        
+        <table id="stockTable">
+            <thead>
+                <tr>
+                    <th>ID Produto</th>
+                    <th>Nome</th>
+                    <th>Tamanho</th>
+                    <th>Cor</th>
+                    <th>Estoque</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Populated by JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function showToast(msg, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.className = 'toast' + (isError ? ' error' : '');
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 3000);
+        }
+
+        async function loadStock() {
+            try {
+                const res = await fetch('/api/estoque');
+                const result = await res.json();
+                
+                const tbody = document.querySelector('#stockTable tbody');
+                tbody.innerHTML = '';
+
+                if (result.useStock && result.data) {
+                    result.data.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${item.id}</td>
+                            <td>${item.name || ''}</td>
+                            <td>${item.size}</td>
+                            <td>${item.color}</td>
+                            <td>
+                                <input type="number" min="0" class="stock-input" id="stock-${item.id}-${item.size}-${item.color}" value="${item.stock}">
+                            </td>
+                            <td>
+                                <button class="btn btn-update" onclick="updateStock(${item.id}, '${item.size}', '${item.color}')">Salvar</button>
+                            </td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            } catch (e) {
+                console.error(e);
+                showToast('Erro ao carregar estoque', true);
+            }
+        }
+
+        async function updateStock(productId, size, color) {
+            const inputId = `stock-${productId}-${size}-${color}`;
+            const input = document.getElementById(inputId);
+            const newStock = parseInt(input.value);
+
+            try {
+                const res = await fetch('/api/estoque/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        product_id: productId,
+                        size: size,
+                        color: color,
+                        new_stock: newStock
+                    })
+                });
+
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Estoque atualizado!');
+                } else {
+                    showToast('Erro: ' + data.error, true);
+                }
+            } catch (e) {
+                console.error(e);
+                showToast('Falha na comunicação', true);
+            }
+        }
+
+        // Load on start
+        loadStock();
+    </script>
+</body>
+</html>

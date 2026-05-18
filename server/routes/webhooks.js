@@ -35,6 +35,18 @@ router.post('/mercadopago', async (req, res) => {
                     const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(orderId);
                     if (order) {
                         const items = JSON.parse(order.items);
+                        
+                        // Decrementar o estoque para cada item
+                        const decrementStock = db.prepare('UPDATE stock SET stock = stock - ? WHERE product_id = ? AND size = ? AND color = ?');
+                        for (const item of items) {
+                            try {
+                                decrementStock.run(item.quantity, item.id, item.size, item.color);
+                                console.log(`📦 Estoque atualizado: -${item.quantity} de Produto ${item.id} (${item.color} - ${item.size})`);
+                            } catch (e) {
+                                console.error(`Erro ao diminuir estoque para ${item.id}:`, e);
+                            }
+                        }
+
                         const itemsHtml = items.map(item => `
                             <tr>
                                 <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.name} (${item.color} - ${item.size})</td>

@@ -45,6 +45,59 @@ db.exec(`
     )
 `);
 
+// Create stock table
+db.exec(`
+    CREATE TABLE IF NOT EXISTS stock (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        product_id INTEGER NOT NULL,
+        name TEXT,
+        size TEXT,
+        color TEXT,
+        stock INTEGER DEFAULT 0,
+        UNIQUE(product_id, size, color)
+    )
+`);
+
+// Seed stock table from CSV if it's empty
+const stockCount = db.prepare('SELECT COUNT(*) as count FROM stock').get();
+if (stockCount.count === 0) {
+    const fs = require('fs');
+    const csvPath = path.join(__dirname, '..', 'estoque_inicial.csv');
+    if (fs.existsSync(csvPath)) {
+        console.log('📦 Populando banco de dados com estoque inicial...');
+        const lines = fs.readFileSync(csvPath, 'utf-8').split('\n');
+        const insertStock = db.prepare('INSERT INTO stock (product_id, name, size, color, stock) VALUES (?, ?, ?, ?, ?)');
+        
+        const insertMany = db.transaction((items) => {
+            for (const item of items) {
+                try {
+                    insertStock.run(item.product_id, item.name, item.size, item.color, item.stock);
+                } catch (e) {
+                    // ignore unique constraint
+                }
+            }
+        });
+        
+        const itemsToInsert = [];
+        for (let i = 1; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (!line) continue;
+            const parts = line.split(',');
+            if (parts.length >= 5) {
+                itemsToInsert.push({
+                    product_id: parseInt(parts[0]),
+                    name: parts[1].trim(),
+                    size: parts[2].trim(),
+                    color: parts[3].trim(),
+                    stock: parseInt(parts[4]) || 0
+                });
+            }
+        }
+        insertMany(itemsToInsert);
+        console.log('✅ Banco de dados de estoque populado com sucesso!');
+    }
+}
+
 // Make db accessible to routes
 app.locals.db = db;
 
@@ -64,6 +117,11 @@ app.get('/api/orders', (req, res) => {
 // Serve pages
 app.get('/checkout', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'checkout.html'));
+});
+
+// Admin panel route
+app.get('/admin', (req, res) => {
+    res.sendFile(path.join(__dirname, '..', 'admin.html'));
 });
 
 // Fallback to index.html
