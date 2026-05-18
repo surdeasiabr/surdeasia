@@ -73,12 +73,17 @@ const products = [
             "images/Vestido Mahalo Branco 1011.png",
             "images/Vestido Mahalo Branco 1012.png",
             "images/Vestido Mahalo Branco 1113.png",
-            "images/Vestido Mahalo Branco 1114.png"
+            "images/Vestido Mahalo Branco 1114.png",
+            "images/Vestido Mahalo Azul Stoneado Mediterraneo 1000.png",
+            "images/Vestido Mahalo Azul Stoneado Mediterraneo 1001.png",
+            "images/Vestido Mahalo Azul Stoneado Mediterraneo 1002.png",
+            "images/Vestido Mahalo Azul Stoneado Mediterraneo 1003.png"
         ],
         "category": "Vestidos",
         "badge": "Novo",
         "colors": [
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Vestido Mahalo Branco 1011.png", "indices": [0, 1, 2, 3] }
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Vestido Mahalo Branco 1011.png", "indices": [0, 1, 2, 3] },
+            { "name": "Azul Stoneado Mediterraneo", "hex": "#4A6B8A", "image": "images/Vestido Mahalo Azul Stoneado Mediterraneo 1000.png", "indices": [4, 5, 6, 7] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Vestido feito de linho. Uma peça super romântica e elegante."
@@ -143,13 +148,16 @@ const products = [
             "images/Chemisse Wave Azul Marinho Linho 2001.png",
             "images/Chemisse wave de Linho Listrado Bege 100.png",
             "images/Chemisse de Linho Listrado Azul 111.png",
-            "images/Chemisse de Linho Listrado Azul 333.png"
+            "images/Chemisse de Linho Listrado Azul 333.png",
+            "images/Chemisse Wave Branco de Linho 1122.png",
+            "images/Chemisse Wave Branco de Linho 1133.png",
+            "images/Chemisse Wave Branco de Linho 1144.png"
         ],
         "category": "Camisas",
         "badge": "Novo",
         "colors": [
             { "name": "Azul Listrado", "hex": "#4A81B8", "image": "images/Chemisse De Linho Listrado Azul 222.png", "indices": [0, 4, 8, 9] },
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse Wave de Linho Branco 100A.png", "indices": [1, 2, 3] },
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse Wave de Linho Branco 100A.png", "indices": [1, 2, 3, 10, 11, 12] },
             { "name": "Azul Marinho", "hex": "#000080", "image": "images/Chemisse Wave Azul Marinho Linho 2000.png", "indices": [5, 6] },
             { "name": "Bege", "hex": "#D5C4B3", "image": "images/Chemisse wave de Linho Listrado Bege 100.png", "indices": [7] }
         ],
@@ -258,12 +266,17 @@ const products = [
             "images/Macacao Dulu 222.png",
             "images/Macacao Dulu 333.png",
             "images/Macacao dulu 444.png",
-            "images/Macacao dulu 555.png"
+            "images/Macacao dulu 555.png",
+            "images/Macacao Dulu De Lunho Azul Marinho 1000.png",
+            "images/Macacao Dulu De Lunho Azul Marinho 1001.png",
+            "images/Macacao Dulu De Lunho Azul Marinho 1002.png",
+            "images/Macacao Dulu De Lunho Azul Marinho 1003.png"
         ],
         "category": "Macacões",
         "badge": "Novo",
         "colors": [
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Macacao Dulu 111.png", "indices": [0, 1, 2, 3, 4] }
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Macacao Dulu 111.png", "indices": [0, 1, 2, 3, 4] },
+            { "name": "Azul Marinho", "hex": "#000080", "image": "images/Macacao Dulu De Lunho Azul Marinho 1000.png", "indices": [5, 6, 7, 8] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Macacão longo perfeito para dias ensolarados à beira-mar. Caimento solto e elegante que acompanha o movimento do corpo, acompanhado de cinto. Disponível em linho e voil de viscosa."
@@ -298,9 +311,9 @@ const products = [
         "image": "images/Saia Mahalo 112.png",
         "images": [
             "images/Saia Mahalo 112.png",
-            "images/Saia Mahalo 111.png",
-            "images/Saia Mahalo 113.png",
-            "images/Saia Mahalo 114.png",
+            "images/Saia Mahaolo Verde Maca 1110.png",
+            "images/Saia Mahaolo Verde Maca 1111.png",
+            "images/Saia Mahaolo Verde Maca 1113.png",
             "images/Saia Mahalo Verde Manzana 1.jpg",
             "images/Saia Mahalo Verde Manzana 2.jpg",
             "images/Saia Mahalo Rosa Viejo Voil de Viscosa 1.jpg",
@@ -311,16 +324,20 @@ const products = [
             "images/Saia mahalo cinza 2.jpeg",
             "images/Saia Mahalo Azul Stone 1000.png",
             "images/Saia Mahalo Azul Stone 1001.png",
-            "images/Saia Mahalo Azul Stone 1002.png"
+            "images/Saia Mahalo Azul Stone 1002.png",
+            "images/Saia Mahalo Bege Abano 1000.png",
+            "images/Saia Mahalo Bege Abano 1001.png",
+            "images/Saia Mahalo Bege Abano 1003.png"
         ],
         "category": "Saias",
         "colors": [
-            { "name": "Verde Maçã", "hex": "#8DB600", "image": "images/Saia Mahalo 111.png", "indices": [1, 2, 3] },
+            { "name": "Verde Maçã", "hex": "#8DB600", "image": "images/Saia Mahaolo Verde Maca 1110.png", "indices": [1, 2, 3] },
             { "name": "Verde Seco", "hex": "#4B5320", "image": "images/Saia Mahalo 112.png", "indices": [0, 4, 5] },
             { "name": "Rosa Velho", "hex": "#C08081", "image": "images/Saia Mahalo Rosa Viejo Voil de Viscosa 1.jpg", "indices": [6, 7] },
             { "name": "Bege Claro", "hex": "#F5F5DC", "image": "images/Saia Mahalo Bege 1.jpg", "indices": [8, 9] },
             { "name": "Cinza", "hex": "#808080", "image": "images/Saia Mahalo Cinza 1.jpg", "indices": [10, 11] },
-            { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Saia Mahalo Azul Stone 1000.png", "indices": [12, 13, 14] }
+            { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Saia Mahalo Azul Stone 1000.png", "indices": [12, 13, 14] },
+            { "name": "Marron Abano", "hex": "#6F4E37", "image": "images/Saia Mahalo Bege Abano 1000.png", "indices": [15, 16, 17] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Saia longa esvoaçante e elegante com cós ajustado. Perfeita para os dias de verão."
@@ -360,7 +377,9 @@ const products = [
             "images/Camisa Pontas Azul Jean 1002.png",
             "images/Camisa Pontas Azul Jean 1003.png",
             "images/Saia Mahalo 112.png",
-            "images/imagen aislada 1.jpeg"
+            "images/imagen aislada 1.jpeg",
+            "images/Camisa Pontas Verde Maca 1100.png",
+            "images/Camisa Pontas Celeste Turquesa 1000.png"
         ],
         "category": "Camisas",
         "badge": "Novo",
@@ -368,7 +387,9 @@ const products = [
             { "name": "Bege Chocolate", "hex": "#7B3F00", "image": "images/Camisa Pontas Bege Stoneada 1004.png", "indices": [0, 1] },
             { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Camisa Pontas Azul Stoneada 1000.png", "indices": [2, 3] },
             { "name": "Azul Jeans", "hex": "#5D76A9", "image": "images/Camisa Pontas Azul Jean 1002.png", "indices": [4, 5] },
-            { "name": "Verde Seco", "hex": "#4B5320", "image": "images/Saia Mahalo 112.png", "indices": [6, 7] }
+            { "name": "Verde Seco", "hex": "#4B5320", "image": "images/Saia Mahalo 112.png", "indices": [6, 7] },
+            { "name": "Verde Maçã", "hex": "#8DB600", "image": "images/Camisa Pontas Verde Maca 1100.png", "indices": [8] },
+            { "name": "Celeste Turquesa", "hex": "#40E0D0", "image": "images/Camisa Pontas Celeste Turquesa 1000.png", "indices": [9] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Camisa solta com botões de madrepérola e tecidos leves. Elegância e frescor."
