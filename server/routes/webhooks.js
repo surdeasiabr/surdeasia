@@ -25,20 +25,29 @@ router.post('/mercadopago', async (req, res) => {
                 else if (result.status === 'rejected') status = 'rejected';
                 else if (result.status === 'cancelled') status = 'cancelled';
 
-                // Update order status in local orders.db (if they want orders in Supabase later we can move it)
-                db.prepare('UPDATE orders SET status = ?, payment_id = ? WHERE id = ?')
-                    .run(status, String(paymentId), orderId);
+                // Update order status in Supabase
+                if (supabase) {
+                    await supabase
+                        .from('orders')
+                        .update({ status, payment_id: String(paymentId) })
+                        .eq('id', orderId);
+                }
 
                 console.log(`📦 Pedido ${orderId}: ${status} (Payment ${paymentId})`);
 
                 // Send email notification to owner if approved
                 if (result.status === 'approved') {
-                    const order = db.prepare('SELECT * FROM orders WHERE id = ?').get(orderId);
-                    if (order) {
-                        const items = JSON.parse(order.items);
-                        
-                        // Decrementar o estoque para cada item no Supabase
-                        if (supabase) {
+                    if (supabase) {
+                        const { data: order } = await supabase
+                            .from('orders')
+                            .select('*')
+                            .eq('id', orderId)
+                            .single();
+                            
+                        if (order) {
+                            const items = JSON.parse(order.items);
+                            
+                            // Decrementar o estoque para cada item no Supabase
                             for (const item of items) {
                                 try {
                                     // Fetch current stock
@@ -64,63 +73,63 @@ router.post('/mercadopago', async (req, res) => {
                                     console.error(`Erro ao diminuir estoque para ${item.id} no Supabase:`, e);
                                 }
                             }
+
+                            const itemsHtml = items.map(item => `
+                                <tr>
+                                    <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.name} (${item.color} - ${item.size})</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity}</td>
+                                    <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right;">R$ ${item.price.toFixed(2)}</td>
+                                </tr>
+                            `).join('');
+
+                            await sendEmail({
+                                to: process.env.EMAIL_USER,
+                                subject: `NOVA VENDA CONFIRMADA - Pedido #${orderId}`,
+                                html: `
+                                    <div style="font-family: sans-serif; color: #333; max-width: 650px; border: 1px solid #ddd; padding: 20px;">
+                                        <h2 style="background: #1f3b4d; color: #fff; padding: 15px; margin: -20px -20px 20px -20px;">🎉 Nova Venda Confirmada!</h2>
+                                        
+                                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                                            <tr><td colspan="2" style="background: #f4f4f4; padding: 10px;"><strong>Dados do Cliente</strong></td></tr>
+                                            <tr><td style="padding: 5px;"><strong>Nome:</strong></td><td>${order.customer_name}</td></tr>
+                                            <tr><td style="padding: 5px;"><strong>E-mail:</strong></td><td>${order.customer_email}</td></tr>
+                                            <tr><td style="padding: 5px;"><strong>CPF:</strong></td><td>${order.customer_cpf}</td></tr>
+                                            <tr><td style="padding: 5px;"><strong>Telefone:</strong></td><td>${order.customer_phone}</td></tr>
+                                        </table>
+
+                                        <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                                            <tr><td colspan="2" style="background: #f4f4f4; padding: 10px;"><strong>Endereço de Entrega</strong></td></tr>
+                                            <tr><td style="padding: 5px;"><strong>CEP:</strong></td><td>${order.address_cep}</td></tr>
+                                            <tr><td style="padding: 5px;"><strong>Endereço:</strong></td><td>${order.address_street}, ${order.address_number}</td></tr>
+                                            <tr><td style="padding: 5px;"><strong>Bairro:</strong></td><td>${order.address_neighborhood}</td></tr>
+                                            <tr><td style="padding: 5px;"><strong>Cidade:</strong></td><td>${order.address_city} - ${order.address_state}</td></tr>
+                                        </table>
+
+                                        <table style="width: 100%; border-collapse: collapse;">
+                                            <thead>
+                                                <tr style="background: #f4f4f4;">
+                                                    <th style="padding: 10px; text-align: left;">Produto</th>
+                                                    <th style="padding: 10px;">Qtd</th>
+                                                    <th style="padding: 10px; text-align: right;">Preço</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                ${itemsHtml}
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <td colspan="2" style="padding: 10px; text-align: right;"><strong>TOTAL:</strong></td>
+                                                    <td style="padding: 10px; text-align: right;"><strong>R$ ${(order.total_cents / 100).toFixed(2)}</strong></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        
+                                        <p style="margin-top: 20px;"><strong>Método de Pagamento:</strong> ${order.payment_method}</p>
+                                        <p><strong>ID do Pagamento (MP):</strong> ${paymentId}</p>
+                                    </div>
+                                `
+                            });
                         }
-
-                        const itemsHtml = items.map(item => `
-                            <tr>
-                                <td style="padding: 10px; border-bottom: 1px solid #eee;">${item.name} (${item.color} - ${item.size})</td>
-                                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: center;">${item.quantity}</td>
-                                <td style="padding: 10px; border-bottom: 1px solid #eee; text-align: right;">R$ ${item.price.toFixed(2)}</td>
-                            </tr>
-                        `).join('');
-
-                        await sendEmail({
-                            to: process.env.EMAIL_USER,
-                            subject: `NOVA VENDA CONFIRMADA - Pedido #${orderId}`,
-                            html: `
-                                <div style="font-family: sans-serif; color: #333; max-width: 650px; border: 1px solid #ddd; padding: 20px;">
-                                    <h2 style="background: #1f3b4d; color: #fff; padding: 15px; margin: -20px -20px 20px -20px;">🎉 Nova Venda Confirmada!</h2>
-                                    
-                                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-                                        <tr><td colspan="2" style="background: #f4f4f4; padding: 10px;"><strong>Dados do Cliente</strong></td></tr>
-                                        <tr><td style="padding: 5px;"><strong>Nome:</strong></td><td>${order.customer_name}</td></tr>
-                                        <tr><td style="padding: 5px;"><strong>E-mail:</strong></td><td>${order.customer_email}</td></tr>
-                                        <tr><td style="padding: 5px;"><strong>CPF:</strong></td><td>${order.customer_cpf}</td></tr>
-                                        <tr><td style="padding: 5px;"><strong>Telefone:</strong></td><td>${order.customer_phone}</td></tr>
-                                    </table>
-
-                                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
-                                        <tr><td colspan="2" style="background: #f4f4f4; padding: 10px;"><strong>Endereço de Entrega</strong></td></tr>
-                                        <tr><td style="padding: 5px;"><strong>CEP:</strong></td><td>${order.address_cep}</td></tr>
-                                        <tr><td style="padding: 5px;"><strong>Endereço:</strong></td><td>${order.address_street}, ${order.address_number}</td></tr>
-                                        <tr><td style="padding: 5px;"><strong>Bairro:</strong></td><td>${order.address_neighborhood}</td></tr>
-                                        <tr><td style="padding: 5px;"><strong>Cidade:</strong></td><td>${order.address_city} - ${order.address_state}</td></tr>
-                                    </table>
-
-                                    <table style="width: 100%; border-collapse: collapse;">
-                                        <thead>
-                                            <tr style="background: #f4f4f4;">
-                                                <th style="padding: 10px; text-align: left;">Produto</th>
-                                                <th style="padding: 10px;">Qtd</th>
-                                                <th style="padding: 10px; text-align: right;">Preço</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            ${itemsHtml}
-                                        </tbody>
-                                        <tfoot>
-                                            <tr>
-                                                <td colspan="2" style="padding: 10px; text-align: right;"><strong>TOTAL:</strong></td>
-                                                <td style="padding: 10px; text-align: right;"><strong>R$ ${(order.total_cents / 100).toFixed(2)}</strong></td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                    
-                                    <p style="margin-top: 20px;"><strong>Método de Pagamento:</strong> ${order.payment_method}</p>
-                                    <p><strong>ID do Pagamento (MP):</strong> ${paymentId}</p>
-                                </div>
-                            `
-                        });
                     }
                 }
             }

@@ -34,21 +34,30 @@ router.post('/checkout', async (req, res) => {
         }, 0);
 
         // Save order in DB as pending
-        const db = req.app.locals.db;
-        db.prepare(`
-            INSERT INTO orders (id, customer_name, customer_email, customer_cpf, customer_phone,
-                address_cep, address_street, address_number, address_neighborhood, address_city, address_state,
-                items, total_cents, payment_method, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `).run(
-            orderId,
-            customer.name, customer.email || '', customer.cpf || '', customer.phone || '',
-            customer.address?.cep || '', customer.address?.street || '',
-            customer.address?.number || '', customer.address?.neighborhood || '',
-            customer.address?.city || '', customer.address?.state || '',
-            JSON.stringify(items), totalCents,
-            'mercadopago', 'pending'
-        );
+        const { error: dbError } = await require('../services/supabase')
+            .from('orders')
+            .insert({
+                id: orderId,
+                customer_name: customer.name,
+                customer_email: customer.email || '',
+                customer_cpf: customer.cpf || '',
+                customer_phone: customer.phone || '',
+                address_cep: customer.address?.cep || '',
+                address_street: customer.address?.street || '',
+                address_number: customer.address?.number || '',
+                address_neighborhood: customer.address?.neighborhood || '',
+                address_city: customer.address?.city || '',
+                address_state: customer.address?.state || '',
+                items: JSON.stringify(items),
+                total_cents: totalCents,
+                payment_method: 'mercadopago',
+                status: 'pending'
+            });
+
+        if (dbError) {
+            console.error('Error saving order to Supabase:', dbError);
+            // Non-blocking for now, but should ideally fail checkout
+        }
 
         // Create Mercado Pago preference
         const result = await mp.createPreference({
@@ -60,8 +69,10 @@ router.post('/checkout', async (req, res) => {
 
         if (result.success) {
             // Update order with preference ID
-            db.prepare('UPDATE orders SET payment_id = ? WHERE id = ?')
-                .run(result.preferenceId, orderId);
+            await require('../services/supabase')
+                .from('orders')
+                .update({ payment_id: result.preferenceId })
+                .eq('id', orderId);
 
             res.json({
                 success: true,

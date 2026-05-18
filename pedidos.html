@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Pedidos - Surdeasia</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #1f3b4d;
+            text-align: center;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #1f3b4d;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+        .status {
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .status-pending { background: #ffeeba; color: #856404; }
+        .status-confirmed { background: #d4edda; color: #155724; }
+        .status-rejected { background: #f8d7da; color: #721c24; }
+        
+        .items-list {
+            font-size: 0.9em;
+            color: #555;
+            margin: 0;
+            padding-left: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>📋 Histórico de Pedidos</h1>
+        <p style="text-align: center;"><a href="/admin" style="color: #007bff; text-decoration: none;">← Ir para Estoque</a></p>
+        
+        <table id="ordersTable">
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Pedido / Cliente</th>
+                    <th>Itens</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Populated by JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function formatDate(dateString) {
+            const d = new Date(dateString);
+            return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+        }
+
+        async function loadOrders() {
+            try {
+                const res = await fetch('/api/orders');
+                const orders = await res.json();
+                
+                const tbody = document.querySelector('#ordersTable tbody');
+                tbody.innerHTML = '';
+
+                if (Array.isArray(orders)) {
+                    orders.forEach(order => {
+                        let itemsHtml = '';
+                        try {
+                            const items = JSON.parse(order.items);
+                            itemsHtml = '<ul class="items-list">' + 
+                                items.map(i => `<li>${i.quantity}x ${i.name} (${i.color} - ${i.size})</li>`).join('') +
+                                '</ul>';
+                        } catch(e) {}
+
+                        let statusClass = 'status-pending';
+                        let statusText = 'Pendente';
+                        if (order.status === 'confirmed') { statusClass = 'status-confirmed'; statusText = 'Confirmado'; }
+                        if (order.status === 'rejected') { statusClass = 'status-rejected'; statusText = 'Recusado'; }
+                        if (order.status === 'cancelled') { statusClass = 'status-rejected'; statusText = 'Cancelado'; }
+
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${formatDate(order.created_at)}</td>
+                            <td>
+                                <strong>#${order.id}</strong><br>
+                                ${order.customer_name}<br>
+                                <span style="font-size:0.8em; color:#777;">${order.customer_email}<br>${order.customer_phone}</span>
+                            </td>
+                            <td>${itemsHtml}</td>
+                            <td>R$ ${(order.total_cents / 100).toFixed(2).replace('.', ',')}</td>
+                            <td><span class="status ${statusClass}">${statusText}</span></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                }
+            } catch (e) {
+                console.error(e);
+                document.querySelector('#ordersTable tbody').innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Erro ao carregar pedidos.</td></tr>';
+            }
+        }
+
+        // Load on start
+        loadOrders();
+    </script>
+</body>
+</html>
