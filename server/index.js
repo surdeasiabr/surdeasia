@@ -53,6 +53,7 @@ app.use('/api/pay', require('./routes/payments'));
 app.use('/api/shipping', require('./routes/shipping'));
 app.use('/api/webhooks', require('./routes/webhooks'));
 app.use('/api/contact', require('./routes/contact'));
+app.use('/api/estoque', require('./routes/estoque'));
 
 // Orders API (for admin use — simple view of all orders)
 app.get('/api/orders', (req, res) => {

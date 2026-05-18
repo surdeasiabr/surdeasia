@@ -19,8 +19,8 @@ const products = [
         "category": "Vestidos",
         "badge": "Novo",
         "colors": [
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Vestido Aloha Branco Linho 123.png" },
-            { "name": "Azul Marinho", "hex": "#000080", "image": "images/Vestido Aloha Linho Azul Marinho 100.png" }
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Vestido Aloha Branco Linho 123.png", "indices": [0, 1, 2, 5] },
+            { "name": "Azul Marinho", "hex": "#000080", "image": "images/Vestido Aloha Linho Azul Marinho 100.png", "indices": [3, 4] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Vestido confeccionado em linho premium, disponível em branco e azul marinho. Peça única que une conforto absoluto a um visual charmoso e sofisticado."
@@ -39,7 +39,7 @@ const products = [
         "category": "Vestidos",
         "badge": "Novo",
         "colors": [
-            { "name": "Bege", "hex": "#D5C4B3", "image": "images/Vestido Aloha e Faixa 3.png" }
+            { "name": "Bege", "hex": "#D5C4B3", "image": "images/Vestido Aloha e Faixa 3.png", "indices": [0, 1, 2] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Deslumbrante vestido em voil de viscose, desenhado com um corte assimétrico: mais curto na frente e alongado atrás. A leveza do tecido cria um movimento fluido e apaixonante a cada passo que você dá."
@@ -58,7 +58,7 @@ const products = [
         "category": "Vestidos",
         "badge": "Novo",
         "colors": [
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Saia Saint Tropez 4.png" }
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Saia Saint Tropez 4.png", "indices": [0, 1, 2] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Vestido longo esvoaçante e estruturado em camadas, na cor branca. Perfeito para quem busca leveza e elegância em cada movimento."
@@ -78,7 +78,7 @@ const products = [
         "category": "Vestidos",
         "badge": "Novo",
         "colors": [
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Vestido Mahalo Branco 1011.png" }
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Vestido Mahalo Branco 1011.png", "indices": [0, 1, 2, 3] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Vestido feito de linho. Uma peça super romântica e elegante."
@@ -97,7 +97,7 @@ const products = [
         "category": "Vestidos",
         "badge": "Novo",
         "colors": [
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Vestidao Kuta 100.png" }
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Vestidao Kuta 100.png", "indices": [0, 1, 2] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Vestido elegante com botões de madrepérola, confeccionado em voil de viscose branca. Caimento leve e fluido, perfeito para os dias quentes com um toque de sofisticação e conforto."
@@ -120,9 +120,9 @@ const products = [
         "category": "Camisas",
         "badge": "Novo",
         "colors": [
-            { "name": "Verde", "hex": "#4CAF50", "image": "images/Chemisse Classic verde seco 101.jpeg" },
-            { "name": "Bege", "hex": "#D5C4B3", "image": "images/Chemisse Classic Bege 105.jpeg" },
-            { "name": "Bordô", "hex": "#800000", "image": "images/Chemisse Classic Listra Bordo 106.jpeg" }
+            { "name": "Verde", "hex": "#4CAF50", "image": "images/Chemisse Classic verde seco 101.jpeg", "indices": [0, 1, 2, 3] },
+            { "name": "Bege", "hex": "#D5C4B3", "image": "images/Chemisse Classic Bege 105.jpeg", "indices": [4] },
+            { "name": "Bordô", "hex": "#800000", "image": "images/Chemisse Classic Listra Bordo 106.jpeg", "indices": [5, 6] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Chemisse elegante com manga clássica e botões de madrepérola. Confeccionada com tecidos nobres, esta peça traz o equilíbrio perfeito entre o conforto casual e a sofisticação atemporal. Ideal para compor looks versáteis em qualquer momento do dia."
@@ -148,10 +148,10 @@ const products = [
         "category": "Camisas",
         "badge": "Novo",
         "colors": [
-            { "name": "Azul Listrado", "hex": "#4A81B8", "image": "images/Chemisse De Linho Listrado Azul 222.png" },
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse Wave de Linho Branco 100A.png" },
-            { "name": "Azul Marinho", "hex": "#000080", "image": "images/Chemisse Wave Azul Marinho Linho 2000.png" },
-            { "name": "Bege", "hex": "#D5C4B3", "image": "images/Chemisse wave de Linho Listrado Bege 100.png" }
+            { "name": "Azul Listrado", "hex": "#4A81B8", "image": "images/Chemisse De Linho Listrado Azul 222.png", "indices": [0, 4, 8, 9] },
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse Wave de Linho Branco 100A.png", "indices": [1, 2, 3] },
+            { "name": "Azul Marinho", "hex": "#000080", "image": "images/Chemisse Wave Azul Marinho Linho 2000.png", "indices": [5, 6] },
+            { "name": "Bege", "hex": "#D5C4B3", "image": "images/Chemisse wave de Linho Listrado Bege 100.png", "indices": [7] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Chemisse Wave confeccionada em linho premium. Uma peça versátil e marcante que traz a essência do mar para o seu estilo."
@@ -172,8 +172,8 @@ const products = [
         "category": "Camisas",
         "badge": "Novo",
         "colors": [
-            { "name": "Celeste Listrado", "hex": "#87CEEB", "image": "images/chemisse listrado algodao 1.jpeg" },
-            { "name": "Bege Listrado", "hex": "#D5C4B3", "image": "images/Chemisse Wave Algodao Listra ancha Bege 1001.png" }
+            { "name": "Celeste Listrado", "hex": "#87CEEB", "image": "images/chemisse listrado algodao 1.jpeg", "indices": [0, 1, 2] },
+            { "name": "Bege Listrado", "hex": "#D5C4B3", "image": "images/Chemisse Wave Algodao Listra ancha Bege 1001.png", "indices": [3, 4] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Chemisse confeccionado em algodão premium com listras. Caimento impecável e frescor ideal para dias ensolarados."
@@ -198,9 +198,9 @@ const products = [
         "category": "Camisas",
         "badge": "Novo",
         "colors": [
-            { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Chemisse de Voil Azul Stone 111.png" },
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse Wave Voil Viscosa 1.jpeg" },
-            { "name": "Celeste", "hex": "#87CEEB", "image": "images/Chemisse Viscosa Celeste 100.png" }
+            { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Chemisse de Voil Azul Stone 111.png", "indices": [0, 1, 8] },
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse Wave Voil Viscosa 1.jpeg", "indices": [2, 3, 4, 5] },
+            { "name": "Celeste", "hex": "#87CEEB", "image": "images/Chemisse Viscosa Celeste 100.png", "indices": [6, 7] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Chemisse Wave em voil de viscose. Peça elegante, leve e fluida, perfeita para compor looks de verão com sofisticação."
@@ -219,7 +219,7 @@ const products = [
         ],
         "category": "Calças",
         "colors": [
-            { "name": "Branca", "hex": "#FFFFFF", "image": "images/Calca Summer 1.png" }
+            { "name": "Branca", "hex": "#FFFFFF", "image": "images/Calca Summer 1.png", "indices": [0, 1, 2, 3] }
         ],
         "sizes": ["P/M", "M/G"],
         "desc": "Calça pantalona com camadas fluídas e design leve."
@@ -241,8 +241,8 @@ const products = [
         "category": "Calças",
         "badge": "Novo",
         "colors": [
-            { "name": "Azul Marinho", "hex": "#000080", "image": "images/calca dulu 111.png" },
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse De Linho Listrado Azul 222.png" }
+            { "name": "Azul Marinho", "hex": "#000080", "image": "images/calca dulu 111.png", "indices": [0, 1] },
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse De Linho Listrado Azul 222.png", "indices": [2, 3, 4, 5] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Calça de linho premium com faixa elástica na cintura. Uma peça que abraça o corpo com leveza, proporcionando total liberdade de movimento e um caimento incrivelmente elegante e despojado."
@@ -263,7 +263,7 @@ const products = [
         "category": "Macacões",
         "badge": "Novo",
         "colors": [
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Macacao Dulu 111.png" }
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Macacao Dulu 111.png", "indices": [0, 1, 2, 3, 4] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Macacão longo perfeito para dias ensolarados à beira-mar. Caimento solto e elegante que acompanha o movimento do corpo, acompanhado de cinto. Disponível em linho e voil de viscosa."
@@ -285,7 +285,7 @@ const products = [
         "category": "Macacões",
         "badge": "Novo",
         "colors": [
-            { "name": "Marrom Chocolate", "hex": "#3E2723", "image": "images/Macacao Dulu Chocolate 106.png" }
+            { "name": "Marrom Chocolate", "hex": "#3E2723", "image": "images/Macacao Dulu Chocolate 106.png", "indices": [0, 1, 2, 3, 4, 5] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Macacão de voil de viscose com acabamento Stone Wash e elástico no busto. Conforto e estilo em uma peça única."
@@ -315,12 +315,12 @@ const products = [
         ],
         "category": "Saias",
         "colors": [
-            { "name": "Verde Maçã", "hex": "#8DB600", "image": "images/Saia Mahalo 111.png" },
-            { "name": "Verde Seco", "hex": "#4B5320", "image": "images/Saia Mahalo 112.png" },
-            { "name": "Rosa Velho", "hex": "#C08081", "image": "images/Saia Mahalo Rosa Viejo Voil de Viscosa 1.jpg" },
-            { "name": "Bege Claro", "hex": "#F5F5DC", "image": "images/Saia Mahalo Bege 1.jpg" },
-            { "name": "Cinza", "hex": "#808080", "image": "images/Saia Mahalo Cinza 1.jpg" },
-            { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Saia Mahalo Azul Stone 1000.png" }
+            { "name": "Verde Maçã", "hex": "#8DB600", "image": "images/Saia Mahalo 111.png", "indices": [1, 2, 3] },
+            { "name": "Verde Seco", "hex": "#4B5320", "image": "images/Saia Mahalo 112.png", "indices": [0, 4, 5] },
+            { "name": "Rosa Velho", "hex": "#C08081", "image": "images/Saia Mahalo Rosa Viejo Voil de Viscosa 1.jpg", "indices": [6, 7] },
+            { "name": "Bege Claro", "hex": "#F5F5DC", "image": "images/Saia Mahalo Bege 1.jpg", "indices": [8, 9] },
+            { "name": "Cinza", "hex": "#808080", "image": "images/Saia Mahalo Cinza 1.jpg", "indices": [10, 11] },
+            { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Saia Mahalo Azul Stone 1000.png", "indices": [12, 13, 14] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Saia longa esvoaçante e elegante com cós ajustado. Perfeita para os dias de verão."
@@ -341,7 +341,7 @@ const products = [
         "category": "Camisas",
         "badge": "Best Seller",
         "colors": [
-            { "name": "Branca", "hex": "#FFFFFF", "image": "images/Camisa Wave Branca 11.png" }
+            { "name": "Branca", "hex": "#FFFFFF", "image": "images/Camisa Wave Branca 11.png", "indices": [0, 1, 2, 3, 4] }
         ],
         "sizes": ["M"],
         "desc": "Camisa elegante em voil de viscosa com babados esvoaçantes nas mangas. Possui botões de madrepérola. Às vezes é feita de linho ou de algodão."
@@ -365,10 +365,10 @@ const products = [
         "category": "Camisas",
         "badge": "Novo",
         "colors": [
-            { "name": "Bege Chocolate", "hex": "#7B3F00", "image": "images/Camisa Pontas Bege Stoneada 1004.png" },
-            { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Camisa Pontas Azul Stoneada 1000.png" },
-            { "name": "Azul Jeans", "hex": "#5D76A9", "image": "images/Camisa Pontas Azul Jean 1002.png" },
-            { "name": "Verde Seco", "hex": "#4B5320", "image": "images/Saia Mahalo 112.png" }
+            { "name": "Bege Chocolate", "hex": "#7B3F00", "image": "images/Camisa Pontas Bege Stoneada 1004.png", "indices": [0, 1] },
+            { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Camisa Pontas Azul Stoneada 1000.png", "indices": [2, 3] },
+            { "name": "Azul Jeans", "hex": "#5D76A9", "image": "images/Camisa Pontas Azul Jean 1002.png", "indices": [4, 5] },
+            { "name": "Verde Seco", "hex": "#4B5320", "image": "images/Saia Mahalo 112.png", "indices": [6, 7] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Camisa solta com botões de madrepérola e tecidos leves. Elegância e frescor."
@@ -389,8 +389,8 @@ const products = [
         ],
         "category": "Camisas",
         "colors": [
-            { "name": "Verde Seco", "hex": "#8B8C65", "image": "images/Camisa Marcela Listrada Verde 1111.png" },
-            { "name": "Azul Marinho", "hex": "#000080", "image": "images/Camisa Marcela Listra Azul 1.png" }
+            { "name": "Verde Seco", "hex": "#8B8C65", "image": "images/Camisa Marcela Listrada Verde 1111.png", "indices": [0, 1, 2, 3] },
+            { "name": "Azul Marinho", "hex": "#000080", "image": "images/Camisa Marcela Listra Azul 1.png", "indices": [4, 5] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Camisa feita 100% de linho, com listras e botões de madrepérola."
@@ -411,12 +411,33 @@ const products = [
         "category": "Acessórios",
         "badge": "Novo",
         "colors": [
-            { "name": "Bege", "hex": "#D5C4B3", "image": "images/Macacao dulu 555.png" }
+            { "name": "Bege", "hex": "#D5C4B3", "image": "images/Macacao dulu 555.png", "indices": [0, 1, 2, 3, 4] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Faixa de couro autêntico, cuidadosamente feita à mão e detalhada com argolas de metal. O acessório perfeito para marcar a silhueta com personalidade e dar um toque rústico e sofisticado ao seu visual."
     }
 ];
+
+/* ========== STOCK SYSTEM ========== */
+let globalStockData = [];
+let useStockSystem = false;
+
+async function loadStock() {
+    try {
+        const response = await fetch('/api/estoque');
+        const result = await response.json();
+        if (result.useStock) {
+            useStockSystem = true;
+            globalStockData = result.data;
+            console.log('Sistema de estoque (Planilha) ativado!', globalStockData);
+        }
+    } catch (e) {
+        console.error('Erro ao carregar estoque', e);
+    }
+}
+
+// Load stock on page load
+document.addEventListener('DOMContentLoaded', loadStock);
 
 /* ========== RENDER PRODUCTS ========== */
 function renderProducts() {
@@ -459,6 +480,95 @@ let currentModalProduct = null;
 let selectedModalSize = null;
 let selectedModalColor = null;
 
+function checkStock(productId, size, color) {
+    if (!useStockSystem) return true;
+    const pId = String(productId);
+    const pSize = String(size).trim();
+    const pColor = String(color).trim();
+    
+    const item = globalStockData.find(s => 
+        String(s.id) === pId && 
+        String(s.size).trim() === pSize && 
+        String(s.color).trim() === pColor
+    );
+    
+    if (item) {
+        return item.stock > 0;
+    }
+    return true; // Se não está na planilha, assume infinito
+}
+
+function updateModalStockUI() {
+    const activeBtn = document.getElementById('modal-add-cart');
+    if (!activeBtn) return;
+
+    const hasStock = checkStock(currentModalProduct.id, selectedModalSize, selectedModalColor);
+    
+    if (!hasStock) {
+        activeBtn.textContent = 'Esgotado';
+        activeBtn.disabled = true;
+        activeBtn.style.opacity = '0.5';
+        activeBtn.style.cursor = 'not-allowed';
+        activeBtn.style.pointerEvents = 'none';
+    } else {
+        activeBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:18px;height:18px;"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg> Adicionar ao Carrinho`;
+        activeBtn.disabled = false;
+        activeBtn.style.opacity = '1';
+        activeBtn.style.cursor = 'pointer';
+        activeBtn.style.pointerEvents = 'auto';
+    }
+}
+
+function selectModalSize(btn, size) {
+    selectedModalSize = size;
+    btn.closest('.size-options').querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    updateModalStockUI();
+}
+
+function selectModalColor(dot, colorName) {
+    selectedModalColor = colorName;
+    dot.closest('.color-options').querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
+    dot.classList.add('active');
+
+    if (currentModalProduct && currentModalProduct.colors) {
+        const colorObj = currentModalProduct.colors.find(c => c.name === colorName);
+        if (colorObj && colorObj.image) {
+            document.getElementById('modal-img').src = colorObj.image;
+        }
+    }
+    updateModalStockUI();
+}
+
+function addToCartFromModal() {
+    if (!currentModalProduct) return;
+    
+    if (!checkStock(currentModalProduct.id, selectedModalSize, selectedModalColor)) {
+        return; // Prevents adding out of stock via quick add
+    }
+    
+    if (typeof SurdeCart !== 'undefined') {
+        SurdeCart.addItem(currentModalProduct, selectedModalSize, selectedModalColor);
+        closeModal();
+    }
+}
+
+function quickAddToCart(productId) {
+    const p = products.find(x => x.id === productId);
+    if (!p) return;
+    const size = p.sizes[0];
+    const color = p.colors[0]?.name || '';
+    
+    if (!checkStock(p.id, size, color)) {
+        alert('Este produto encontra-se esgotado nesta variação.');
+        return;
+    }
+    
+    if (typeof SurdeCart !== 'undefined') {
+        SurdeCart.addItem(p, size, color);
+    }
+}
+
 function openModal(id) {
     const p = products.find(x => x.id === id);
     if (!p) return;
@@ -498,14 +608,34 @@ function openModal(id) {
 
     document.getElementById('product-modal').classList.add('active');
     document.body.style.overflow = 'hidden';
+    
+    // Initialize stock UI logic
+    updateModalStockUI();
 }
 
 function handleThumbnailClick(imgSrc) {
     document.getElementById('modal-img').src = imgSrc;
     
     if (currentModalProduct && currentModalProduct.colors) {
-        // Find if this image is the primary image of any color
-        const matchingColor = currentModalProduct.colors.find(c => c.image === imgSrc);
+        let matchingColor = null;
+        
+        const imgIndex = currentModalProduct.images?.indexOf(imgSrc);
+        if (imgIndex !== -1) {
+            matchingColor = currentModalProduct.colors.find(c => c.indices && c.indices.includes(imgIndex));
+        }
+        
+        if (!matchingColor) {
+            matchingColor = currentModalProduct.colors.find(c => c.image === imgSrc);
+        }
+        
+        if (!matchingColor) {
+            const lowercaseSrc = imgSrc.toLowerCase();
+            matchingColor = currentModalProduct.colors.find(c => {
+                const colorKeywords = c.name.toLowerCase().split(' ').filter(w => w.length > 2);
+                return colorKeywords.some(keyword => lowercaseSrc.includes(keyword));
+            });
+        }
+        
         if (matchingColor) {
             const dots = document.querySelectorAll('#modal-colors .color-dot');
             dots.forEach(dot => {
@@ -517,26 +647,6 @@ function handleThumbnailClick(imgSrc) {
                     }
                 }
             });
-        } else {
-            // Optional: If we want to map ALL images to colors, we could do a fuzzy match here
-            // based on the filename, but mapping the main image covers 90% of cases.
-            // E.g. if the image has "Azul" in the name, select "Azul".
-            const lowercaseSrc = imgSrc.toLowerCase();
-            const fuzzyColor = currentModalProduct.colors.find(c => {
-                const colorKeywords = c.name.toLowerCase().split(' ').filter(w => w.length > 2);
-                return colorKeywords.some(keyword => lowercaseSrc.includes(keyword));
-            });
-            
-            if (fuzzyColor) {
-                const dots = document.querySelectorAll('#modal-colors .color-dot');
-                dots.forEach(dot => {
-                    if (dot.title === fuzzyColor.name && !dot.classList.contains('active')) {
-                        selectedModalColor = fuzzyColor.name;
-                        dots.forEach(d => d.classList.remove('active'));
-                        dot.classList.add('active');
-                    }
-                });
-            }
         }
     }
 }
