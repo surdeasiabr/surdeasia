@@ -4,7 +4,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
     try {
         const db = req.app.locals.db;
-        const stockData = db.prepare('SELECT product_id as id, name, size, color, stock FROM stock').all();
+        const stockData = db.prepare('SELECT product_id as id, name, size, color, stock FROM stock ORDER BY product_id ASC, color ASC').all();
         res.json({ useStock: true, data: stockData });
     } catch (error) {
         console.error('Erro ao buscar estoque:', error);
