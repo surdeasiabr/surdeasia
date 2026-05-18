@@ -406,12 +406,17 @@ const products = [
             "images/Camisa Marcela Listrada Verde 1112.png",
             "images/Camisa Marcela Listrada Verde 1113.png",
             "images/Camisa Marcela Listra Azul 1.png",
-            "images/Camisa Marcela Listra Azul 2.png"
+            "images/Camisa Marcela Listra Azul 2.png",
+            "images/Camisa Marcela Verde Oliva 1110.png",
+            "images/Camisa Marcela Verde Oliva 1111.png",
+            "images/Camisa Marcela Verde Oliva 1112.png",
+            "images/Camisa Marcela Verde Oliva 1113.png"
         ],
         "category": "Camisas",
         "colors": [
             { "name": "Verde Seco", "hex": "#8B8C65", "image": "images/Camisa Marcela Listrada Verde 1111.png", "indices": [0, 1, 2, 3] },
-            { "name": "Azul Marinho", "hex": "#000080", "image": "images/Camisa Marcela Listra Azul 1.png", "indices": [4, 5] }
+            { "name": "Azul Marinho", "hex": "#000080", "image": "images/Camisa Marcela Listra Azul 1.png", "indices": [4, 5] },
+            { "name": "Verde Oliva", "hex": "#556B2F", "image": "images/Camisa Marcela Verde Oliva 1110.png", "indices": [6, 7, 8, 9] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Camisa feita 100% de linho, com listras e botões de madrepérola."
