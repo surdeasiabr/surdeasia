@@ -1,11 +1,29 @@
 const express = require('express');
 const router = express.Router();
+const supabase = require('../services/supabase');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const db = req.app.locals.db;
-        const stockData = db.prepare('SELECT product_id as id, name, size, color, stock FROM stock ORDER BY product_id ASC, color ASC').all();
-        res.json({ useStock: true, data: stockData });
+        if (!supabase) return res.status(500).json({ useStock: false, error: 'Supabase não configurado' });
+
+        const { data: stockData, error } = await supabase
+            .from('stock')
+            .select('product_id, name, size, color, stock')
+            .order('product_id', { ascending: true })
+            .order('color', { ascending: true });
+
+        if (error) throw error;
+        
+        // Rename product_id to id for the frontend
+        const formattedData = stockData.map(s => ({
+            id: s.product_id,
+            name: s.name,
+            size: s.size,
+            color: s.color,
+            stock: s.stock
+        }));
+
+        res.json({ useStock: true, data: formattedData });
     } catch (error) {
         console.error('Erro ao buscar estoque:', error);
         res.status(500).json({ useStock: false, error: 'Erro ao buscar estoque do banco' });
@@ -13,13 +31,20 @@ router.get('/', (req, res) => {
 });
 
 // Update stock
-router.post('/update', (req, res) => {
+router.post('/update', async (req, res) => {
     try {
-        const db = req.app.locals.db;
+        if (!supabase) return res.status(500).json({ success: false, error: 'Supabase não configurado' });
+        
         const { product_id, size, color, new_stock } = req.body;
         
-        const update = db.prepare('UPDATE stock SET stock = ? WHERE product_id = ? AND size = ? AND color = ?');
-        update.run(new_stock, product_id, size, color);
+        const { error } = await supabase
+            .from('stock')
+            .update({ stock: new_stock })
+            .eq('product_id', product_id)
+            .eq('size', size)
+            .eq('color', color);
+            
+        if (error) throw error;
         
         res.json({ success: true });
     } catch (error) {

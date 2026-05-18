@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const MercadoPagoService = require('../services/mercadopago');
 const { sendEmail } = require('../services/email');
+const supabase = require('../services/supabase');
 
 const mp = new MercadoPagoService();
 
@@ -24,7 +25,7 @@ router.post('/mercadopago', async (req, res) => {
                 else if (result.status === 'rejected') status = 'rejected';
                 else if (result.status === 'cancelled') status = 'cancelled';
 
-                // Update order status
+                // Update order status in local orders.db (if they want orders in Supabase later we can move it)
                 db.prepare('UPDATE orders SET status = ?, payment_id = ? WHERE id = ?')
                     .run(status, String(paymentId), orderId);
 
@@ -36,14 +37,32 @@ router.post('/mercadopago', async (req, res) => {
                     if (order) {
                         const items = JSON.parse(order.items);
                         
-                        // Decrementar o estoque para cada item
-                        const decrementStock = db.prepare('UPDATE stock SET stock = stock - ? WHERE product_id = ? AND size = ? AND color = ?');
-                        for (const item of items) {
-                            try {
-                                decrementStock.run(item.quantity, item.id, item.size, item.color);
-                                console.log(`📦 Estoque atualizado: -${item.quantity} de Produto ${item.id} (${item.color} - ${item.size})`);
-                            } catch (e) {
-                                console.error(`Erro ao diminuir estoque para ${item.id}:`, e);
+                        // Decrementar o estoque para cada item no Supabase
+                        if (supabase) {
+                            for (const item of items) {
+                                try {
+                                    // Fetch current stock
+                                    const { data: stockData } = await supabase
+                                        .from('stock')
+                                        .select('stock')
+                                        .eq('product_id', item.id)
+                                        .eq('size', item.size)
+                                        .eq('color', item.color)
+                                        .single();
+                                    
+                                    if (stockData) {
+                                        await supabase
+                                            .from('stock')
+                                            .update({ stock: stockData.stock - item.quantity })
+                                            .eq('product_id', item.id)
+                                            .eq('size', item.size)
+                                            .eq('color', item.color);
+                                            
+                                        console.log(`📦 Estoque atualizado no Supabase: -${item.quantity} de Produto ${item.id} (${item.color} - ${item.size})`);
+                                    }
+                                } catch (e) {
+                                    console.error(`Erro ao diminuir estoque para ${item.id} no Supabase:`, e);
+                                }
                             }
                         }
 
