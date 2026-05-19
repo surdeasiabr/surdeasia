@@ -15,8 +15,7 @@ const transporter = nodemailer.createTransport({
  */
 async function sendEmail({ to, subject, html, replyTo }) {
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-        console.warn('E-mail não configurado. Envio ignorado.');
-        return { success: true, simulated: true };
+        throw new Error('As variáveis de ambiente EMAIL_USER e EMAIL_PASS não estão configuradas no servidor (Render).');
     }
 
     try {
@@ -30,7 +29,7 @@ async function sendEmail({ to, subject, html, replyTo }) {
         return { success: true, messageId: info.messageId };
     } catch (error) {
         console.error('Email service error:', error);
-        throw error;
+        throw new Error('Falha no SMTP: ' + error.message);
     }
 }
 

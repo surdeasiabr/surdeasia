@@ -80,7 +80,7 @@ router.post('/', async (req, res) => {
 
     } catch (error) {
         console.error('Erro ao enviar e-mail:', error);
-        res.status(500).json({ success: false, error: 'Erro ao enviar e-mail.' });
+        res.status(500).json({ success: false, error: error.message || 'Erro ao enviar e-mail.' });
     }
 });
 
