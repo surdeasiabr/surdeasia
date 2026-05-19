@@ -30,7 +30,8 @@ app.get('/api/debug', (req, res) => {
         url_exists: !!process.env.SUPABASE_URL,
         key_exists: !!process.env.SUPABASE_KEY,
         url_val: process.env.SUPABASE_URL,
-        supabase_is_null: supabase === null
+        supabase_is_null: !supabase || !!supabase._error,
+        error: supabase ? supabase._error : null
     });
 });
 
