@@ -254,35 +254,30 @@
             };
 
             try {
-                // Determine port or base URL
-                const baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-                    ? `${window.location.protocol}//${window.location.hostname}:3001`
-                    : '';
-                    
-                const response = await fetch(`${baseUrl}/api/contact`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                await emailjs.send('service_8vjqq7n', 'template_wqy8d5p', {
+                    title: 'Proposta Atacado - SURDEASIA',
+                    name: data.name,
+                    email: data.email,
+                    mensagem: data.message || 'Interesse em proposta de atacado.',
+                    tipo: 'Atacado'
                 });
 
-                const result = await response.json();
-
-                if (response.ok && result.success) {
-                    feedback.textContent = "Excelente! A proposta foi enviada para o seu e-mail. (Verifique também sua caixa de spam)";
-                    feedback.classList.add('success');
-                    form.reset();
-                } else {
-                    throw new Error(result.error || 'Erro desconhecido');
-                }
+                feedback.textContent = "Excelente! Recebemos sua solicitação. Em breve entraremos em contato com a proposta completa.";
+                feedback.classList.add('success');
+                form.reset();
             } catch (error) {
                 console.error(error);
-                feedback.textContent = `Erro detalhado: ${error.message}. Por favor, contate-nos via WhatsApp.`;
+                feedback.textContent = 'Erro ao enviar. Por favor, entre em contato via WhatsApp.';
                 feedback.classList.add('error');
             } finally {
                 submitBtn.textContent = 'Receber Proposta por E-mail';
                 submitBtn.disabled = false;
             }
         });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        emailjs.init('Mh1p36j1zxak3n--F');
     </script>
 </body>
 </html>
