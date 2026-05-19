@@ -25,6 +25,15 @@ app.use('/api/webhooks', require('./routes/webhooks'));
 app.use('/api/contact', require('./routes/contact'));
 app.use('/api/estoque', require('./routes/estoque'));
 
+app.get('/api/debug', (req, res) => {
+    res.json({
+        url_exists: !!process.env.SUPABASE_URL,
+        key_exists: !!process.env.SUPABASE_KEY,
+        url_val: process.env.SUPABASE_URL,
+        supabase_is_null: supabase === null
+    });
+});
+
 // Orders API (for admin use — simple view of all orders)
 app.get('/api/orders', async (req, res) => {
     try {
