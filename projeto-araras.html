@@ -569,7 +569,12 @@
             };
 
             try {
-                const response = await fetch('/api/contact', {
+                // Determine port or base URL
+                const baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                    ? `${window.location.protocol}//${window.location.hostname}:3001`
+                    : '';
+                    
+                const response = await fetch(`${baseUrl}/api/contact`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
@@ -586,7 +591,7 @@
                 }
             } catch (error) {
                 console.error(error);
-                feedback.textContent = "Erro ao enviar. Por favor, tente pelo WhatsApp.";
+                feedback.textContent = `Erro detalhado: ${error.message}. Por favor, tente pelo WhatsApp.`;
                 feedback.classList.add('error');
             } finally {
                 submitBtn.textContent = 'Solicitar Proposta Araras';

@@ -256,7 +256,7 @@
             try {
                 // Determine port or base URL
                 const baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-                    ? window.location.origin.replace('5500', '3001') // Handle livereload port diff
+                    ? `${window.location.protocol}//${window.location.hostname}:3001`
                     : '';
                     
                 const response = await fetch(`${baseUrl}/api/contact`, {
@@ -276,7 +276,7 @@
                 }
             } catch (error) {
                 console.error(error);
-                feedback.textContent = "No momento o envio automático não está disponível. Por favor, contate-nos via WhatsApp ou envie um e-mail para contato@surdeasiabr.com.";
+                feedback.textContent = `Erro detalhado: ${error.message}. Por favor, contate-nos via WhatsApp.`;
                 feedback.classList.add('error');
             } finally {
                 submitBtn.textContent = 'Receber Proposta por E-mail';
