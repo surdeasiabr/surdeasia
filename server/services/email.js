@@ -2,12 +2,15 @@ const nodemailer = require('nodemailer');
 
 const transporter = nodemailer.createTransport({
     host: process.env.EMAIL_HOST || 'smtp.gmail.com',
-    port: 587, // FORCE port 587 to bypass Render port 465 blocks
-    secure: false, // FORCE false for STARTTLS
+    port: 587,
+    secure: false, // STARTTLS
     auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS
-    }
+    },
+    connectionTimeout: 30000, // 30 segundos para conectar
+    greetingTimeout: 30000,   // 30 segundos para o handshake
+    socketTimeout: 60000      // 60 segundos para operações de socket
 });
 
 /**
