@@ -11,7 +11,14 @@ if (supabaseUrl && supabaseKey) {
     try {
         const cleanUrl = supabaseUrl.replace(/[^a-zA-Z0-9\.\-:\/]/g, '');
         const cleanKey = supabaseKey.replace(/[^a-zA-Z0-9\_\-]/g, '');
-        supabase = createClient(cleanUrl, cleanKey);
+        // Require ws explicitly in case Node 20 is used
+        const ws = require('ws');
+        supabase = createClient(cleanUrl, cleanKey, {
+            auth: {
+                persistSession: false
+            }
+        });
+        // Override transport globally if needed or let Supabase 22.x handle it
     } catch (e) {
         supabaseError = e.message;
         console.error('⚠️ Erro ao inicializar Supabase. Verifique se a SUPABASE_URL começa com https://', e.message);

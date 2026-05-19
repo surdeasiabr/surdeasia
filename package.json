@@ -8,7 +8,7 @@
     "build": "npm install"
   },
   "engines": {
-    "node": "20.11.0"
+    "node": "22.x"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.0",
@@ -19,6 +19,7 @@
     "mercadopago": "^2.0.15",
     "nodemailer": "^6.9.13",
     "sharp": "^0.34.5",
-    "uuid": "^10.0.0"
+    "uuid": "^10.0.0",
+    "ws": "^8.20.1"
   }
 }
