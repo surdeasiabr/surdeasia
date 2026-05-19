@@ -9,7 +9,9 @@ let supabaseError = null;
 
 if (supabaseUrl && supabaseKey) {
     try {
-        supabase = createClient(supabaseUrl.trim(), supabaseKey.trim());
+        const cleanUrl = supabaseUrl.replace(/[^a-zA-Z0-9\.\-:\/]/g, '');
+        const cleanKey = supabaseKey.replace(/[^a-zA-Z0-9\_\-]/g, '');
+        supabase = createClient(cleanUrl, cleanKey);
     } catch (e) {
         supabaseError = e.message;
         console.error('⚠️ Erro ao inicializar Supabase. Verifique se a SUPABASE_URL começa com https://', e.message);
