@@ -6,6 +6,7 @@
 const SurdeCart = (() => {
     let items = [];
     let isOpen = false;
+    let appliedCoupon = null; // { code, value_cents }
 
     // ── Load from localStorage ──
     function load() {
@@ -73,7 +74,13 @@ const SurdeCart = (() => {
 
     function getItems() { return items; }
     function getCount() { return items.reduce((s, i) => s + i.quantity, 0); }
-    function getTotal() { return items.reduce((s, i) => s + i.price * i.quantity, 0); }
+    function getTotal() {
+        let subtotal = items.reduce((s, i) => s + i.price * i.quantity, 0);
+        if (appliedCoupon) {
+            subtotal = Math.max(0, subtotal - (appliedCoupon.value_cents / 100));
+        }
+        return subtotal;
+    }
 
     // ── Badge ──
     function updateBadge() {
@@ -142,6 +149,23 @@ const SurdeCart = (() => {
         `).join('');
 
         if (totalEl) {
+            const subtotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            
+            if (appliedCoupon) {
+                const discountAmount = appliedCoupon.value_cents / 100;
+                document.getElementById('cart-discount-row').style.display = 'flex';
+                document.getElementById('cart-discount-value').textContent = `- R$ ${discountAmount.toFixed(2).replace('.', ',')}`;
+                document.getElementById('cart-coupon-msg').className = 'cart-coupon-message success';
+                document.getElementById('cart-coupon-msg').textContent = `Cupom ${appliedCoupon.code} aplicado!`;
+                document.getElementById('cart-coupon-msg').style.display = 'block';
+                document.getElementById('cart-coupon-input').value = '';
+                document.getElementById('cart-coupon-area').style.display = 'none';
+            } else {
+                document.getElementById('cart-discount-row').style.display = 'none';
+                document.getElementById('cart-coupon-area').style.display = 'flex';
+                document.getElementById('cart-coupon-msg').style.display = 'none';
+            }
+            
             totalEl.textContent = `R$ ${getTotal().toFixed(2).replace('.', ',')}`;
         }
     }
@@ -172,6 +196,12 @@ const SurdeCart = (() => {
             }
             lines.push(``);
         });
+
+        if (appliedCoupon) {
+            const discount = appliedCoupon.value_cents / 100;
+            lines.push(`🎫 *Cupom/Vale:* ${appliedCoupon.code} (- R$ ${discount.toFixed(2).replace('.', ',')})`);
+            lines.push(``);
+        }
 
         const total = getTotal();
         lines.push(`━━━━━━━━━━━━━━━━━━━━`);
@@ -264,6 +294,18 @@ const SurdeCart = (() => {
                     <div class="cart-items" id="cart-items"></div>
                 </div>
                 <div class="cart-drawer-footer" id="cart-footer" style="display:none;">
+                    <div class="cart-coupon-area" id="cart-coupon-area">
+                        <input type="text" id="cart-coupon-input" placeholder="Possui cupom/vale?">
+                        <button onclick="SurdeCart.applyCoupon()">Aplicar</button>
+                    </div>
+                    <div id="cart-coupon-msg" class="cart-coupon-message"></div>
+                    <div class="cart-discount-row" id="cart-discount-row">
+                        <span>Desconto</span>
+                        <div style="display:flex; gap:10px; align-items:center;">
+                            <strong id="cart-discount-value">- R$ 0,00</strong>
+                            <button onclick="SurdeCart.removeCoupon()" style="background:none;border:none;color:#dc3545;font-size:12px;cursor:pointer;text-decoration:underline;">Remover</button>
+                        </div>
+                    </div>
                     <div class="cart-total-row">
                         <span>Total</span>
                         <strong id="cart-total">R$ 0,00</strong>

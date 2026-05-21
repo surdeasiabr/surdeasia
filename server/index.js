@@ -34,6 +34,7 @@ app.use('/api/shipping', require('./routes/shipping'));
 app.use('/api/webhooks', require('./routes/webhooks'));
 app.use('/api/contact', require('./routes/contact'));
 app.use('/api/estoque', require('./routes/estoque'));
+app.use('/api/coupons', require('./routes/coupons'));
 
 app.get('/api/debug', (req, res) => {
     res.json({
@@ -99,6 +100,16 @@ app.post('/api/orders/:id/cancel', async (req, res) => {
         
         for (const item of items) {
             if (item.id === 'shipping') continue;
+            
+            if (item.id === 'coupon' && item.code) {
+                // Restore coupon
+                await supabase
+                    .from('coupons')
+                    .update({ is_used: false })
+                    .eq('code', item.code);
+                continue;
+            }
+
             const { data: stockData } = await supabase
                 .from('stock')
                 .select('stock')
@@ -162,6 +173,16 @@ setInterval(async () => {
                     const items = JSON.parse(order.items);
                     for (const item of items) {
                         if (item.id === 'shipping') continue;
+                        
+                        if (item.id === 'coupon' && item.code) {
+                            await supabase
+                                .from('coupons')
+                                .update({ is_used: false })
+                                .eq('code', item.code);
+                            console.log(`🎫 Cupom devolvido por abandono: ${item.code}`);
+                            continue;
+                        }
+
                         const { data: stockData } = await supabase
                             .from('stock')
                             .select('stock')

@@ -15,7 +15,7 @@ const mp = new MercadoPagoService();
  */
 router.post('/checkout', async (req, res) => {
     try {
-        const { customer, items } = req.body;
+        const { customer, items, coupon_code } = req.body;
 
         // Validate
         if (!customer?.name) {
@@ -29,11 +29,43 @@ router.post('/checkout', async (req, res) => {
         const siteUrl = process.env.SITE_URL || `http://localhost:${process.env.PORT || 3001}`;
 
         // Calculate total
-        const totalCents = items.reduce((sum, item) => {
+        let totalCents = items.reduce((sum, item) => {
             return sum + Math.round(item.price * 100) * item.quantity;
         }, 0);
 
         const supabase = require('../services/supabase');
+
+        // Coupon Validation
+        let appliedCoupon = null;
+        if (coupon_code) {
+            const { data: coupon, error: couponErr } = await supabase
+                .from('coupons')
+                .select('*')
+                .eq('code', coupon_code.trim().toUpperCase())
+                .single();
+
+            if (couponErr || !coupon) {
+                return res.status(400).json({ success: false, message: 'Cupom inválido ou não encontrado.' });
+            }
+            if (coupon.is_used) {
+                return res.status(400).json({ success: false, message: 'Este cupom já foi utilizado.' });
+            }
+
+            appliedCoupon = coupon;
+            // Apply discount (don't go below 0)
+            totalCents = Math.max(0, totalCents - coupon.value_cents);
+            
+            // Add as pseudo-item for tracking and admin display
+            items.push({
+                id: 'coupon',
+                name: `Cupom (${coupon.code})`,
+                price: -(coupon.value_cents / 100),
+                quantity: 1,
+                code: coupon.code,
+                color: '-',
+                size: '-'
+            });
+        }
 
         // Check stock for all items
         const stockUpdates = [];
@@ -72,6 +104,14 @@ router.post('/checkout', async (req, res) => {
                 .eq('product_id', update.product_id)
                 .eq('size', update.size)
                 .eq('color', update.color);
+        }
+
+        // Mark coupon as used
+        if (appliedCoupon) {
+            await supabase
+                .from('coupons')
+                .update({ is_used: true })
+                .eq('code', appliedCoupon.code);
         }
 
         // Save order in DB as pending

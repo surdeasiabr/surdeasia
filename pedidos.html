@@ -113,6 +113,33 @@
             font-size: 0.85em;
         }
         .refresh-btn:hover { background: #2b5a78; }
+
+        .coupon-panel {
+            background: #eef2f7;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #dce4ec;
+        }
+        .coupon-panel input {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .coupon-panel button {
+            padding: 8px 16px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .coupon-panel button:hover { background: #218838; }
     </style>
 </head>
 <body>
@@ -121,7 +148,14 @@
         <h1>📋 Histórico de Pedidos</h1>
         <p class="subtitle"><a href="/admin" style="color: #007bff; text-decoration: none;">← Ir para Estoque</a></p>
 
-        <button class="refresh-btn" onclick="loadOrders()">🔄 Atualizar</button>
+        <div class="coupon-panel">
+            <strong>🎫 Gerar Vale-Compras:</strong>
+            <input type="text" id="new-coupon-code" placeholder="CÓDIGO (ex: TROCA-ANA)">
+            <input type="number" id="new-coupon-value" placeholder="Valor em R$" style="width: 120px;">
+            <button onclick="createCoupon()">Gerar Cupom</button>
+        </div>
+
+        <button class="refresh-btn" onclick="loadOrders()">🔄 Atualizar Pedidos</button>
 
         <table id="ordersTable">
             <thead>
@@ -140,6 +174,37 @@
     </div>
 
     <script>
+        async function createCoupon() {
+            const code = document.getElementById('new-coupon-code').value.trim();
+            const valueReais = parseFloat(document.getElementById('new-coupon-value').value);
+            
+            if (!code || isNaN(valueReais) || valueReais <= 0) {
+                return alert('Preencha o código e um valor válido em R$.');
+            }
+
+            const valueCents = Math.round(valueReais * 100);
+
+            try {
+                const res = await fetch('/api/coupons', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ code, value_cents: valueCents })
+                });
+                const data = await res.json();
+                
+                if (data.success) {
+                    alert(`✅ Cupom gerado com sucesso!\n\nCódigo: ${data.code}\nValor: R$ ${valueReais.toFixed(2)}\n\nEnvie este código para a cliente.`);
+                    document.getElementById('new-coupon-code').value = '';
+                    document.getElementById('new-coupon-value').value = '';
+                } else {
+                    alert('Erro: ' + (data.error || 'Falha ao gerar cupom.'));
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Erro de conexão ao gerar cupom.');
+            }
+        }
+
         function formatDate(dateString) {
             const d = new Date(dateString);
             return d.toLocaleDateString('pt-BR', {
