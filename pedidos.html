@@ -211,6 +211,10 @@
                         </div>
                     ` : '';
 
+                    // ── Cancel Button ──
+                    const cancelBtnHtml = (order.status === 'pending' || order.status === 'confirmed') ? 
+                        `<br><button onclick="cancelOrder('${order.id}')" style="margin-top: 10px; font-size: 0.75em; padding: 4px 8px; background: #fff; border: 1px solid #dc3545; color: #dc3545; border-radius: 4px; cursor: pointer;">❌ Cancelar</button>` : '';
+
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
                         <td style="font-size:0.82em; color:#555; white-space:nowrap;">${formatDate(order.created_at)}</td>
@@ -226,7 +230,10 @@
                         </td>
                         <td>${itemsHtml}</td>
                         <td class="total-cell">R$ ${(order.total_cents / 100).toFixed(2).replace('.', ',')}</td>
-                        <td><span class="status ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <span class="status ${statusClass}">${statusText}</span>
+                            ${cancelBtnHtml}
+                        </td>
                     `;
                     tbody.appendChild(tr);
                 });
@@ -234,6 +241,25 @@
             } catch (e) {
                 console.error(e);
                 tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red; padding:20px;">Erro ao carregar pedidos.</td></tr>';
+            }
+        }
+
+        async function cancelOrder(id) {
+            if (!confirm('Tem certeza que deseja CANCELAR este pedido e devolver os produtos ao estoque?\n\n(Se o cliente já pagou, você precisará estornar o dinheiro no Mercado Pago manualmente)')) {
+                return;
+            }
+            try {
+                const res = await fetch(`/api/orders/${id}/cancel`, { method: 'POST' });
+                const data = await res.json();
+                if (data.success) {
+                    alert('Pedido cancelado com sucesso e estoque devolvido!');
+                    loadOrders(); // Recarrega a tabela
+                } else {
+                    alert('Erro: ' + (data.error || 'Falha ao cancelar pedido.'));
+                }
+            } catch (e) {
+                console.error(e);
+                alert('Erro de conexão ao tentar cancelar.');
             }
         }
 

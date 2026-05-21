@@ -62,6 +62,68 @@ app.get('/api/orders', async (req, res) => {
     }
 });
 
+// Manual cancel order endpoint
+app.post('/api/orders/:id/cancel', async (req, res) => {
+    try {
+        if (!supabase) throw new Error('Supabase not configured');
+        const orderId = req.params.id;
+        
+        // Fetch order
+        const { data: order, error: fetchError } = await supabase
+            .from('orders')
+            .select('*')
+            .eq('id', orderId)
+            .single();
+            
+        if (fetchError || !order) {
+            return res.status(404).json({ error: 'Pedido não encontrado.' });
+        }
+        
+        if (order.status === 'cancelled') {
+            return res.status(400).json({ error: 'Pedido já está cancelado.' });
+        }
+        
+        // Mark cancelled
+        const { error: updateError } = await supabase
+            .from('orders')
+            .update({ status: 'cancelled' })
+            .eq('id', orderId);
+            
+        if (updateError) throw updateError;
+        
+        // Restore stock
+        let items = [];
+        try {
+            items = JSON.parse(order.items);
+        } catch (e) {}
+        
+        for (const item of items) {
+            if (item.id === 'shipping') continue;
+            const { data: stockData } = await supabase
+                .from('stock')
+                .select('stock')
+                .eq('product_id', item.id)
+                .eq('size', item.size)
+                .eq('color', item.color)
+                .single();
+                
+            if (stockData) {
+                await supabase
+                    .from('stock')
+                    .update({ stock: stockData.stock + item.quantity })
+                    .eq('product_id', item.id)
+                    .eq('size', item.size)
+                    .eq('color', item.color);
+            }
+        }
+        
+        res.json({ success: true, message: 'Pedido cancelado e estoque restaurado.' });
+    } catch (e) {
+        console.error('Cancel order error:', e);
+        res.status(500).json({ error: 'Erro ao cancelar o pedido.' });
+    }
+});
+
 // Serve pages
 app.get('/checkout', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'checkout.html'));
