@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Histórico de Pedidos - Surdeasia</title>
     <style>
+        * { box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f7f6;
@@ -12,67 +13,124 @@
             margin: 0;
             padding: 20px;
         }
-        h1 {
-            color: #1f3b4d;
-            text-align: center;
-        }
+        h1 { color: #1f3b4d; text-align: center; margin-bottom: 4px; }
+        .subtitle { text-align: center; color: #777; font-size: 0.9em; margin-bottom: 20px; }
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             background: #fff;
-            padding: 20px;
+            padding: 24px;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            overflow-x: auto;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 10px;
+            min-width: 900px;
         }
         th, td {
-            padding: 12px;
+            padding: 12px 10px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+            vertical-align: top;
         }
         th {
             background-color: #1f3b4d;
             color: white;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
         }
-        tr:hover {
-            background-color: #f1f1f1;
-        }
+        tr:hover { background-color: #f8fbfa; }
+
         .status {
             font-weight: bold;
-            padding: 4px 8px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.82em;
+            white-space: nowrap;
+            display: inline-block;
+        }
+        .status-pending   { background: #ffeeba; color: #856404; }
+        .status-confirmed { background: #d4edda; color: #155724; }
+        .status-rejected  { background: #f8d7da; color: #721c24; }
+
+        .items-list {
+            font-size: 0.88em;
+            color: #444;
+            margin: 0;
+            padding-left: 0;
+            list-style: none;
+            line-height: 1.7;
+        }
+        .items-list li {
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .items-list li:last-child { border-bottom: none; margin-bottom: 0; }
+
+        .customer-block { line-height: 1.8; font-size: 0.9em; }
+        .customer-block strong { font-size: 1em; color: #1f3b4d; }
+        .label {
+            color: #999;
+            font-size: 0.78em;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .address-block {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px dashed #ddd;
+            font-size: 0.85em;
+            color: #555;
+            line-height: 1.7;
+        }
+        .order-id {
+            font-family: monospace;
+            background: #eef2f7;
+            padding: 2px 6px;
             border-radius: 4px;
             font-size: 0.9em;
+            color: #1f3b4d;
         }
-        .status-pending { background: #ffeeba; color: #856404; }
-        .status-confirmed { background: #d4edda; color: #155724; }
-        .status-rejected { background: #f8d7da; color: #721c24; }
-        
-        .items-list {
-            font-size: 0.9em;
-            color: #555;
-            margin: 0;
-            padding-left: 15px;
+        .total-cell {
+            font-weight: 700;
+            color: #1f3b4d;
+            white-space: nowrap;
         }
+        .refresh-btn {
+            display: inline-block;
+            margin-bottom: 14px;
+            padding: 8px 18px;
+            background: #1f3b4d;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85em;
+        }
+        .refresh-btn:hover { background: #2b5a78; }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>📋 Histórico de Pedidos</h1>
-        <p style="text-align: center;"><a href="/admin" style="color: #007bff; text-decoration: none;">← Ir para Estoque</a></p>
-        
+        <p class="subtitle"><a href="/admin" style="color: #007bff; text-decoration: none;">← Ir para Estoque</a></p>
+
+        <button class="refresh-btn" onclick="loadOrders()">🔄 Atualizar</button>
+
         <table id="ordersTable">
             <thead>
                 <tr>
-                    <th>Data</th>
-                    <th>Pedido / Cliente</th>
+                    <th style="width:90px">Data</th>
+                    <th style="width:240px">Cliente</th>
                     <th>Itens</th>
-                    <th>Total</th>
-                    <th>Status</th>
+                    <th style="width:110px">Total</th>
+                    <th style="width:110px">Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -84,55 +142,91 @@
     <script>
         function formatDate(dateString) {
             const d = new Date(dateString);
-            return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            return d.toLocaleDateString('pt-BR', {
+                day: '2-digit', month: '2-digit', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
         }
 
         async function loadOrders() {
+            const tbody = document.querySelector('#ordersTable tbody');
+            tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:30px;">Carregando...</td></tr>';
             try {
                 const res = await fetch('/api/orders');
                 const orders = await res.json();
-                
-                const tbody = document.querySelector('#ordersTable tbody');
+
                 tbody.innerHTML = '';
 
-                if (Array.isArray(orders)) {
-                    orders.forEach(order => {
-                        let itemsHtml = '';
-                        try {
-                            const items = JSON.parse(order.items);
-                            itemsHtml = '<ul class="items-list">' + 
-                                items.map(i => `<li>${i.quantity}x ${i.name} (${i.color} - ${i.size})</li>`).join('') +
-                                '</ul>';
-                        } catch(e) {}
-
-                        let statusClass = 'status-pending';
-                        let statusText = 'Pendente';
-                        if (order.status === 'confirmed') { statusClass = 'status-confirmed'; statusText = 'Confirmado'; }
-                        if (order.status === 'rejected') { statusClass = 'status-rejected'; statusText = 'Recusado'; }
-                        if (order.status === 'cancelled') { statusClass = 'status-rejected'; statusText = 'Cancelado'; }
-
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>${formatDate(order.created_at)}</td>
-                            <td>
-                                <strong>#${order.id}</strong><br>
-                                ${order.customer_name}<br>
-                                <span style="font-size:0.8em; color:#777;">${order.customer_email}<br>${order.customer_phone}</span>
-                            </td>
-                            <td>${itemsHtml}</td>
-                            <td>R$ ${(order.total_cents / 100).toFixed(2).replace('.', ',')}</td>
-                            <td><span class="status ${statusClass}">${statusText}</span></td>
-                        `;
-                        tbody.appendChild(tr);
-                    });
+                if (!Array.isArray(orders) || orders.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:30px;">Nenhum pedido encontrado.</td></tr>';
+                    return;
                 }
+
+                orders.forEach(order => {
+
+                    // ── Items ──
+                    let itemsHtml = '<p style="color:#bbb;font-size:0.85em;">—</p>';
+                    try {
+                        const items = JSON.parse(order.items);
+                        itemsHtml = '<ul class="items-list">' +
+                            items.map(i => {
+                                if (i.id === 'shipping') {
+                                    return `<li>🚚 <em>${i.name}</em></li>`;
+                                }
+                                return `<li>
+                                    <strong>${i.quantity}x ${i.name}</strong><br>
+                                    &nbsp;&nbsp;🎨 <span class="label">Cor:</span> ${i.color || '—'}<br>
+                                    &nbsp;&nbsp;📏 <span class="label">Tamanho:</span> ${i.size || '—'}
+                                </li>`;
+                            }).join('') +
+                            '</ul>';
+                    } catch(e) {}
+
+                    // ── Status ──
+                    let statusClass = 'status-pending';
+                    let statusText  = '⏳ Pendente';
+                    if (order.status === 'confirmed') { statusClass = 'status-confirmed'; statusText = '✅ Confirmado'; }
+                    if (order.status === 'rejected')  { statusClass = 'status-rejected';  statusText = '❌ Recusado'; }
+                    if (order.status === 'cancelled') { statusClass = 'status-rejected';  statusText = '❌ Cancelado'; }
+
+                    // ── Address ──
+                    const hasAddress = order.address_street || order.address_cep;
+                    const addressHtml = hasAddress ? `
+                        <div class="address-block">
+                            📍 <strong>Endereço de entrega:</strong><br>
+                            ${order.address_street || ''}${order.address_number ? ', ' + order.address_number : ''}<br>
+                            ${order.address_neighborhood ? order.address_neighborhood + '<br>' : ''}
+                            ${order.address_city || ''}${order.address_state ? ' - ' + order.address_state : ''}<br>
+                            <span class="label">CEP:</span> ${order.address_cep || '—'}
+                        </div>
+                    ` : '';
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="font-size:0.82em; color:#555; white-space:nowrap;">${formatDate(order.created_at)}</td>
+                        <td>
+                            <div class="customer-block">
+                                <span class="order-id">#${order.id}</span><br>
+                                <strong>${order.customer_name || '—'}</strong><br>
+                                <span class="label">Email:</span> ${order.customer_email || '—'}<br>
+                                <span class="label">Tel:</span> ${order.customer_phone || '—'}<br>
+                                <span class="label">CPF:</span> ${order.customer_cpf || '—'}
+                                ${addressHtml}
+                            </div>
+                        </td>
+                        <td>${itemsHtml}</td>
+                        <td class="total-cell">R$ ${(order.total_cents / 100).toFixed(2).replace('.', ',')}</td>
+                        <td><span class="status ${statusClass}">${statusText}</span></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+
             } catch (e) {
                 console.error(e);
-                document.querySelector('#ordersTable tbody').innerHTML = '<tr><td colspan="5" style="text-align:center; color:red;">Erro ao carregar pedidos.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:red; padding:20px;">Erro ao carregar pedidos.</td></tr>';
             }
         }
 
-        // Load on start
         loadOrders();
     </script>
 </body>

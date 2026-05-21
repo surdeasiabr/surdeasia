@@ -501,6 +501,28 @@ function openWhatsApp(name, price) {
     window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`, '_blank');
 }
 
+function openWhatsAppFromModal() {
+    if (!currentModalProduct) return;
+    const p = currentModalProduct;
+    const color = selectedModalColor || (p.colors[0]?.name || '---');
+    const size  = selectedModalSize  || p.sizes[0]  || '---';
+
+    const lines = [
+        'Ola! Gostaria de fazer um pedido',
+        '',
+        'Peca: ' + p.name,
+        'Cor: ' + color,
+        'Tamanho: ' + size,
+        'Valor: ' + p.price,
+        '',
+        'Poderia confirmar a disponibilidade?'
+    ];
+
+    window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(lines.join('\n')), '_blank');
+}
+
+function updateModalWhatsAppLink() { /* now handled by openWhatsAppFromModal on click */ }
+
 /* ========== MODAL ========== */
 let currentModalProduct = null;
 let selectedModalSize = null;
@@ -550,55 +572,7 @@ function updateModalStockUI() {
     }
 }
 
-function selectModalSize(btn, size) {
-    selectedModalSize = size;
-    btn.closest('.size-options').querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    updateModalStockUI();
-}
 
-function selectModalColor(dot, colorName) {
-    selectedModalColor = colorName;
-    dot.closest('.color-options').querySelectorAll('.color-dot').forEach(d => d.classList.remove('active'));
-    dot.classList.add('active');
-
-    if (currentModalProduct && currentModalProduct.colors) {
-        const colorObj = currentModalProduct.colors.find(c => c.name === colorName);
-        if (colorObj && colorObj.image) {
-            document.getElementById('modal-img').src = colorObj.image;
-        }
-    }
-    updateModalStockUI();
-}
-
-function addToCartFromModal() {
-    if (!currentModalProduct) return;
-    
-    if (!checkStock(currentModalProduct.id, selectedModalSize, selectedModalColor)) {
-        return; // Prevents adding out of stock via quick add
-    }
-    
-    if (typeof SurdeCart !== 'undefined') {
-        SurdeCart.addItem(currentModalProduct, selectedModalSize, selectedModalColor);
-        closeModal();
-    }
-}
-
-function quickAddToCart(productId) {
-    const p = products.find(x => x.id === productId);
-    if (!p) return;
-    const size = p.sizes[0];
-    const color = p.colors[0]?.name || '';
-    
-    if (!checkStock(p.id, size, color)) {
-        alert('Este produto encontra-se esgotado nesta variação.');
-        return;
-    }
-    
-    if (typeof SurdeCart !== 'undefined') {
-        SurdeCart.addItem(p, size, color);
-    }
-}
 
 function openModal(id) {
     const p = products.find(x => x.id === id);
@@ -634,8 +608,8 @@ function openModal(id) {
         `<button class="size-btn ${i === 0 ? 'active' : ''}" onclick="selectModalSize(this, '${s}')">${s}</button>`
     ).join('');
 
-    const msg = encodeURIComponent(`Olá! Gostaria de comprar: ${p.name} (${p.price}).`);
-    document.getElementById('modal-whatsapp').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
+    // Build detailed WhatsApp link with current selections
+    updateModalWhatsAppLink();
 
     document.getElementById('product-modal').classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -688,6 +662,7 @@ function selectModalSize(btn, size) {
     selectedModalSize = size;
     btn.closest('.size-options').querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    updateModalWhatsAppLink();
 }
 
 function selectModalColor(dot, colorName) {
@@ -701,6 +676,7 @@ function selectModalColor(dot, colorName) {
             document.getElementById('modal-img').src = colorObj.image;
         }
     }
+    updateModalWhatsAppLink();
 }
 
 function addToCartFromModal() {

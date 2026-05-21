@@ -15,6 +15,16 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+// Disable cache for JS/CSS so updates always take effect immediately
+app.use((req, res, next) => {
+    if (/\.(js|css)(\?.*)?$/.test(req.url)) {
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+    }
+    next();
+});
+
 // Serve static files from parent directory (the frontend)
 app.use(express.static(path.join(__dirname, '..')));
 
