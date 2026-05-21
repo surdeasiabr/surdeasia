@@ -13,12 +13,19 @@ const SurdeCart = (() => {
         try {
             const saved = localStorage.getItem('surdeasia_cart');
             items = saved ? JSON.parse(saved) : [];
-        } catch { items = []; }
+            const savedCoupon = localStorage.getItem('surdeasia_coupon');
+            if (savedCoupon) appliedCoupon = JSON.parse(savedCoupon);
+        } catch { items = []; appliedCoupon = null; }
         updateBadge();
     }
 
     function save() {
         localStorage.setItem('surdeasia_cart', JSON.stringify(items));
+        if (appliedCoupon) {
+            localStorage.setItem('surdeasia_coupon', JSON.stringify(appliedCoupon));
+        } else {
+            localStorage.removeItem('surdeasia_coupon');
+        }
         updateBadge();
     }
 

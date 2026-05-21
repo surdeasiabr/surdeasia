@@ -5,6 +5,7 @@
 
 const API_BASE = window.location.origin;
 let cartItems = [];
+let appliedCoupon = null;
 let selectedShipping = null;
 
 // ── Initialize ──
@@ -19,7 +20,9 @@ function loadCart() {
     try {
         const saved = localStorage.getItem('surdeasia_cart');
         cartItems = saved ? JSON.parse(saved) : [];
-    } catch { cartItems = []; }
+        const savedCoupon = localStorage.getItem('surdeasia_coupon');
+        if (savedCoupon) appliedCoupon = JSON.parse(savedCoupon);
+    } catch { cartItems = []; appliedCoupon = null; }
 
     if (cartItems.length === 0) {
         window.location.href = '/';
@@ -46,12 +49,30 @@ function renderSummary() {
     `).join('');
 
     const subtotal = cartItems.reduce((s, i) => s + i.price * i.quantity, 0);
+    
+    let summaryHtml = '';
+    if (appliedCoupon) {
+        const discountAmount = appliedCoupon.value_cents / 100;
+        summaryHtml = `
+            <div class="summary-row" style="color: #2E7D32; margin-top: -10px; margin-bottom: 15px;">
+                <span>Desconto (${appliedCoupon.code})</span>
+                <span>- R$ ${discountAmount.toFixed(2).replace('.', ',')}</span>
+            </div>
+        `;
+    }
+    
     subtotalEl.textContent = `R$ ${subtotal.toFixed(2).replace('.', ',')}`;
+    if (appliedCoupon) {
+        subtotalEl.insertAdjacentHTML('afterend', summaryHtml);
+    }
     updateTotal();
 }
 
 function updateTotal() {
-    const subtotal = cartItems.reduce((s, i) => s + i.price * i.quantity, 0);
+    let subtotal = cartItems.reduce((s, i) => s + i.price * i.quantity, 0);
+    if (appliedCoupon) {
+        subtotal = Math.max(0, subtotal - (appliedCoupon.value_cents / 100));
+    }
     const shippingCost = selectedShipping ? selectedShipping.price : 0;
     const total = subtotal + shippingCost;
 
@@ -251,16 +272,23 @@ async function processCheckout() {
     });
 
     try {
+        const payload = { 
+            customer, 
+            items,
+            coupon_code: appliedCoupon ? appliedCoupon.code : null
+        };
+
         const response = await fetch(`${API_BASE}/api/pay/checkout`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ customer, items })
+            body: JSON.stringify(payload)
         });
 
         const data = await response.json();
 
         if (data.success) {
             localStorage.removeItem('surdeasia_cart');
+            localStorage.removeItem('surdeasia_coupon');
             window.location.href = data.checkoutUrl || data.sandboxUrl;
         } else {
             alert(data.message || 'Erro ao processar. Tente novamente.');
