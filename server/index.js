@@ -82,6 +82,52 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
+// Clean up abandoned pending orders and restore their stock (every 15 minutes)
+setInterval(async () => {
+    try {
+        if (!supabase) return;
+        const timeLimit = new Date(Date.now() - 45 * 60 * 1000).toISOString();
+        const { data: abandoned } = await supabase
+            .from('orders')
+            .select('id, items')
+            .eq('status', 'pending')
+            .lt('created_at', timeLimit);
+
+        if (abandoned && abandoned.length > 0) {
+            for (const order of abandoned) {
+                await supabase.from('orders').update({ status: 'cancelled' }).eq('id', order.id);
+                try {
+                    const items = JSON.parse(order.items);
+                    for (const item of items) {
+                        if (item.id === 'shipping') continue;
+                        const { data: stockData } = await supabase
+                            .from('stock')
+                            .select('stock')
+                            .eq('product_id', item.id)
+                            .eq('size', item.size)
+                            .eq('color', item.color)
+                            .single();
+                        if (stockData) {
+                            await supabase
+                                .from('stock')
+                                .update({ stock: stockData.stock + item.quantity })
+                                .eq('product_id', item.id)
+                                .eq('size', item.size)
+                                .eq('color', item.color);
+                            console.log(`📦 Estoque devolvido por abandono: +${item.quantity} de ${item.id}`);
+                        }
+                    }
+                } catch (err) {
+                    console.error('Erro ao restaurar estoque do pedido:', order.id, err);
+                }
+            }
+            console.log(`🧹 Limpeza: ${abandoned.length} pedidos abandonados foram cancelados.`);
+        }
+    } catch (e) {
+        console.error('Erro na limpeza de pedidos abandonados:', e);
+    }
+}, 15 * 60 * 1000);
+
 app.listen(PORT, () => {
     const hasToken = process.env.MERCADOPAGO_ACCESS_TOKEN && 
                      process.env.MERCADOPAGO_ACCESS_TOKEN !== 'SEU_ACCESS_TOKEN_AQUI';

@@ -46,31 +46,31 @@ router.post('/mercadopago', async (req, res) => {
                             
                         if (order) {
                             const items = JSON.parse(order.items);
-                            
-                            // Decrementar o estoque para cada item no Supabase
-                            for (const item of items) {
-                                try {
-                                    // Fetch current stock
-                                    const { data: stockData } = await supabase
-                                        .from('stock')
-                                        .select('stock')
-                                        .eq('product_id', item.id)
-                                        .eq('size', item.size)
-                                        .eq('color', item.color)
-                                        .single();
-                                    
-                                    if (stockData) {
-                                        await supabase
+                            // Se o pagamento falhar ou for cancelado, devolvemos o estoque
+                            if (status === 'rejected' || status === 'cancelled') {
+                                for (const item of items) {
+                                    if (item.id === 'shipping') continue;
+                                    try {
+                                        const { data: stockData } = await supabase
                                             .from('stock')
-                                            .update({ stock: stockData.stock - item.quantity })
+                                            .select('stock')
                                             .eq('product_id', item.id)
                                             .eq('size', item.size)
-                                            .eq('color', item.color);
+                                            .eq('color', item.color)
+                                            .single();
                                             
-                                        console.log(`📦 Estoque atualizado no Supabase: -${item.quantity} de Produto ${item.id} (${item.color} - ${item.size})`);
+                                        if (stockData) {
+                                            await supabase
+                                                .from('stock')
+                                                .update({ stock: stockData.stock + item.quantity })
+                                                .eq('product_id', item.id)
+                                                .eq('size', item.size)
+                                                .eq('color', item.color);
+                                            console.log(`📦 Estoque devolvido: +${item.quantity} de ${item.id}`);
+                                        }
+                                    } catch (e) {
+                                        console.error(`Erro ao devolver estoque para ${item.id}:`, e);
                                     }
-                                } catch (e) {
-                                    console.error(`Erro ao diminuir estoque para ${item.id} no Supabase:`, e);
                                 }
                             }
 

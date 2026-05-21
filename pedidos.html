@@ -162,6 +162,16 @@
                     return;
                 }
 
+                // Sort orders: Confirmado first, then Pendente, then others
+                orders.sort((a, b) => {
+                    const rank = { 'confirmed': 1, 'pending': 2, 'cancelled': 3, 'rejected': 4 };
+                    const rankA = rank[a.status] || 5;
+                    const rankB = rank[b.status] || 5;
+                    if (rankA !== rankB) return rankA - rankB;
+                    // Sort by date descending for same status
+                    return new Date(b.created_at) - new Date(a.created_at);
+                });
+
                 orders.forEach(order => {
 
                     // ── Items ──

@@ -33,6 +33,47 @@ router.post('/checkout', async (req, res) => {
             return sum + Math.round(item.price * 100) * item.quantity;
         }, 0);
 
+        const supabase = require('../services/supabase');
+
+        // Check stock for all items
+        const stockUpdates = [];
+        for (const item of items) {
+            if (item.id === 'shipping') continue;
+            
+            const { data: stockData } = await supabase
+                .from('stock')
+                .select('stock')
+                .eq('product_id', item.id)
+                .eq('size', item.size)
+                .eq('color', item.color)
+                .single();
+                
+            if (stockData) {
+                if (stockData.stock < item.quantity) {
+                    return res.status(400).json({ 
+                        success: false, 
+                        message: `O produto "${item.name}" não tem estoque suficiente no momento.` 
+                    });
+                }
+                stockUpdates.push({
+                    product_id: item.id,
+                    size: item.size,
+                    color: item.color,
+                    new_stock: stockData.stock - item.quantity
+                });
+            }
+        }
+
+        // Reserve stock immediately
+        for (const update of stockUpdates) {
+            await supabase
+                .from('stock')
+                .update({ stock: update.new_stock })
+                .eq('product_id', update.product_id)
+                .eq('size', update.size)
+                .eq('color', update.color);
+        }
+
         // Save order in DB as pending
         const { error: dbError } = await require('../services/supabase')
             .from('orders')
