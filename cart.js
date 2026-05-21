@@ -345,6 +345,43 @@ const SurdeCart = (() => {
         }
     }
 
+    async function applyCoupon() {
+        const input = document.getElementById('cart-coupon-input');
+        if (!input) return;
+        const code = input.value.trim();
+        const msgEl = document.getElementById('cart-coupon-msg');
+        
+        if (!code) return;
+        
+        try {
+            msgEl.style.display = 'block';
+            msgEl.className = 'cart-coupon-message';
+            msgEl.textContent = 'Validando...';
+            
+            const res = await fetch(`/api/coupons/validate/${code}`);
+            const data = await res.json();
+            
+            if (data.valid) {
+                appliedCoupon = { code: code.toUpperCase(), value_cents: data.value_cents };
+                save();
+                renderDrawer();
+            } else {
+                msgEl.className = 'cart-coupon-message error';
+                msgEl.textContent = data.error || 'Cupom inválido.';
+                setTimeout(() => { if (!appliedCoupon) msgEl.style.display = 'none'; }, 3000);
+            }
+        } catch (e) {
+            msgEl.className = 'cart-coupon-message error';
+            msgEl.textContent = 'Erro ao validar cupom.';
+        }
+    }
+
+    function removeCoupon() {
+        appliedCoupon = null;
+        save();
+        renderDrawer();
+    }
+
     return {
         init,
         addItem,
@@ -357,7 +394,9 @@ const SurdeCart = (() => {
         openDrawer,
         closeDrawer,
         renderDrawer,
-        openWhatsAppCart
+        openWhatsAppCart,
+        applyCoupon,
+        removeCoupon
     };
 })();
 
