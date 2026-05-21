@@ -302,7 +302,7 @@ const SurdeCart = (() => {
                 </div>
                 <div class="cart-drawer-footer" id="cart-footer" style="display:none;">
                     <div class="cart-coupon-area" id="cart-coupon-area">
-                        <input type="text" id="cart-coupon-input" placeholder="Possui cupom/vale?">
+                        <input type="text" id="cart-coupon-input" placeholder="Possui cupom/vale?" onkeypress="if(event.key==='Enter') SurdeCart.applyCoupon()">
                         <button onclick="SurdeCart.applyCoupon()">Aplicar</button>
                     </div>
                     <div id="cart-coupon-msg" class="cart-coupon-message"></div>
