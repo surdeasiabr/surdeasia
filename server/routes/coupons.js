@@ -71,4 +71,23 @@ router.post('/', async (req, res) => {
     }
 });
 
+// List all active coupons (Admin)
+router.get('/', async (req, res) => {
+    try {
+        if (!supabase) return res.status(500).json({ error: 'Supabase não configurado' });
+
+        const { data: coupons, error } = await supabase
+            .from('coupons')
+            .select('*')
+            .eq('is_used', false)
+            .order('created_at', { ascending: false });
+
+        if (error) throw error;
+        res.json(coupons);
+    } catch (e) {
+        console.error('Erro ao buscar cupons:', e);
+        res.status(500).json({ error: 'Erro ao buscar cupons.' });
+    }
+});
+
 module.exports = router;

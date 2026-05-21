@@ -140,6 +140,23 @@
             font-weight: bold;
         }
         .coupon-panel button:hover { background: #218838; }
+
+        .active-coupons {
+            margin-bottom: 24px;
+            font-size: 0.9em;
+        }
+        .coupon-tag {
+            display: inline-block;
+            background: #d4edda;
+            color: #155724;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            border: 1px solid #c3e6cb;
+            font-family: monospace;
+            font-size: 1.1em;
+        }
     </style>
 </head>
 <body>
@@ -153,6 +170,11 @@
             <input type="text" id="new-coupon-code" placeholder="CÓDIGO (ex: TROCA-ANA)">
             <input type="number" id="new-coupon-value" placeholder="Valor em R$" style="width: 120px;">
             <button onclick="createCoupon()">Gerar Cupom</button>
+        </div>
+
+        <div class="active-coupons" id="activeCouponsContainer" style="display:none;">
+            <strong>Cupons Ativos (Não usados):</strong>
+            <div id="activeCouponsList" style="margin-top: 8px;"></div>
         </div>
 
         <button class="refresh-btn" onclick="loadOrders()">🔄 Atualizar Pedidos</button>
@@ -174,6 +196,27 @@
     </div>
 
     <script>
+        async function loadCoupons() {
+            try {
+                const res = await fetch('/api/coupons');
+                const coupons = await res.json();
+                const container = document.getElementById('activeCouponsContainer');
+                const list = document.getElementById('activeCouponsList');
+                
+                if (coupons && coupons.length > 0) {
+                    container.style.display = 'block';
+                    list.innerHTML = coupons.map(c => 
+                        `<span class="coupon-tag">${c.code} (- R$ ${(c.value_cents/100).toFixed(2).replace('.', ',')})</span>`
+                    ).join('');
+                } else {
+                    container.style.display = 'none';
+                    list.innerHTML = '';
+                }
+            } catch (e) {
+                console.error('Erro ao carregar cupons:', e);
+            }
+        }
+
         async function createCoupon() {
             const code = document.getElementById('new-coupon-code').value.trim();
             const valueReais = parseFloat(document.getElementById('new-coupon-value').value);
@@ -196,6 +239,7 @@
                     alert(`✅ Cupom gerado com sucesso!\n\nCódigo: ${data.code}\nValor: R$ ${valueReais.toFixed(2)}\n\nEnvie este código para a cliente.`);
                     document.getElementById('new-coupon-code').value = '';
                     document.getElementById('new-coupon-value').value = '';
+                    loadCoupons();
                 } else {
                     alert('Erro: ' + (data.error || 'Falha ao gerar cupom.'));
                 }
@@ -329,6 +373,7 @@
         }
 
         loadOrders();
+        loadCoupons();
     </script>
 </body>
 </html>
