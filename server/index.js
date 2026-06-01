@@ -36,6 +36,32 @@ app.use('/api/contact', require('./routes/contact'));
 app.use('/api/estoque', require('./routes/estoque'));
 app.use('/api/coupons', require('./routes/coupons'));
 
+// Wholesale Leads API
+app.post('/api/wholesale-leads', async (req, res) => {
+    try {
+        if (!supabase) throw new Error('Supabase not configured');
+        const lead = req.body;
+        const { data, error } = await supabase.from('wholesale_leads').insert([lead]);
+        if (error) throw error;
+        res.json({ success: true });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ error: e.message });
+    }
+});
+
+app.get('/api/wholesale-leads', async (req, res) => {
+    try {
+        if (!supabase) throw new Error('Supabase not configured');
+        const { data, error } = await supabase.from('wholesale_leads').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        res.json(data);
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ error: e.message });
+    }
+});
+
 app.get('/api/debug', (req, res) => {
     res.json({
         url_exists: !!process.env.SUPABASE_URL,
