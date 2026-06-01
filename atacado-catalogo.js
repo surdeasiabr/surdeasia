@@ -2,7 +2,7 @@
 
 let atacadoCart = [];
 const MIN_PIECES = 30;
-const CATALOG_PASSWORD = 'VERAO'; // Senha hardcoded (o dono passará isso no WhatsApp)
+const CATALOG_PASSWORD = 'SDA520'; // Senha hardcoded (o dono passará isso no WhatsApp)
 // Note: products and WHATSAPP_NUMBER are loaded from products.js
 
 document.addEventListener('DOMContentLoaded', () => {
