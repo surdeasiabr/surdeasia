@@ -179,21 +179,29 @@
                 <form id="atacado-form">
                     <input type="hidden" id="form-type" value="atacado">
                     <div class="form-group">
-                        <label for="name">Nome / Empresa *</label>
-                        <input type="text" id="name" class="form-control" required placeholder="Seu nome ou nome da sua loja">
+                        <label for="name">Nome Completo *</label>
+                        <input type="text" id="name" class="form-control" required placeholder="Seu nome">
+                    </div>
+                    <div class="form-group">
+                        <label for="empresa">Nome da Loja / Empresa (Opcional)</label>
+                        <input type="text" id="empresa" class="form-control" placeholder="Nome do seu negócio">
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail *</label>
-                        <input type="email" id="email" class="form-control" required placeholder="Para onde enviaremos a proposta?">
+                        <input type="email" id="email" class="form-control" required placeholder="Para onde enviaremos a confirmação?">
                     </div>
                     <div class="form-group">
                         <label for="message">Mensagem (opcional)</label>
                         <textarea id="message" class="form-control" placeholder="Conte um pouco sobre seu negócio (ex: Onde fica? Qual o perfil do seu cliente?)"></textarea>
                     </div>
                     <button type="submit" class="ar-btn ar-btn-primary form-submit" id="submit-btn">
-                        Receber Proposta por E-mail
+                        Solicitar Senha de Acesso
                     </button>
                     <div id="form-feedback" class="form-feedback"></div>
+                    
+                    <a id="whatsapp-btn" href="#" target="_blank" class="ar-btn ar-btn-primary form-submit" style="display:none; background:#25D366; border-color:#25D366; text-decoration:none; text-align:center;">
+                        Chamar no WhatsApp para liberar senha
+                    </a>
                 </form>
             </div>
         </div>
@@ -242,6 +250,7 @@
         const form = document.getElementById('atacado-form');
         const submitBtn = document.getElementById('submit-btn');
         const feedback = document.getElementById('form-feedback');
+        const whatsappBtn = document.getElementById('whatsapp-btn');
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -249,33 +258,42 @@
             submitBtn.textContent = 'Enviando...';
             submitBtn.disabled = true;
             feedback.className = 'form-feedback';
+            whatsappBtn.style.display = 'none';
             
             const data = {
                 name: document.getElementById('name').value,
+                empresa: document.getElementById('empresa').value,
                 email: document.getElementById('email').value,
                 message: document.getElementById('message').value,
                 type: document.getElementById('form-type').value
             };
 
+            const fullMessage = `Empresa: ${data.empresa || 'Não informado'}\n\n${data.message || 'Interesse em acesso ao catálogo de atacado.'}`;
+
             try {
                 await emailjs.send('service_8vjqq7n', 'template_fjhz5kg', {
-                    title: 'Proposta Atacado - SURDEASIA',
+                    title: 'Solicitação de Senha - Catálogo Atacado',
                     name: data.name,
                     email: data.email,
-                    mensagem: data.message || 'Interesse em proposta de atacado.',
+                    mensagem: fullMessage,
                     tipo: 'Atacado'
                 });
 
-                feedback.textContent = "Excelente! Recebemos sua solicitação. Em breve entraremos em contato com a proposta completa.";
+                feedback.textContent = "Excelente! Dados enviados com sucesso.";
                 feedback.classList.add('success');
-                form.reset();
+                
+                // Show WhatsApp Button
+                const waMsg = encodeURIComponent(`Olá, acabei de preencher o formulário no site. Meu nome é ${data.name} e gostaria da senha para acessar o catálogo de atacado.`);
+                whatsappBtn.href = `https://wa.me/5521972100797?text=${waMsg}`;
+                whatsappBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+                
             } catch (error) {
                 console.error('EmailJS error:', error);
                 const msg = error?.text || error?.message || JSON.stringify(error);
                 feedback.textContent = `Erro EmailJS: ${msg}`;
                 feedback.classList.add('error');
-            } finally {
-                submitBtn.textContent = 'Receber Proposta por E-mail';
+                submitBtn.textContent = 'Solicitar Senha de Acesso';
                 submitBtn.disabled = false;
             }
         });

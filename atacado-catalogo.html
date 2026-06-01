@@ -18,40 +18,58 @@
 
     <header class="cat-header">
         <h1>Catálogo Atacado</h1>
-        <p>Condições exclusivas para revendedores (Pedido Mínimo: 20 peças)</p>
+        <p>Condições exclusivas para revendedores (Pedido Mínimo: 30 peças)</p>
         <div class="cat-header-rules">
             <span>🏷️ 40% OFF no valor final</span>
             <span>💰 Pagamento: 50% Sinal / 50% Envio</span>
         </div>
     </header>
 
-    <main class="cat-main">
-        <div id="catalog-grid" class="cat-grid">
-            <!-- Produtos renderizados por JS -->
+    <div id="login-overlay" class="login-overlay">
+        <div class="login-box">
+            <img src="images/logo-transparent.png" alt="SURDEASIA" class="login-logo">
+            <h2>Acesso Restrito</h2>
+            <p>O catálogo de atacado é exclusivo para lojistas e revendedores autorizados.</p>
+            <input type="text" id="catalog-password-input" placeholder="Digite sua senha de acesso" onkeypress="if(event.key==='Enter') loginCatalog()">
+            <div id="login-error" class="login-error" style="display:none;"></div>
+            <button class="cat-btn" onclick="loginCatalog()" style="width: 100%; margin-top: 15px;">Acessar Catálogo</button>
+            
+            <div class="login-footer">
+                Ainda não tem a senha?<br>
+                <a href="atacado.html#contato-atacado">Preencha o formulário para solicitar</a>
+            </div>
         </div>
-    </main>
+    </div>
 
-    <div class="cat-cart-bar" id="cart-bar">
-        <div class="cat-cart-inner">
-            <div class="cat-cart-stats">
-                <div class="cat-stat">
-                    <span class="cat-stat-label">Total de Peças</span>
-                    <strong id="cart-qty">0 / 20</strong>
+    <div id="catalog-content" style="display:none;">
+        <main class="cat-main">
+            <div id="catalog-grid" class="cat-grid">
+                <!-- Produtos renderizados por JS -->
+            </div>
+        </main>
+
+        <div class="cat-cart-bar" id="cart-bar">
+            <div class="cat-cart-inner">
+                <div class="cat-cart-stats">
+                    <div class="cat-stat">
+                        <span class="cat-stat-label">Total de Peças</span>
+                        <strong id="cart-qty">0 / 30</strong>
+                    </div>
+                    <div class="cat-stat">
+                        <span class="cat-stat-label">Valor Atacado</span>
+                        <strong id="cart-total">R$ 0,00</strong>
+                    </div>
                 </div>
-                <div class="cat-stat">
-                    <span class="cat-stat-label">Valor Atacado</span>
-                    <strong id="cart-total">R$ 0,00</strong>
-                </div>
+                
+                <button id="cart-btn" class="cat-btn" disabled>
+                    Faltam 30 peças
+                </button>
             </div>
             
-            <button id="cart-btn" class="cat-btn" disabled>
-                Faltam 20 peças
-            </button>
-        </div>
-        
-        <div id="cart-breakdown" class="cat-cart-breakdown" style="display: none;">
-            <div><span>Sinal (50%):</span> <strong id="cart-sinal">R$ 0,00</strong></div>
-            <div><span>Envio (50%):</span> <strong id="cart-envio">R$ 0,00</strong></div>
+            <div id="cart-breakdown" class="cat-cart-breakdown" style="display: none;">
+                <div><span>Sinal (50%):</span> <strong id="cart-sinal">R$ 0,00</strong></div>
+                <div><span>Envio (50%):</span> <strong id="cart-envio">R$ 0,00</strong></div>
+            </div>
         </div>
     </div>
 

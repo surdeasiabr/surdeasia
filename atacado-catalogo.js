@@ -1,13 +1,39 @@
 /* ========== ATACADO LOGIC ========== */
 
 let atacadoCart = [];
-const MIN_PIECES = 20;
+const MIN_PIECES = 30;
+const CATALOG_PASSWORD = 'VERAO'; // Senha hardcoded (o dono passará isso no WhatsApp)
 // Note: products and WHATSAPP_NUMBER are loaded from products.js
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderCatalog();
-    updateCartUI();
+    checkAuth();
 });
+
+function checkAuth() {
+    const isAuth = localStorage.getItem('surdeasia_atacado_auth');
+    if (isAuth === 'true') {
+        document.getElementById('login-overlay').style.display = 'none';
+        document.getElementById('catalog-content').style.display = 'block';
+        renderCatalog();
+        updateCartUI();
+    } else {
+        document.getElementById('login-overlay').style.display = 'flex';
+        document.getElementById('catalog-content').style.display = 'none';
+    }
+}
+
+function loginCatalog() {
+    const input = document.getElementById('catalog-password-input').value.trim().toUpperCase();
+    const errorEl = document.getElementById('login-error');
+    
+    if (input === CATALOG_PASSWORD) {
+        localStorage.setItem('surdeasia_atacado_auth', 'true');
+        checkAuth();
+    } else {
+        errorEl.textContent = 'Senha incorreta. Solicite a senha via WhatsApp.';
+        errorEl.style.display = 'block';
+    }
+}
 
 function getWholesalePrice(retailPrice) {
     return retailPrice * 0.60;
