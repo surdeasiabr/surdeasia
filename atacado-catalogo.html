@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Atacado — SURDEASIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="atacado-catalogo.css">
+</head>
+<body>
+    <nav class="cat-nav">
+        <a href="atacado.html" class="cat-nav-back">← Voltar</a>
+        <div class="cat-nav-logo">
+            <img src="images/logo-transparent.png" alt="SURDEASIA">
+        </div>
+        <div class="cat-nav-info">Atacado Exclusivo</div>
+    </nav>
+
+    <header class="cat-header">
+        <h1>Catálogo Atacado</h1>
+        <p>Condições exclusivas para revendedores (Pedido Mínimo: 20 peças)</p>
+        <div class="cat-header-rules">
+            <span>🏷️ 40% OFF no valor final</span>
+            <span>💰 Pagamento: 50% Sinal / 50% Envio</span>
+        </div>
+    </header>
+
+    <main class="cat-main">
+        <div id="catalog-grid" class="cat-grid">
+            <!-- Produtos renderizados por JS -->
+        </div>
+    </main>
+
+    <div class="cat-cart-bar" id="cart-bar">
+        <div class="cat-cart-inner">
+            <div class="cat-cart-stats">
+                <div class="cat-stat">
+                    <span class="cat-stat-label">Total de Peças</span>
+                    <strong id="cart-qty">0 / 20</strong>
+                </div>
+                <div class="cat-stat">
+                    <span class="cat-stat-label">Valor Atacado</span>
+                    <strong id="cart-total">R$ 0,00</strong>
+                </div>
+            </div>
+            
+            <button id="cart-btn" class="cat-btn" disabled>
+                Faltam 20 peças
+            </button>
+        </div>
+        
+        <div id="cart-breakdown" class="cat-cart-breakdown" style="display: none;">
+            <div><span>Sinal (50%):</span> <strong id="cart-sinal">R$ 0,00</strong></div>
+            <div><span>Envio (50%):</span> <strong id="cart-envio">R$ 0,00</strong></div>
+        </div>
+    </div>
+
+    <!-- Modals ou Toasts -->
+    <div id="toast" class="cat-toast">Adicionado</div>
+
+    <script src="products.js?v=5"></script>
+    <script src="atacado-catalogo.js?v=1"></script>
+</body>
+</html>
