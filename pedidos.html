@@ -101,6 +101,27 @@
             color: #1f3b4d;
             white-space: nowrap;
         }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .header h1 { font-size: 24px; font-weight: 600; }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #1f3b4d;
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            border: 1px solid #e1e8ed;
+            margin-left: 10px;
+            transition: 0.2s;
+        }
+        .nav-links a:hover { background: #e1e8ed; }
+
         .refresh-btn {
             display: inline-block;
             margin-bottom: 14px;
@@ -162,8 +183,16 @@
 <body>
 
     <div class="container">
-        <h1>📋 Histórico de Pedidos</h1>
-        <p class="subtitle"><a href="/admin" style="color: #007bff; text-decoration: none;">← Ir para Estoque</a></p>
+        <div class="header">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <h1>📋 Histórico de Pedidos</h1>
+            </div>
+            <div class="nav-links">
+                <a href="/admin" style="font-size: 0.9em; margin-right: 15px;">← Ir para Estoque</a>
+                <a href="atacadistas.html">👥 Ver Atacadistas (Leads)</a>
+                <a href="index.html" target="_blank">🌐 Ir para o site</a>
+            </div>
+        </div>
 
         <div class="coupon-panel">
             <strong>🎫 Gerar Vale-Compras:</strong>

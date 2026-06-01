@@ -183,8 +183,32 @@
                         <input type="text" id="name" class="form-control" required placeholder="Seu nome">
                     </div>
                     <div class="form-group">
-                        <label for="empresa">Nome da Loja / Empresa (Opcional)</label>
+                        <label for="empresa">Nome da Loja / Empresa</label>
                         <input type="text" id="empresa" class="form-control" placeholder="Nome do seu negócio">
+                    </div>
+                    <div class="form-group">
+                        <label for="cnpj">CNPJ (Opcional)</label>
+                        <input type="text" id="cnpj" class="form-control" placeholder="00.000.000/0000-00">
+                    </div>
+                    <div style="display: flex; gap: 15px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="celular">Celular / WhatsApp *</label>
+                            <input type="tel" id="celular" class="form-control" required placeholder="(DDD) 90000-0000">
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <label for="instagram">Instagram da Loja (Opcional)</label>
+                            <input type="text" id="instagram" class="form-control" placeholder="@suamarca">
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 15px;">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="estado">Estado (UF) *</label>
+                            <input type="text" id="estado" class="form-control" required placeholder="Ex: SP">
+                        </div>
+                        <div class="form-group" style="flex: 2;">
+                            <label for="cidade">Cidade *</label>
+                            <input type="text" id="cidade" class="form-control" required placeholder="Sua cidade">
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="email">E-mail *</label>
@@ -263,21 +287,46 @@
             const data = {
                 name: document.getElementById('name').value,
                 empresa: document.getElementById('empresa').value,
+                cnpj: document.getElementById('cnpj').value,
+                celular: document.getElementById('celular').value,
+                instagram: document.getElementById('instagram').value,
+                estado: document.getElementById('estado').value,
+                cidade: document.getElementById('cidade').value,
                 email: document.getElementById('email').value,
-                message: document.getElementById('message').value,
-                type: document.getElementById('form-type').value
+                message: document.getElementById('message').value
             };
 
-            const fullMessage = `Empresa: ${data.empresa || 'Não informado'}\n\n${data.message || 'Interesse em acesso ao catálogo de atacado.'}`;
+            const fullMessage = `
+Empresa: ${data.empresa || 'Não informado'}
+CNPJ: ${data.cnpj || 'Não informado'}
+Celular: ${data.celular}
+Instagram: ${data.instagram || 'Não informado'}
+Local: ${data.cidade} - ${data.estado}
+
+Mensagem:
+${data.message || 'Interesse em acesso ao catálogo de atacado.'}
+            `;
 
             try {
-                await emailjs.send('service_8vjqq7n', 'template_fjhz5kg', {
+                // 1. Send email notification
+                emailjs.send('service_8vjqq7n', 'template_fjhz5kg', {
                     title: 'Solicitação de Senha - Catálogo Atacado',
                     name: data.name,
                     email: data.email,
                     mensagem: fullMessage,
                     tipo: 'Atacado'
+                }).catch(e => console.error('Email error (ignoring)', e));
+
+                // 2. Save to database
+                const response = await fetch('/api/wholesale-leads', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
                 });
+                
+                if (!response.ok) {
+                    console.error('Failed to save lead to database');
+                }
 
                 feedback.textContent = "Excelente! Dados enviados com sucesso.";
                 feedback.classList.add('success');
@@ -289,9 +338,9 @@
                 submitBtn.style.display = 'none';
                 
             } catch (error) {
-                console.error('EmailJS error:', error);
-                const msg = error?.text || error?.message || JSON.stringify(error);
-                feedback.textContent = `Erro EmailJS: ${msg}`;
+                console.error('Error:', error);
+                const msg = error?.message || 'Erro desconhecido';
+                feedback.textContent = `Erro: ${msg}`;
                 feedback.classList.add('error');
                 submitBtn.textContent = 'Solicitar Senha de Acesso';
                 submitBtn.disabled = false;

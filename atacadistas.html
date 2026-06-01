@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel de Atacadistas — SURDEASIA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body { background: #f4f7f6; color: #1f3b4d; padding: 40px; }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .header h1 { font-size: 24px; font-weight: 600; }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #1f3b4d;
+            background: #fff;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            border: 1px solid #e1e8ed;
+            margin-left: 10px;
+            transition: 0.2s;
+        }
+        .nav-links a:hover { background: #e1e8ed; }
+
+        .filters {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #e1e8ed;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        .filters input {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            outline: none;
+            width: 300px;
+        }
+
+        .table-container {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e1e8ed;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th, td { padding: 15px 20px; border-bottom: 1px solid #f0f4f8; }
+        th { 
+            background: #f8fafb; 
+            font-size: 13px; 
+            text-transform: uppercase; 
+            color: #667; 
+            font-weight: 600;
+            cursor: pointer;
+        }
+        th:hover { background: #f0f4f8; }
+        tr:hover { background: #fcfcfd; }
+        
+        .btn-wa {
+            background: #25D366;
+            color: #fff;
+            text-decoration: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .btn-wa:hover { background: #20bd5a; }
+
+        .tag-info {
+            font-size: 12px;
+            background: #eef2f7;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #556;
+            margin-top: 4px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>Gerenciar Atacadistas (Leads)</h1>
+        <div class="nav-links">
+            <a href="pedidos.html">📦 Ver Pedidos</a>
+            <a href="index.html" target="_blank">🌐 Ir para o site</a>
+        </div>
+    </div>
+
+    <div class="filters">
+        <input type="text" id="search" placeholder="Buscar por nome, cidade, estado..." onkeyup="renderTable()">
+        <span style="font-size: 14px; color: #666;" id="count-label">0 contatos encontrados</span>
+    </div>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th onclick="setSort('created_at')">Data ▼</th>
+                    <th onclick="setSort('name')">Contato</th>
+                    <th onclick="setSort('empresa')">Empresa / CNPJ</th>
+                    <th onclick="setSort('cidade')">Localização</th>
+                    <th>Instagram</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody id="table-body">
+                <tr><td colspan="6" style="text-align: center;">Carregando...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let leads = [];
+        let sortCol = 'created_at';
+        let sortAsc = false;
+
+        async function fetchLeads() {
+            try {
+                const res = await fetch('/api/wholesale-leads');
+                const data = await res.json();
+                leads = data;
+                renderTable();
+            } catch (e) {
+                console.error(e);
+                document.getElementById('table-body').innerHTML = `<tr><td colspan="6" style="color:red; text-align:center;">Erro ao carregar os dados.</td></tr>`;
+            }
+        }
+
+        function setSort(col) {
+            if (sortCol === col) {
+                sortAsc = !sortAsc;
+            } else {
+                sortCol = col;
+                sortAsc = true;
+            }
+            renderTable();
+        }
+
+        function renderTable() {
+            const term = document.getElementById('search').value.toLowerCase();
+            
+            // Filter
+            let filtered = leads.filter(l => {
+                const text = `${l.name} ${l.empresa} ${l.cidade} ${l.estado} ${l.celular} ${l.email}`.toLowerCase();
+                return text.includes(term);
+            });
+
+            // Sort
+            filtered.sort((a, b) => {
+                let valA = a[sortCol] || '';
+                let valB = b[sortCol] || '';
+                
+                if (valA < valB) return sortAsc ? -1 : 1;
+                if (valA > valB) return sortAsc ? 1 : -1;
+                return 0;
+            });
+
+            document.getElementById('count-label').textContent = `${filtered.length} contato(s)`;
+
+            const tbody = document.getElementById('table-body');
+            
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align: center;">Nenhum contato encontrado.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(l => {
+                const date = new Date(l.created_at).toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                
+                // Clean phone for whatsapp
+                const cleanPhone = (l.celular || '').replace(/\D/g, '');
+                const waLink = cleanPhone ? `https://wa.me/55${cleanPhone}?text=Ol%C3%A1%20${encodeURIComponent(l.name)}!%20Aqui%20%C3%A9%20da%20SURDEASIA.%20Recebemos%20seu%20cadastro%20para%20atacado.` : '#';
+
+                return `
+                    <tr>
+                        <td>${date}</td>
+                        <td>
+                            <strong>${l.name || '-'}</strong><br>
+                            <span class="tag-info">📱 ${l.celular || '-'}</span><br>
+                            <span class="tag-info">✉️ ${l.email || '-'}</span>
+                        </td>
+                        <td>
+                            ${l.empresa || '-'}<br>
+                            ${l.cnpj ? `<span class="tag-info">📄 ${l.cnpj}</span>` : ''}
+                        </td>
+                        <td>
+                            ${l.cidade || '-'} - <strong>${l.estado || '-'}</strong>
+                        </td>
+                        <td>
+                            ${l.instagram ? `<a href="https://instagram.com/${l.instagram.replace('@','')}" target="_blank" style="color:#e1306c; text-decoration:none;">${l.instagram}</a>` : '-'}
+                        </td>
+                        <td>
+                            ${cleanPhone ? `<a href="${waLink}" target="_blank" class="btn-wa">WhatsApp</a>` : '-'}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        fetchLeads();
+    </script>
+</body>
+</html>
