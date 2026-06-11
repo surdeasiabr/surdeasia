@@ -191,24 +191,21 @@ const products = [
         "name": "Chemisse Wave Voil Viscosa",
         "price": "R$ 380,00",
         "priceNum": 380,
-        "image": "images/Chemisse de Voil Azul Stone 111.png",
+        "image": "images/Chemisse Azul Stone Medit 2000.png",
         "images": [
-            "images/Chemisse de Voil Azul Stone 111.png",
-            "images/Chemisse de Voil Azul Stone 222.png",
-            "images/Chemisse Wave Voil Viscosa 1.jpeg",
-            "images/Chemisse Wave Voil Viscosa 2.jpeg",
-            "images/Chemisse Wave Voil Viscosa 4.jpeg",
-            "images/Chemisse Wave Voil Viscosa 5.jpeg",
-            "images/Chemisse Viscosa Celeste 100.png",
-            "images/Chemisse Viscosa Celeste 200.png",
-            "images/Chemisse Wave Azul Viscosa Stoneado.png"
+            "images/Chemisse Azul Stone Medit 2000.png",
+            "images/Chemisse Azul Stone Medit 2001.png",
+            "images/Chemisse Azul Stone Medit 2002.png",
+            "images/Chemisse Azul Stone Medit 2003.png",
+            "images/Chemisse Azul Celeste 2000.png",
+            "images/Chemisse Azul Celeste 2003.png",
+            "images/Chemisse Azul Celeste 2002.png"
         ],
         "category": "Camisas",
         "badge": "Novo",
         "colors": [
-            { "name": "Azul Stoneado", "hex": "#4A6B8A", "image": "images/Chemisse de Voil Azul Stone 111.png", "indices": [0, 1, 8] },
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse Wave Voil Viscosa 1.jpeg", "indices": [2, 3, 4, 5] },
-            { "name": "Celeste", "hex": "#87CEEB", "image": "images/Chemisse Viscosa Celeste 100.png", "indices": [6, 7] }
+            { "name": "Azul Mediterraneo Stoneado", "hex": "#4A6B8A", "image": "images/Chemisse Azul Stone Medit 2000.png", "indices": [0, 1, 2, 3] },
+            { "name": "Azul Celeste", "hex": "#87CEEB", "image": "images/Chemisse Azul Celeste 2000.png", "indices": [4, 5, 6] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Chemisse Wave em voil de viscose. Peça elegante, leve e fluida, perfeita para compor looks de verão com sofisticação."
@@ -426,18 +423,21 @@ const products = [
         "name": "Faixa Mahalo",
         "price": "R$ 290,00",
         "priceNum": 290,
-        "image": "images/Macacao dulu 555.png",
+        "image": "images/Faixa Mahalo Caramelo 2000.png",
         "images": [
-            "images/Macacao dulu 555.png",
-            "images/Vestido Aloha e faixa.png",
-            "images/Vestido Aloha e Faixa 2.png",
-            "images/Vestido Aloha e Faixa 3.png",
-            "images/Vestido Mahalo e Faixa.png"
+            "images/Faixa Mahalo Caramelo 2000.png",
+            "images/Faixa Mahalo Caramelo 2001.png",
+            "images/Faixa Mahalo Bege 2000.png",
+            "images/Faixa Mahalo Bege 2001.png",
+            "images/Faixa Mahalo Preto Velho 2000.png",
+            "images/Faixa Mahalo Preto Velho 2001.png"
         ],
         "category": "Acessórios",
         "badge": "Novo",
         "colors": [
-            { "name": "Bege", "hex": "#D5C4B3", "image": "images/Macacao dulu 555.png", "indices": [0, 1, 2, 3, 4] }
+            { "name": "Caramelo", "hex": "#B57C4C", "image": "images/Faixa Mahalo Caramelo 2000.png", "indices": [0, 1] },
+            { "name": "Bege", "hex": "#D5C4B3", "image": "images/Faixa Mahalo Bege 2000.png", "indices": [2, 3] },
+            { "name": "Preto Velho", "hex": "#2A2A2A", "image": "images/Faixa Mahalo Preto Velho 2000.png", "indices": [4, 5] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Faixa de couro autêntico, cuidadosamente feita à mão e detalhada com argolas de metal. O acessório perfeito para marcar a silhueta com personalidade e dar um toque rústico e sofisticado ao seu visual."
