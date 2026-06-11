@@ -65,6 +65,35 @@
         .btn-update:hover {
             background-color: #0069d9;
         }
+        .btn-sync {
+            background-color: #17a2b8;
+        }
+        .btn-sync:hover {
+            background-color: #138496;
+        }
+        .header-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e1e8ed;
+            padding-bottom: 15px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #1f3b4d;
+            background: #fff;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 500;
+            border: 1px solid #e1e8ed;
+            margin-left: 10px;
+            font-size: 0.9em;
+            transition: 0.2s;
+        }
+        .nav-links a:hover {
+            background: #e1e8ed;
+        }
         .toast {
             position: fixed;
             top: 20px;
@@ -75,6 +104,7 @@
             border-radius: 4px;
             display: none;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            z-index: 1000;
         }
         .toast.error {
             background: #dc3545;
@@ -86,8 +116,18 @@
     <div class="toast" id="toast">Sucesso!</div>
 
     <div class="container">
-        <h1>📦 Controle de Estoque Interno</h1>
-        <p>Aqui você gerencia as quantidades. Elas serão atualizadas automaticamente quando houver vendas no site.</p>
+        <div class="header-actions">
+            <h1 style="margin: 0; text-align: left;">📦 Controle de Estoque Interno</h1>
+            <div class="nav-links">
+                <a href="/pedidos">📋 Ver Pedidos</a>
+                <a href="/atacadistas.html">👥 Ver Atacadistas</a>
+            </div>
+        </div>
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; background: #eef2f7; padding: 12px 16px; border-radius: 6px; border: 1px solid #dce4ec;">
+            <span style="font-size: 0.9em; color: #555;">Aqui você gerencia as quantidades. Elas são atualizadas com as vendas.</span>
+            <button class="btn btn-sync" onclick="syncDatabase()">🔄 Sincronizar com o Site</button>
+        </div>
         
         <table id="stockTable">
             <thead>
@@ -107,6 +147,28 @@
     </div>
 
     <script>
+        async function syncDatabase() {
+            if (!confirm('Deseja sincronizar o estoque e histórico de pedidos com o arquivo products.js do site?\n\nIsso atualizará os nomes dos produtos, cores e tamanhos no banco de dados Supabase sem alterar as quantidades existentes.')) {
+                return;
+            }
+            
+            try {
+                showToast('Sincronizando banco de dados...', false);
+                const res = await fetch('/api/estoque/sync', { method: 'POST' });
+                const result = await res.json();
+                
+                if (result.success) {
+                    showToast('Sincronização concluída com sucesso!');
+                    loadStock();
+                } else {
+                    showToast('Erro: ' + (result.error || 'Erro desconhecido'), true);
+                }
+            } catch (e) {
+                console.error(e);
+                showToast('Erro de conexão ao sincronizar', true);
+            }
+        }
+
         function showToast(msg, isError = false) {
             const toast = document.getElementById('toast');
             toast.textContent = msg;

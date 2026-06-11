@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const supabase = require('../services/supabase');
+const { syncDatabase } = require('../services/syncDb');
 
 router.get('/', async (req, res) => {
     try {
@@ -49,6 +50,21 @@ router.post('/update', async (req, res) => {
         res.json({ success: true });
     } catch (error) {
         console.error('Erro ao atualizar estoque:', error);
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Sync stock with products.js manually
+router.post('/sync', async (req, res) => {
+    try {
+        const result = await syncDatabase();
+        if (result.success) {
+            res.json({ success: true, message: 'Banco de dados sincronizado com sucesso!' });
+        } else {
+            res.status(500).json({ success: false, error: result.error });
+        }
+    } catch (error) {
+        console.error('Erro ao sincronizar estoque:', error);
         res.status(500).json({ success: false, error: error.message });
     }
 });

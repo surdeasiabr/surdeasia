@@ -7,6 +7,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const supabase = require('./services/supabase');
+const { syncDatabase } = require('./services/syncDb');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -237,7 +238,7 @@ setInterval(async () => {
     }
 }, 15 * 60 * 1000);
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
     const hasToken = process.env.MERCADOPAGO_ACCESS_TOKEN && 
                      process.env.MERCADOPAGO_ACCESS_TOKEN !== 'SEU_ACCESS_TOKEN_AQUI';
     
@@ -245,4 +246,11 @@ app.listen(PORT, () => {
     console.log(`  📦 API available at http://localhost:${PORT}/api`);
     console.log(`  💳 Mercado Pago: ${hasToken ? '✅ Configurado' : '⚠️  Falta o Access Token no .env'}`);
     console.log(`  📋 Ver pedidos: http://localhost:${PORT}/api/orders\n`);
+
+    // Run database sync on startup
+    try {
+        await syncDatabase();
+    } catch (e) {
+        console.error('Failed to run syncDatabase on startup:', e);
+    }
 });
