@@ -199,13 +199,16 @@ const products = [
             "images/Chemisse Azul Stone Medit 2003.png",
             "images/Chemisse Azul Celeste 2000.png",
             "images/Chemisse Azul Celeste 2001.png",
-            "images/Chemisse Azul Celeste 2003.png"
+            "images/Chemisse Azul Celeste 2003.png",
+            "images/Chemisse Wave Voil Viscosa Marron Abano 2000.png",
+            "images/Chemisse Wave Voil Viscosa Marron Abano 2001.png"
         ],
         "category": "Camisas",
         "badge": "Novo",
         "colors": [
             { "name": "Azul Mediterraneo Stoneado", "hex": "#4A6B8A", "image": "images/Chemisse Azul Stone Medit 2000.png", "indices": [0, 1, 2, 3] },
-            { "name": "Azul Celeste", "hex": "#87CEEB", "image": "images/Chemisse Azul Celeste 2000.png", "indices": [4, 5, 6] }
+            { "name": "Azul Celeste", "hex": "#87CEEB", "image": "images/Chemisse Azul Celeste 2000.png", "indices": [4, 5, 6] },
+            { "name": "Marron Abano", "hex": "#6F4E37", "image": "images/Chemisse Wave Voil Viscosa Marron Abano 2000.png", "indices": [7, 8] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Chemisse Wave em voil de viscose. Peça elegante, leve e fluida, perfeita para compor looks de verão com sofisticação."
