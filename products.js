@@ -198,8 +198,8 @@ const products = [
             "images/Chemisse Azul Stone Medit 2002.png",
             "images/Chemisse Azul Stone Medit 2003.png",
             "images/Chemisse Azul Celeste 2000.png",
-            "images/Chemisse Azul Celeste 2003.png",
-            "images/Chemisse Azul Celeste 2002.png"
+            "images/Chemisse Azul Celeste 2001.png",
+            "images/Chemisse Azul Celeste 2003.png"
         ],
         "category": "Camisas",
         "badge": "Novo",
