@@ -470,6 +470,6 @@ const products = [
             { "name": "Bege/Azul", "hex": "#C8B89A", "image": "images/Camisa Marcela Algodao Bege Best111.png", "indices": [6, 7, 8] }
         ],
         "sizes": ["Tamanho Único"],
-        "desc": "Camisa confeccionada em 100% algodão puro, com manga 3/4 e caimento levemente oversized que abraça o corpo com elegância. O tecido respirável e macio garante conforto absoluto durante todo o dia, enquanto a estampa listrada exclusiva da SURDEASIA traz personalidade e sofisticação ao seu visual. Disponível em três combinações de cores pensadas para o estilo mediterrâneo."
+        "desc": "Camisa confeccionada em 100% algodão puro, com manga 3/4 e caimento levemente oversized que abraça o corpo com elegância. O tecido respirável e macio garante conforto absoluto durante todo o dia, as distintas estampas da SURDEASIA trazem personalidade e sofisticação ao seu visual. Disponível em três combinações de cores pensadas para o estilo mediterrâneo."
     }
 ];
