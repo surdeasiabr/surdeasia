@@ -444,6 +444,32 @@ const products = [
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Faixa de couro autêntico, cuidadosamente feita à mão e detalhada com argolas de metal. O acessório perfeito para marcar a silhueta com personalidade e dar um toque rústico e sofisticado ao seu visual."
+    },
+    {
+        "id": 35,
+        "name": "Camisa Marcela Algodão",
+        "price": "R$ 340,00",
+        "priceNum": 340,
+        "image": "images/Camisa Marcela Algodao Azest111.png",
+        "images": [
+            "images/Camisa Marcela Algodao Azest111.png",
+            "images/Camisa Marcela Algodao Azest222.png",
+            "images/Camisa Marcela Algodao Azest333.png",
+            "images/Camisa Marcela Algodao celeste est rojo 111.png",
+            "images/Camisa Marcela Algodao celeste est rojo 222.png",
+            "images/Camisa Marcela Algodao celeste est rojo 333.png",
+            "images/Camisa Marcela Algodao Bege Best111.png",
+            "images/Camisa Marcela Algodao Bege Best222.png",
+            "images/Camisa Marcela Algodao Bege Best333.png"
+        ],
+        "category": "Camisas",
+        "badge": "Novo",
+        "colors": [
+            { "name": "Azul/Bege", "hex": "#6B8CAE", "image": "images/Camisa Marcela Algodao Azest111.png", "indices": [0, 1, 2] },
+            { "name": "Celeste/Bordo", "hex": "#7EB8CC", "image": "images/Camisa Marcela Algodao celeste est rojo 111.png", "indices": [3, 4, 5] },
+            { "name": "Bege/Azul", "hex": "#C8B89A", "image": "images/Camisa Marcela Algodao Bege Best111.png", "indices": [6, 7, 8] }
+        ],
+        "sizes": ["Tamanho Único"],
+        "desc": "Camisa confeccionada em 100% algodão puro, com manga 3/4 e caimento levemente oversized que abraça o corpo com elegância. O tecido respirável e macio garante conforto absoluto durante todo o dia, enquanto a estampa listrada exclusiva da SURDEASIA traz personalidade e sofisticação ao seu visual. Disponível em três combinações de cores pensadas para o estilo mediterrâneo."
     }
 ];
-
