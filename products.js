@@ -345,8 +345,8 @@ const products = [
     {
         "id": 4,
         "name": "Camisa Wave",
-        "price": "R$ 340,00",
-        "priceNum": 340,
+        "price": "R$ 380,00",
+        "priceNum": 380,
         "image": "images/Camisa Wave Branca 11.png",
         "images": [
             "images/Camisa Wave Branca 11.png",
