@@ -130,8 +130,9 @@ button { border: none; background: none; cursor: pointer; font-family: inherit; 
 .product-name { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 500; margin-bottom: 4px; }
 .product-price { font-size: .95rem; color: var(--blue-med); font-weight: 600; margin-bottom: 12px; }
 .product-colors { display: flex; gap: 6px; margin-bottom: 8px; }
-.color-dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--white); box-shadow: 0 0 0 1px #CBD5E0; cursor: pointer; transition: transform .2s; }
-.color-dot:hover, .color-dot.active { transform: scale(1.2); box-shadow: 0 0 0 2px var(--blue-med); }
+.color-dot { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--white); box-shadow: 0 0 0 1px #CBD5E0; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+.color-dot:hover { transform: scale(1.15); box-shadow: 0 0 0 2px #94a3b8; }
+.color-dot.active { transform: scale(1.25); box-shadow: 0 0 0 2.5px var(--blue-med); }
 .product-sizes { display: flex; gap: 6px; margin-bottom: 16px; }
 .size-tag { font-size: .7rem; padding: 3px 10px; border-radius: 50px; border: 1px solid #E2E8F0; color: var(--text-mid); }
 .product-actions { display: flex; gap: 8px; }

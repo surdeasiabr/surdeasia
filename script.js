@@ -32,7 +32,7 @@ function renderProducts() {
                 <h3 class="product-name">${p.name}</h3>
                 <p class="product-price">${p.price}</p>
                 <div class="product-colors">
-                    ${p.colors.map(c => `<span class="color-dot" style="background:${c.hex}" title="${c.name}"></span>`).join('')}
+                    ${p.colors.map((c, i) => `<span class="color-dot${i === 0 ? ' active' : ''}" style="background:${c.hex}" title="${c.name}" onclick="switchCardColor(event, ${p.id}, ${i})"></span>`).join('')}
                 </div>
                 <div class="product-sizes">
                     ${p.sizes.map(s => `<span class="size-tag">${s}</span>`).join('')}
@@ -47,6 +47,34 @@ function renderProducts() {
             </div>
         </div>
     `).join('');
+}
+
+/* ========== CARD COLOR SWITCHER ========== */
+function switchCardColor(event, productId, colorIndex) {
+    event.stopPropagation(); // prevent modal from opening
+    const product = products.find(p => p.id === productId);
+    if (!product) return;
+
+    const card = event.target.closest('.product-card');
+    if (!card) return;
+
+    // Update active dot
+    card.querySelectorAll('.color-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === colorIndex);
+    });
+
+    // Switch image with fade
+    const img = card.querySelector('.product-image img');
+    const color = product.colors[colorIndex];
+    if (!color || !img) return;
+
+    img.style.opacity = '0';
+    img.style.transition = 'opacity 0.25s ease';
+    setTimeout(() => {
+        img.src = color.image;
+        img.alt = `${product.name} - ${color.name}`;
+        img.style.opacity = '1';
+    }, 250);
 }
 
 /* ========== WHATSAPP ========== */
