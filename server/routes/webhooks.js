@@ -129,6 +129,54 @@ router.post('/mercadopago', async (req, res) => {
                                     </div>
                                 `
                             });
+
+                            // ── Meta Conversions API: Purchase (server-side, verified) ──
+                            // This fires only when Mercado Pago confirms the payment via webhook.
+                            // Uses orderId as event_id to deduplicate with the browser Pixel event.
+                            // Requires META_ACCESS_TOKEN env var in Render dashboard.
+                            if (process.env.META_ACCESS_TOKEN) {
+                                try {
+                                    const crypto = require('crypto');
+                                    const hashSHA256 = (val) => val
+                                        ? crypto.createHash('sha256').update(String(val).trim().toLowerCase()).digest('hex')
+                                        : undefined;
+
+                                    const capiPayload = {
+                                        data: [{
+                                            event_name: 'Purchase',
+                                            event_time: Math.floor(Date.now() / 1000),
+                                            event_id: orderId,
+                                            action_source: 'website',
+                                            event_source_url: 'https://surdeasiabr.com/checkout-result',
+                                            user_data: {
+                                                em: hashSHA256(order.customer_email),
+                                                ph: hashSHA256(order.customer_phone)
+                                            },
+                                            custom_data: {
+                                                value: result.transaction_amount || (order.total_cents / 100),
+                                                currency: 'BRL',
+                                                content_type: 'product',
+                                                order_id: orderId
+                                            }
+                                        }]
+                                    };
+
+                                    const capiRes = await fetch(
+                                        `https://graph.facebook.com/v20.0/2128091181457539/events?access_token=${process.env.META_ACCESS_TOKEN}`,
+                                        {
+                                            method: 'POST',
+                                            headers: { 'Content-Type': 'application/json' },
+                                            body: JSON.stringify(capiPayload)
+                                        }
+                                    );
+                                    const capiData = await capiRes.json();
+                                    console.log(`📊 Meta CAPI Purchase sent for order ${orderId}:`, capiData.events_received || capiData.error);
+                                } catch (capiErr) {
+                                    // Silent fail — never block order confirmation
+                                    console.error('Meta CAPI error (non-critical):', capiErr.message);
+                                }
+                            }
+
                         }
                     }
                 }

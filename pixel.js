@@ -90,33 +90,17 @@ window.pixelInitiateCheckout = function(cartItems, total) {
   });
 };
 
-/* ── Purchase: fired on checkout-result.html when status=approved ──
-   Anti-duplicate guard: uses localStorage flag 'surdeasia_pixel_fired'
-   to prevent re-firing on page refresh.
-   @param {number} value     - total order value (products + shipping)
-   @param {number} numItems  - total quantity of items
-   @param {Array}  contentIds - array of product ID strings
+/* ── Purchase: fired on checkout-result.html when server confirms status=confirmed ──
+   Anti-duplicate guard: uses localStorage flag keyed by orderId.
+   event_id = orderId → Meta deduplicates with the CAPI server-side event automatically.
+   @param {number} value     - total order value confirmed by Mercado Pago
+   @param {string} eventId   - orderId (8-char), used as event_id for CAPI deduplication
 */
-window.pixelPurchase = function(value, numItems, contentIds) {
-  // Guard: check if already fired in this browser session
-  var key = 'surdeasia_pixel_fired';
-  var pendingKey = 'surdeasia_pending_pixel';
-  var pending = {};
-  try { pending = JSON.parse(localStorage.getItem(pendingKey) || '{}'); } catch(e) {}
-
-  if (pending.fired) {
-    return; // Already fired for this order — do not duplicate
-  }
-
-  _fbqSafe('track', 'Purchase', {
-    content_ids:  contentIds || [],
-    content_type: 'product',
-    num_items:    numItems || 1,
-    value:        parseFloat(value) || 0,
-    currency:     'BRL'
-  });
-
-  // Mark as fired to prevent duplicates on refresh
-  pending.fired = true;
-  try { localStorage.setItem(pendingKey, JSON.stringify(pending)); } catch(e) {}
+window.pixelPurchase = function(value, eventId) {
+    _fbqSafe('track', 'Purchase', {
+        value:        parseFloat(value) || 0,
+        currency:     'BRL',
+        content_type: 'product',
+        event_id:     eventId || undefined
+    }, { eventID: eventId || undefined });
 };

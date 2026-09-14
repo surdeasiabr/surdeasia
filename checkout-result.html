@@ -146,18 +146,34 @@
         if (status === 'approved') {
             localStorage.removeItem('surdeasia_cart');
 
-            // ── Meta Pixel: Purchase ──
-            try {
-                var pendingPixel = JSON.parse(localStorage.getItem('surdeasia_pending_pixel') || '{}');
-                if (!pendingPixel.fired && pendingPixel.value) {
-                    window.pixelPurchase(
-                        pendingPixel.value,
-                        pendingPixel.num_items || 1,
-                        pendingPixel.content_ids || []
-                    );
+            // ── Meta Pixel: Verified Purchase ──
+            // orderId comes from Mercado Pago's redirect URL as external_reference
+            // We verify server-side that the order is actually confirmed before firing
+            const orderId = params.get('external_reference');
+            if (orderId) {
+                const pixelKey = 'surdeasia_pixel_' + orderId;
+                const alreadyFired = localStorage.getItem(pixelKey) === 'fired';
+
+                if (!alreadyFired) {
+                    fetch('/api/orders/verify/' + orderId)
+                        .then(r => r.json())
+                        .then(result => {
+                            if (result.confirmed) {
+                                // Fire browser Pixel with event_id for CAPI deduplication
+                                if (typeof window.pixelPurchase === 'function') {
+                                    window.pixelPurchase(result.value, orderId);
+                                }
+                                // Mark as fired to prevent refresh duplicates
+                                localStorage.setItem(pixelKey, 'fired');
+                                // Clean up pending pixel data
+                                localStorage.removeItem('surdeasia_pending_pixel');
+                            }
+                        })
+                        .catch(() => { /* silent fail */ });
                 }
-            } catch(e) { /* silent fail */ }
+            }
         }
+
 
         const content = {
             approved: `

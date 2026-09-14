@@ -90,6 +90,32 @@ app.get('/api/orders', async (req, res) => {
     }
 });
 
+// Meta Pixel: read-only order verification for secure Purchase event
+// Only returns confirmed:true when Mercado Pago webhook has confirmed the payment
+app.get('/api/orders/verify/:orderId', async (req, res) => {
+    try {
+        if (!supabase) return res.json({ confirmed: false });
+        const { orderId } = req.params;
+        if (!orderId || orderId.length > 20) return res.json({ confirmed: false });
+
+        const { data: order, error } = await supabase
+            .from('orders')
+            .select('status, total_cents')
+            .eq('id', orderId.toUpperCase())
+            .single();
+
+        if (error || !order) return res.json({ confirmed: false });
+
+        // Only 'confirmed' (set exclusively by the MP webhook) counts as a real purchase
+        res.json({
+            confirmed: order.status === 'confirmed',
+            value: order.status === 'confirmed' ? (order.total_cents / 100) : 0
+        });
+    } catch (e) {
+        res.json({ confirmed: false });
+    }
+});
+
 // Manual cancel order endpoint
 app.post('/api/orders/:id/cancel', async (req, res) => {
     try {
