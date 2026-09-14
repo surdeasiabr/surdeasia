@@ -163,6 +163,8 @@ function openModal(id) {
     selectedModalSize = p.sizes[0];
     selectedModalColor = p.colors[0]?.name || '';
 
+    // Meta Pixel: ViewContent
+    if (typeof window.pixelViewContent === 'function') window.pixelViewContent(p);
     document.getElementById('modal-img').src = p.image;
     document.getElementById('modal-img').alt = p.name;
     

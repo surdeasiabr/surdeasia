@@ -14,6 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
     renderSummary();
     setupInputMasks();
     loadCustomerData();
+
+    // Meta Pixel: InitiateCheckout (fired once when user reaches checkout)
+    setTimeout(() => {
+        try {
+            const total = cartItems.reduce((s, i) => s + i.price * i.quantity, 0);
+            if (typeof window.pixelInitiateCheckout === 'function') {
+                window.pixelInitiateCheckout(cartItems, total);
+            }
+        } catch(e) { /* silent fail */ }
+    }, 500); // slight delay to ensure pixel is loaded
 });
 
 function loadCart() {
@@ -287,6 +297,20 @@ async function processCheckout() {
         const data = await response.json();
 
         if (data.success) {
+            // Meta Pixel: save purchase data for Purchase event on result page
+            try {
+                const pixelTotal = items.reduce((s, i) => s + (i.price * (i.quantity || 1)), 0);
+                const pixelIds = cartItems.map(i => String(i.id));
+                const pixelQty = cartItems.reduce((s, i) => s + (i.quantity || 1), 0);
+                localStorage.setItem('surdeasia_pending_pixel', JSON.stringify({
+                    value: Math.round(pixelTotal * 100) / 100,
+                    currency: 'BRL',
+                    num_items: pixelQty,
+                    content_ids: pixelIds,
+                    fired: false
+                }));
+            } catch(e) { /* silent fail */ }
+
             localStorage.removeItem('surdeasia_cart');
             localStorage.removeItem('surdeasia_coupon');
             window.location.href = data.checkoutUrl || data.sandboxUrl;

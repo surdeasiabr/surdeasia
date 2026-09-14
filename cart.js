@@ -50,6 +50,8 @@ const SurdeCart = (() => {
             });
         }
         save();
+        // Meta Pixel: AddToCart
+        if (typeof window.pixelAddToCart === 'function') window.pixelAddToCart(product, selectedColor, selectedSize);
         renderDrawer();
         openDrawer();
         showAddedFeedback();
