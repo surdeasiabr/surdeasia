@@ -471,5 +471,28 @@ const products = [
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Camisa confeccionada em 100% algodão puro, com manga 3/4 e caimento levemente oversized que abraça o corpo com elegância. O tecido respirável e macio garante conforto absoluto durante todo o dia, as distintas estampas da SURDEASIA trazem personalidade e sofisticação ao seu visual. Disponível em três combinações de cores pensadas para o estilo mediterrâneo."
+    },
+    {
+        "id": 36,
+        "name": "Conjunto Aqua Marine",
+        "price": "R$ 650,00",
+        "priceNum": 650,
+        "image": "images/Camisa Marcela Azul Tencel 1002.webp",
+        "images": [
+            "images/Camisa Marcela Azul Tencel 1002.webp",
+            "images/Camisa Marcela Azul Tencel 1004.webp",
+            "images/Camisa Marcela Azul Tencel 1006.webp",
+            "images/Camisa Marcela Azul Tencel 1008.webp",
+            "images/Camisa Marcela Azul Tencel 1010.webp",
+            "images/Camisa Marcela Azul Tencel 1012.webp",
+            "images/Camisa Marcela Azul Tencel 1014.webp"
+        ],
+        "category": "Conjuntos",
+        "badge": "Novo",
+        "colors": [
+            { "name": "Azul Aqua Marine", "hex": "#5B9BA6", "image": "images/Camisa Marcela Azul Tencel 1002.webp", "indices": [0, 1, 2, 3, 4, 5, 6] }
+        ],
+        "sizes": ["Tamanho Único"],
+        "desc": "Um encontro perfeito entre a frescura do mediterrâneo e a elegância natural da SURDEASIA. A Camisa Marcela em tencel azul — tecido macio, respirável e levemente fluido — se une à Saia Mahalo Celeste em voil de viscosa stoneada, criando uma harmonia de tons aquáticos que evoca o azul cristalino do mar. Juntos, formam o conjunto perfeito para viver o verão com leveza, sofisticação e toda a sensação da moda praia premium."
     }
 ];
