@@ -358,4 +358,43 @@ document.addEventListener('DOMContentLoaded', () => {
     initReveals();
     const statsSection = document.querySelector('.story-stats');
     if (statsSection) counterObserver.observe(statsSection);
+
+    // Deep-link: auto-open product if URL has ?produto=ID
+    const prodParam = new URLSearchParams(window.location.search).get('produto');
+    if (prodParam) {
+        const pid = parseInt(prodParam);
+        if (!isNaN(pid)) {
+            setTimeout(() => openModal(pid), 400); // small delay for page to render
+        }
+    }
 });
+
+/* ========== SHARE PRODUCT ========== */
+function shareProduct() {
+    if (!currentModalProduct) return;
+    const p = currentModalProduct;
+
+    const shareUrl  = `${window.location.origin}/?produto=${p.id}`;
+    const shareText = `✨ Olha que lindo! *${p.name}* — ${p.price}\n\nVi na SURDEASIA e pensei em você 🌊\n`;
+
+    // Native share sheet (iOS/Android) — opens WhatsApp, Instagram, etc. directly
+    if (navigator.share) {
+        navigator.share({
+            title: `${p.name} — SURDEASIA`,
+            text:  shareText,
+            url:   shareUrl
+        }).catch(() => {}); // user cancelled — silent
+        return;
+    }
+
+    // Desktop fallback: copy link to clipboard
+    navigator.clipboard.writeText(shareUrl).then(() => {
+        const btn  = document.getElementById('share-btn-text');
+        const orig = btn.textContent;
+        btn.textContent = '✓ Link copiado!';
+        setTimeout(() => { btn.textContent = orig; }, 2500);
+    }).catch(() => {
+        // Last resort: show the URL in a prompt
+        prompt('Copie o link do produto:', shareUrl);
+    });
+}
