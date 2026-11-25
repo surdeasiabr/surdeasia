@@ -244,13 +244,19 @@ const products = [
             "images/Chemisse De Linho Listrado Azul 222.png",
             "images/Chemisse Wave Azul Marinho Linho 2000.png",
             "images/Vestido Aloha de Linho 20211.png",
-            "images/Camisa Pontas Bege Stoneada 1005.png"
+            "images/Camisa Pontas Bege Stoneada 1005.png",
+            "images/Calca Dulu Listrada Azul 2600.PNG",
+            "images/Calca Dulu Listrada Azul 2601.PNG",
+            "images/Calca Dulu Listrada Azul 2602.png",
+            "images/Calca Dulu Listrada Azul 2603.PNG",
+            "images/Calca Dulu Listrada Azul 2604.PNG"
         ],
         "category": "Calças",
         "badge": "Novo",
         "colors": [
             { "name": "Azul Marinho", "hex": "#000080", "image": "images/calca dulu 111.png", "indices": [0, 1] },
-            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse De Linho Listrado Azul 222.png", "indices": [2, 3, 4, 5] }
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Chemisse De Linho Listrado Azul 222.png", "indices": [2, 3, 4, 5] },
+            { "name": "Azul Listrado", "hex": "#4A81B8", "image": "images/Calca Dulu Listrada Azul 2600.PNG", "indices": [6, 7, 8, 9, 10] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Calça de linho premium com faixa elástica na cintura. Uma peça que abraça o corpo com leveza, proporcionando total liberdade de movimento e um caimento incrivelmente elegante e despojado."
@@ -293,12 +299,15 @@ const products = [
             "images/Macacao Dulu Chocolate 102.png",
             "images/Macacao Dulu Chocolate 103.png",
             "images/Macacao Dulu Chocolate 104.png",
-            "images/Macacao Dulu Chocolate 105.png"
+            "images/Macacao Dulu Chocolate 105.png",
+            "images/Macacao Dulu Viscosa 2600.PNG",
+            "images/Macacao Dulu Verde 2601.PNG"
         ],
         "category": "Macacões",
         "badge": "Novo",
         "colors": [
-            { "name": "Marrom Chocolate", "hex": "#3E2723", "image": "images/Macacao Dulu Chocolate 106.png", "indices": [0, 1, 2, 3, 4, 5] }
+            { "name": "Marrom Chocolate", "hex": "#3E2723", "image": "images/Macacao Dulu Chocolate 106.png", "indices": [0, 1, 2, 3, 4, 5] },
+            { "name": "Verde", "hex": "#8B9B7A", "image": "images/Macacao Dulu Viscosa 2600.PNG", "indices": [6, 7] }
         ],
         "sizes": ["Tamanho Único"],
         "desc": "Macacão de voil de viscose com acabamento Stone Wash e elástico no busto. Conforto e estilo em uma peça única."
@@ -347,18 +356,22 @@ const products = [
         "name": "Camisa Wave",
         "price": "R$ 380,00",
         "priceNum": 380,
-        "image": "images/Camisa Wave Branca 11.png",
+        "image": "images/Camisa Wave Branca 2600.png",
         "images": [
-            "images/Camisa Wave Branca 11.png",
-            "images/camisa wave 1.jpeg",
-            "images/Camisa wave 2.jpeg",
-            "images/Saia Mahalo Rosa Viejo Voil de Viscosa 2.jpg",
-            "images/Saia Mahalo 111.png"
+            "images/Camisa Wave Branca 2600.png",
+            "images/Camisa Wave Branca 2601.png",
+            "images/Camisa Wave Branca 2602.png",
+            "images/Camisa Wave Branca 2603.png",
+            "images/Camisa Wave Branca 2605.png",
+            "images/Camisa Wave Branca 2610.png",
+            "images/Camisa Wave Branca 2611.png",
+            "images/Camisa Wave Branca 2612.png"
         ],
         "category": "Camisas",
         "badge": "Best Seller",
         "colors": [
-            { "name": "Branca", "hex": "#FFFFFF", "image": "images/Camisa Wave Branca 11.png", "indices": [0, 1, 2, 3, 4] }
+            { "name": "Branco", "hex": "#FFFFFF", "image": "images/Camisa Wave Branca 2600.png", "indices": [0, 1, 2, 3, 4] },
+            { "name": "Azul", "hex": "#4A81B8", "image": "images/Camisa Wave Branca 2610.png", "indices": [5, 6, 7] }
         ],
         "sizes": ["M"],
         "desc": "Camisa elegante em voil de viscosa com babados esvoaçantes nas mangas. Possui botões de madrepérola. Às vezes é feita de linho ou de algodão."
